@@ -1,10 +1,7 @@
-
 using UnityEngine;
 using System;
-public interface IActivable
-{
-    public Action Active();
-}
+using CustomInterface;
+
 public abstract class ItemStrategy
 {
     protected Item item;

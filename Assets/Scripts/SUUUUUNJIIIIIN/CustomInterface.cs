@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 namespace CustomInterface
 {
-    public enum MASTATE_TYPE
+    public interface IActivable
     {
-        abc,
+        public Action Active();
     }
+
     public interface IStateMachine
     {
         public void SetState(string name);
