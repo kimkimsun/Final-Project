@@ -2,34 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-public interface IStateMachine
-{
-    void SetState(string name);
-    object GetOwner();
-}
-public class State
+using CustomInterface;
+public abstract class State
 {
     public IStateMachine sm = null;
-    public event Action onEnter;
-
     public virtual void Init(IStateMachine sm)
     {
         this.sm = sm;
     }
-    public virtual void Enter()
-    {
-        if (onEnter != null)
-            onEnter();
-    }
-    public virtual void Update()
-    {
-
-    }
-    public virtual void Exit()
-    {
-
-    }
+    public abstract void Enter();
+    public abstract void Update();
+    public abstract void Exit();
 }
 public class StateMachine<T> : IStateMachine where T : class
 {
