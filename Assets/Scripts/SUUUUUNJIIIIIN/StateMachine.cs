@@ -42,6 +42,7 @@ public class StateMachine<T> : IStateMachine where T : class
         {
             if (curState != null)
                 curState.Exit();
+
             curState = stateDic[name];
             curState.Enter();
         }

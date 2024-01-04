@@ -11,6 +11,7 @@ public class MonsterIdleState : MonsterState
 
     public override void Enter()
     {
+        
     }
     public override void Exit()
     {
