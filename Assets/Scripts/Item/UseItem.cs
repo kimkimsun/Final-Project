@@ -44,6 +44,7 @@ public enum USEITEM_TYPE
 
 public class UseItem : Item
 {
+    public UseItemStrategy useItemStrategy;
     public USEITEM_TYPE useItem_Type;
 
     private void Start()
@@ -52,14 +53,11 @@ public class UseItem : Item
         {
             switch (useItem_Type)
             {
-                case ITEM_TYPE.CAMERA:
-                    itemStrategy = new CameraItem(this);
+                case USEITEM_TYPE.CAMERA:
+                    useItemStrategy = new CameraItem(this);
                     break;
-                case ITEM_TYPE.FIRECRACKER:
-                    itemStrategy = new FireCrackerItem(this);
-                    break;
-                case ITEM_TYPE.FLASHLIGHT:
-                    itemStrategy = new FlashlightItem(this);
+                case USEITEM_TYPE.FIRECRACKER:
+                    useItemStrategy = new FireCrackerItem(this);
                     break;
             }
         }
