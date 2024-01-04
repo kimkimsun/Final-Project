@@ -12,7 +12,7 @@ public abstract class ItemStrategy
     public abstract void Use();
 }
 
-public class FlashlightItem : ItemStrategy
+/*public class FlashlightItem : ItemStrategy
 {
     private float batteryCharge;
     public FlashlightItem(Item item) : base(item)
@@ -30,7 +30,7 @@ public class FlashlightItem : ItemStrategy
         else
             return;
     }
-}
+}*/
 
 public class Item : MonoBehaviour, IActivable
 {

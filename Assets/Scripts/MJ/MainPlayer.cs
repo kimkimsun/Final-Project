@@ -11,20 +11,26 @@ public class MainPlayer : MonoBehaviour
 
     private int hp;
     private int tension;
-    private int stamina;
+    [SerializeField]
+    private float stamina;
 
-    public int Stamina
+    public float Stamina
     {
+        get { return stamina; }
         set 
         { 
             stamina = value; 
             if(stamina >= 100)
             {
                 stamina = 100;
+                playerMove.MoveSpeed = 4.0f;
+                playerMove.SprintSpeed = 6.0f;
             }
             if (stamina <= 0)
             {
                 stamina = 0;
+                playerMove.MoveSpeed = 2.5f;
+                playerMove.SprintSpeed = 0f;
             }
         } 
     }

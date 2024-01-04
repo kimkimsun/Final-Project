@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingleTon<GameManager>
 {
-    public Player player;
+
+    public MainPlayer mainPlayer;
 }
