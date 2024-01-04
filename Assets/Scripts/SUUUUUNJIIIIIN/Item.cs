@@ -67,13 +67,13 @@ public enum ITEM_TYPE
 public class Item : MonoBehaviour, IActivable
 {
     ItemStrategy itemStrategy = null;
-    public ITEM_TYPE weapon;
+    public ITEM_TYPE item;
     public float batteryCharge;
     protected Action action;
     void Start()
     {
         batteryCharge = 20;
-        switch(weapon)
+        switch(item)
         {
             case ITEM_TYPE.CAMERA:
                 itemStrategy = new CameraItem(this);
