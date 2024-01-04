@@ -1,3 +1,4 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,14 @@ public abstract class PlayerState : State
     protected float stamina;
     protected IEnumerator plusStaminaCo;
     protected IEnumerator minusHpCo;
+
+    public override void Init(IStateMachine sm)
+    {
+        this.sm = sm;
+        player = (MainPlayer)sm.GetOwner();
+    }
     protected PlayerState()
     {
-        player = (MainPlayer)sm.GetOwner();
         plusStaminaCo = PlusStaminaCo(plus, time);
         minusHpCo = MinusHpCo(damege);
     }
@@ -43,8 +49,10 @@ public class IdleState : PlayerState
 {
     public override void Enter()
     {
+        Debug.Log("±âº» »óÅÂ");
         plus = 5f;
         time = 2f;
+        player.playerMove.MoveSpeed = 4.0f;
         player.StartCoroutine(PlusStaminaCo(plus, time));
     }
 
@@ -65,6 +73,7 @@ public class ExhaustionState : PlayerState //Å»Áø»óÅÂ
 
     public override void Enter()
     {
+        Debug.Log("Å»Áø »óÅÂ");
         plus = 2.5f;
         time = 2f;
         damege = 5;
@@ -92,11 +101,13 @@ public class MoribundState : PlayerState // ºó»ç »óÅÂ
 
     public override void Enter()
     {
+        Debug.Log("ºó»ç »óÅÂ");
         plus = 2.5f;
         time = 3f;
         damege = 10;
-        player.playerMove.MoveSpeed = 2.0f;
-        player.playerMove.SprintSpeed = 3.2f;       
+        player.playerMove.MoveSpeed = 1.0f;
+        player.playerMove.SprintSpeed = 3.2f;
+        player.StartCoroutine(minusHpCo);
         //°¡»Û ¼û »ç¿îµå
     }
 

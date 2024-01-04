@@ -13,6 +13,21 @@ public class MainPlayer : MonoBehaviour
     private int tension;
     private int stamina;
 
+    public int Stamina
+    {
+        set 
+        { 
+            stamina = value; 
+            if(stamina >= 100)
+            {
+                stamina = 100;
+            }
+            if (stamina <= 0)
+            {
+                stamina = 0;
+            }
+        } 
+    }
     public int Tension
     {
         get { return tension; }
@@ -64,6 +79,22 @@ public class MainPlayer : MonoBehaviour
         stamina = 100;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            playerSM.SetState("Exhaustion");
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            playerSM.SetState("Moribund");
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            playerSM.SetState("Idle");
+        }
+
+    }
 
 
 }
