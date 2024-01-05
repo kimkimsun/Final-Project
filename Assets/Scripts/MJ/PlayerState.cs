@@ -10,7 +10,6 @@ public abstract class PlayerState : State
     protected int damege;
     protected float plus;
     protected float time;
-    protected float stamina;
     protected IEnumerator plusStaminaCo;
     protected IEnumerator minusHpCo;
 
@@ -19,20 +18,15 @@ public abstract class PlayerState : State
         this.sm = sm;
         player = (MainPlayer)sm.GetOwner();
     }
-    protected PlayerState()
+/*    protected IEnumerator PlusStaminaCo(float plus, float time)
     {
-        plusStaminaCo = PlusStaminaCo(plus, time);
-        minusHpCo = MinusHpCo(damege);
-    }
-    protected IEnumerator PlusStaminaCo(float plus, float time)
-    {
-        while (stamina > 100)
+        while (player.Stamina > 100)
         {
             yield return new WaitForSeconds(time);
-            stamina += plus;
+            player.Stamina += plus * Time.deltaTime;
 
         }      
-    }
+    }*/
 
     protected IEnumerator MinusHpCo(int damege)
     {
@@ -40,6 +34,7 @@ public abstract class PlayerState : State
         {
             yield return new WaitForSeconds(3);
             player.Hp -= damege;
+            Debug.Log(damege);
         }
         yield break;
     }
@@ -52,13 +47,14 @@ public class IdleState : PlayerState
         Debug.Log("±âº» »óÅÂ");
         plus = 5f;
         time = 2f;
+        //plusStaminaCo = PlusStaminaCo(plus, time);
         player.playerMove.MoveSpeed = 4.0f;
-        player.StartCoroutine(PlusStaminaCo(plus, time));
+       // player.StartCoroutine(plusStaminaCo);
     }
 
     public override void Exit()
     {
-        
+        //player.StopCoroutine(plusStaminaCo);
     }
 
     public override void Update()
@@ -70,22 +66,26 @@ public class IdleState : PlayerState
 
 public class ExhaustionState : PlayerState //Å»Áø»óÅÂ
 {
-
+    
     public override void Enter()
     {
         Debug.Log("Å»Áø »óÅÂ");
         plus = 2.5f;
         time = 2f;
         damege = 5;
+        //plusStaminaCo = PlusStaminaCo(plus, time);
+        minusHpCo = MinusHpCo(damege);
         player.playerMove.MoveSpeed = 3.0f;
         player.playerMove.SprintSpeed = 4.5f;
         player.StartCoroutine(minusHpCo);
+       // player.StartCoroutine(plusStaminaCo);
 
     }
 
     public override void Exit()
     {
         player.StopCoroutine(minusHpCo);
+       // player.StopCoroutine(plusStaminaCo);
     }
 
     public override void Update()
@@ -105,9 +105,11 @@ public class MoribundState : PlayerState // ºó»ç »óÅÂ
         plus = 2.5f;
         time = 3f;
         damege = 10;
+        minusHpCo = MinusHpCo(damege);
         player.playerMove.MoveSpeed = 1.0f;
         player.playerMove.SprintSpeed = 3.2f;
         player.StartCoroutine(minusHpCo);
+        //player.StartCoroutine(plusStaminaCo);
         //°¡»Û ¼û »ç¿îµå
     }
 
@@ -115,6 +117,7 @@ public class MoribundState : PlayerState // ºó»ç »óÅÂ
     {
         //°¡»Û ¼û »ç¿îµå Á¾·á
         player.StopCoroutine(minusHpCo);
+        //player.StopCoroutine(plusStaminaCo);
     }
 
     public override void Update()

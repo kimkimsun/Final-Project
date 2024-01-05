@@ -9,6 +9,7 @@ public class MainPlayer : MonoBehaviour
     public FirstPersonController playerMove;
     private StateMachine<MainPlayer> playerSM;
 
+    [SerializeField]
     private int hp;
     private int tension;
     [SerializeField]
