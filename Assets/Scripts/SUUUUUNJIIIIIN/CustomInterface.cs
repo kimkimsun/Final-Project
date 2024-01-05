@@ -6,7 +6,7 @@ namespace CustomInterface
 {
     public interface IActivable
     {
-        public Action Active();
+        public  Action Active();
     }
 
     public interface IStateMachine

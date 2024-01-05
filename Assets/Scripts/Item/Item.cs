@@ -12,30 +12,10 @@ public abstract class ItemStrategy
     public abstract void Use();
 }
 
-/*public class FlashlightItem : ItemStrategy
-{
-    private float batteryCharge;
-    public FlashlightItem(Item item) : base(item)
-    {
-        this.item = item;
-        this.batteryCharge = item.batteryCharge;
-    }
-
-    public override void Use()
-    {
-        if (batteryCharge > 0)
-        {
-            GameManager.Instance.player.OperationFlashLight();
-        }
-        else
-            return;
-    }
-}*/
 
 public class Item : MonoBehaviour, IActivable
 {
-    ItemStrategy itemStrategy = null;
-    public float batteryCharge;
+    protected ItemStrategy itemStrategy = null;
     protected Action action;
 
     void Update()
