@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
         StopCoroutine("FlashOutCo");
         StartCoroutine("FlashInCo");
     }
-    IEnumerator FlashOutCo()
+/*    IEnumerator FlashOutCo()
     {
         while(flash.batteryCharge > 0)
         {
@@ -58,5 +58,5 @@ public class Player : MonoBehaviour
             flash.batteryCharge += Time.deltaTime * b;
             yield return null;
         }
-    }
+    }*/
 }
