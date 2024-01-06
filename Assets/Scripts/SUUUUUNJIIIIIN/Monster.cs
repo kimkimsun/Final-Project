@@ -5,14 +5,16 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject map;
+    [SerializeField] private GameObject map;
+    [SerializeField] private LayerMask targetLayerMask;
     private List<Transform> monsterNextPosition;
     private StateMachine<Monster> sm;
     private NavMeshAgent agent;
     private bool isNextPosition;
+    private bool isCheck;
     private bool isPlayerCheck;
     private Collider[] cols;
+    private float maxDistance;
 
 
     public Collider[] Cols
@@ -39,6 +41,11 @@ public class Monster : MonoBehaviour
         }
 
     }
+    public bool IsCheck
+    { get { return isCheck; } 
+      set { isCheck = value; }
+    }
+
     private void Awake()
     {
         monsterNextPosition = new List<Transform>
@@ -51,6 +58,7 @@ public class Monster : MonoBehaviour
     }
     private void Start()
     {
+        maxDistance = 10f;
         agent = GetComponent<NavMeshAgent>();
         sm = new StateMachine<Monster>();
         sm.owner = this;
@@ -59,17 +67,26 @@ public class Monster : MonoBehaviour
         sm.AddState("Run", new MonsterRunState());
         sm.SetState("Idle");
     }
+    bool CheckInLayerMask(int layerIndex)
+    {
+        Debug.Log("비트연산자 계산 값" + (targetLayerMask & (1 << layerIndex)));
+        return (targetLayerMask & (1 << layerIndex)) != 0;
+    }
     private void Update()
     {
         sm.curState.Update();
-        cols = Physics.OverlapSphere(transform.position, 5f, 1 << 10);
-        if (cols.Length > 0)
+        cols = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
+        IsCheck = cols.Length > 0;
+        if (IsCheck)
         {
             Debug.Log("들어옴");
-            if (!IsPlayerCheck)
-                IsPlayerCheck = true;
-            else
-                return;
+            RaycastHit hit;
+            Vector3 direction = ((cols[0].transform.position) - transform.position).normalized;
+            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
+            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
+            {
+                IsPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+            }
         }
         else
         {

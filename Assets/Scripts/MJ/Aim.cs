@@ -16,6 +16,6 @@ public class Aim : MonoBehaviour
                 text.text = hit.transform.GetComponent<IActivable>().InteractionText;
         }
         else
-            text.text = "abc";
+            text.text = "";
     }
 }
