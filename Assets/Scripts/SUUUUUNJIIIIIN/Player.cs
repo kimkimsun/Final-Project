@@ -9,8 +9,6 @@ public class Player : MonoBehaviour
 
     public int battery;
     public Item flash;
-    private int a = 1;
-    private int b = 1;
 
     public bool IsActive
     {

@@ -21,7 +21,6 @@ public abstract class MonsterState : State
 
 public class MonsterIdleState : MonsterState
 {
-
     public override void Enter()
     {
         monster.StartCoroutine(monsterMoveCo);
@@ -30,7 +29,6 @@ public class MonsterIdleState : MonsterState
     {
         monster.StopCoroutine(monsterMoveCo);
     }
-
     public override void Update()
     {
     }
@@ -49,6 +47,24 @@ public class MonsterRunState : MonsterState
     public override void Update()
     {
         Debug.Log("런스테이트임");
-        monster.Agent.SetDestination(monster.Cols[0].transform.position);
+        monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
+    }
+}
+
+public class MonsterStunState : MonsterState
+{
+
+    public override void Enter()
+    {
+        // ++) 귀신 비명 소리 추가
+        monster.StartCoroutine(monster.StunCo());
+        monster.Agent.enabled = false;
+    }
+    public override void Exit()
+    {
+        monster.Agent.enabled = true;
+    }
+    public override void Update()
+    {
     }
 }

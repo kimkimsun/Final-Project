@@ -25,7 +25,7 @@ public class Item : MonoBehaviour, IActivable
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.K))
         {
             Debug.Log(itemStrategy);
             itemStrategy.Use();

@@ -7,20 +7,27 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
-    private List<Transform> monsterNextPosition;
+    private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
     private NavMeshAgent agent;
+    private Collider[] playerLookCol;
+    private Collider[] playerHeardCol;
+    private Rigidbody rb;
     private bool isNextPosition;
     private bool isCheck;
     private bool isPlayerCheck;
-    private Collider[] cols;
     private float maxDistance;
-
-
-    public Collider[] Cols
+    private float stunTime;
+    private Stack<Transform> playerSoundPos;
+    //public Collider[] PlayerHeardCol
+    //{
+    //    get => playerHeardCol;
+    //    set => playerHeardCol = value;
+    //}
+    public Collider[] PlayerLookCol
     {
-        get => cols;
-        set => cols = value;
+        get => playerLookCol;
+        set => playerLookCol = value;
     }
     public NavMeshAgent Agent
     {
@@ -45,10 +52,15 @@ public class Monster : MonoBehaviour
     { get { return isCheck; } 
       set { isCheck = value; }
     }
+    public Rigidbody Rb
+    { get => rb; 
+      set => rb = value;
+    }
 
     private void Awake()
     {
-        monsterNextPosition = new List<Transform>
+        playerSoundPos = new Stack<Transform>();
+        monsterNextPositionList = new List<Transform>
         {
             map.transform.GetChild(0),
             map.transform.GetChild(1),
@@ -59,29 +71,43 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         maxDistance = 10f;
+
+        rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = maxDistance;
         sm = new StateMachine<Monster>();
         sm.owner = this;
-
         sm.AddState("Idle", new MonsterIdleState());
         sm.AddState("Run", new MonsterRunState());
+        sm.AddState("Stun", new MonsterStunState());
         sm.SetState("Idle");
     }
     bool CheckInLayerMask(int layerIndex)
     {
-        Debug.Log("비트연산자 계산 값" + (targetLayerMask & (1 << layerIndex)));
         return (targetLayerMask & (1 << layerIndex)) != 0;
+    }
+    private void FixedUpdate()
+    {
+        ResetRigidbody();
+    }
+    private void ResetRigidbody()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
     private void Update()
     {
         sm.curState.Update();
-        cols = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
-        IsCheck = cols.Length > 0;
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            sm.SetState("Stun");
+        }
+        playerLookCol = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
+        IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {
-            Debug.Log("들어옴");
             RaycastHit hit;
-            Vector3 direction = ((cols[0].transform.position) - transform.position).normalized;
+            Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
             {
@@ -98,7 +124,11 @@ public class Monster : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, 5f);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 10f);
         Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
     }
     private void OnTriggerEnter(Collider other)
@@ -108,15 +138,26 @@ public class Monster : MonoBehaviour
     }
     public IEnumerator MonsterMoveCo()
     {
-        for (int i = 0; i < monsterNextPosition.Count; i++)
+        for (int i = 0; i < monsterNextPositionList.Count+1; i++)
         {
-            Debug.Log(monsterNextPosition.Count);
+            if (i == monsterNextPositionList.Count)
+                i = 0;
             while (!isNextPosition)
             {
-                agent.SetDestination(monsterNextPosition[i].transform.position);
+                agent.SetDestination(monsterNextPositionList[i].transform.position);
                 yield return null;
             }
             isNextPosition = false;
         }
+    }
+    public IEnumerator StunCo()
+    {
+        stunTime = 0f;
+        while(stunTime < 3.0f)
+        {
+            stunTime += Time.deltaTime;
+            yield return null;
+        }
+        sm.SetState("Idle");
     }
 }

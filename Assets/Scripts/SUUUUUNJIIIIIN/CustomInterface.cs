@@ -12,7 +12,6 @@ namespace CustomInterface
         }
         public Action Active();
     }
-
     public interface IStateMachine
     {
         public void SetState(string name);
