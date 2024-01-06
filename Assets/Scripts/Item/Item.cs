@@ -17,6 +17,11 @@ public class Item : MonoBehaviour, IActivable
 {
     protected ItemStrategy itemStrategy = null;
     protected Action action;
+    public string interactionText;
+    public string InteractionText
+    {
+        get => interactionText;
+    }
 
     void Update()
     {
