@@ -13,24 +13,33 @@ public class StunLight : MonoBehaviour,IStunable
     private void Start()
     {
         lightStun = GetComponent<Light>();
+        lightStun.intensity = 0;
         maxBright = 30;
 
     }
 
     public void Stun()
     {
-        
+        StartCoroutine(BrightLightCo());
     }
 
     IEnumerator BrightLightCo()
     {
-        lightStun.intensity = 0;
-
-        while (lightStun.intensity <= 30)
+       
+        while (lightStun.intensity <= maxBright)
         {
             lightStun.intensity += 1 ;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.07f);
         }
+        lightStun.intensity = 0;
+        yield break;
+    }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.N)) 
+        {
+            Stun();
+        }
     }
 }
