@@ -50,10 +50,8 @@ public class MonsterRunState : MonsterState
         monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
     }
 }
-
 public class MonsterStunState : MonsterState
 {
-
     public override void Enter()
     {
         // ++) 귀신 비명 소리 추가
