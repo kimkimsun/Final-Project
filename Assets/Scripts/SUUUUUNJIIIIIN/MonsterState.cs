@@ -48,6 +48,7 @@ public class MonsterRunState : MonsterState
     {
         Debug.Log("런스테이트임");
         monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
+        // 플레이어 손전등 깜빡거리거나, 밝기 낮아지거나 해야됨
     }
 }
 public class MonsterStunState : MonsterState
