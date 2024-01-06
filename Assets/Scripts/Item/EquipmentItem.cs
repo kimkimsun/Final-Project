@@ -12,9 +12,9 @@ public class FlashlightItem : ItemStrategy
 {
 
     private float batteryCharge;
-    public FlashlightItem(EquipmentItem item) : base(item)
+    public FlashlightItem(EquipmentItem equipmentItem) 
     {
-        this.batteryCharge = item.batteryCharge;
+        this.batteryCharge = equipmentItem.batteryCharge;
     }
 
     public override void Use()

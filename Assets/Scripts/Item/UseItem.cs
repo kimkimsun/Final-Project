@@ -1,25 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class CameraItem : ItemStrategy
 {
-    public CameraItem(UseItem item) : base(item)
+    float radius = 5;
+
+    public CameraItem(UseItem useItem)
     {
-        this.item = item;
+        this.useItem = useItem;
+
     }
 
     public override void Use()
     {
-        Debug.Log("ÂûÄ¬");
+        
+        Debug.Log("Ä«¸Þ¶ó");
     }
+
 }
 public class FireCrackerItem : ItemStrategy
 {
-    public FireCrackerItem(UseItem item) : base(item)
+    public FireCrackerItem(UseItem useItem) 
     {
-        this.item = item;
+        this.useItem = useItem;
     }
 
     public override void Use()
@@ -36,6 +42,9 @@ public enum USEITEM_TYPE
 public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
+    public GameObject flashLight;
+    
+
 
     private void Start()
     {
@@ -51,4 +60,16 @@ public class UseItem : Item
        }
 
     }
+   
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            
+            Active();
+
+        }
+    }
+
+
 }

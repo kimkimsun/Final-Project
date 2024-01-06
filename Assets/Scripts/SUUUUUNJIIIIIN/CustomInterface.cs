@@ -10,11 +10,16 @@ namespace CustomInterface
         {
             get;
         }
-        public Action Active();
+        public void Active();
     }
     public interface IStateMachine
     {
         public void SetState(string name);
         public object GetOwner();
+    }
+
+    public interface IStunable
+    {
+        public void Stun();
     }
 }

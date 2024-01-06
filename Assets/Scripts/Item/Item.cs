@@ -5,34 +5,24 @@ using CustomInterface;
 public abstract class ItemStrategy
 {
     protected Item item;
-    public ItemStrategy(Item item)
-    {
-        this.item = item;
-    }
+    protected UseItem useItem;
+    protected EquipmentItem equipmentItem;
     public abstract void Use();
 }
 
 
 public class Item : MonoBehaviour, IActivable
 {
-    protected ItemStrategy itemStrategy = null;
-    protected Action action;
+    protected ItemStrategy itemStrategy = null;    
     public string interactionText;
     public string InteractionText
     {
         get => interactionText;
     }
 
-    void Update()
+    public void Active()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log(itemStrategy);
-            itemStrategy.Use();
-        }
+        itemStrategy.Use();
     }
-    public Action Active()
-    {
-        return action += () => {itemStrategy.Use();};
-    }
+
 }
