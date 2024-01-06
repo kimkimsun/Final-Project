@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4030452210869675960}
   - component: {fileID: 18244725779474461}
   - component: {fileID: 2856450063424347351}
-  - component: {fileID: 7988100506138343215}
+  - component: {fileID: -2334391692014638940}
   m_Layer: 0
   m_Name: Railing_Gwandeokjong
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7988100506138343215
-BoxCollider:
+--- !u!64 &-2334391692014638940
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +103,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5997356, y: 0.28145233, z: 0.12209167}
-  m_Center: {x: -0.2998678, y: 0.14072616, z: -0.061045837}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4289980572792393541, guid: 901b0635811da434d8234e29bdcdcf6e, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5484450498672674402}
   - component: {fileID: 8913597000798587335}
   - component: {fileID: 6653930422571285773}
-  - component: {fileID: 8549645476236178277}
+  - component: {fileID: -6364221426226169541}
   m_Layer: 0
   m_Name: Railing_Mid_Gyullimdang
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8549645476236178277
-BoxCollider:
+--- !u!64 &-6364221426226169541
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +103,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.500856, y: 0.6957556, z: 0.12407143}
-  m_Center: {x: -0.250428, y: 0.3478778, z: -0.062035713}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4405682455936265188, guid: 6638e14a0c05e8c40903934e74b5f54e, type: 3}

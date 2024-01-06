@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2326631777969096895}
   - component: {fileID: 1722064814541686554}
   - component: {fileID: 3459599707874276304}
-  - component: {fileID: 7528115546335693123}
+  - component: {fileID: -3125271145072858149}
   m_Layer: 0
   m_Name: RedPillarThickStone
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7528115546335693123
-CapsuleCollider:
+--- !u!64 &-3125271145072858149
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,8 +103,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.29483375
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3363280126370310961, guid: 115de83185576ac4a8440a89eacfc144, type: 3}

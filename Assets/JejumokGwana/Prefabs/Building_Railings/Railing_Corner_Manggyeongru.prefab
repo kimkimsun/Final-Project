@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1020134826150043154}
   - component: {fileID: 4145533415470567863}
   - component: {fileID: 2189615716015170941}
-  - component: {fileID: 5834418434787199947}
+  - component: {fileID: 5502220325821161598}
   m_Layer: 0
   m_Name: Railing_Corner_Manggyeongru
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5834418434787199947
-BoxCollider:
+--- !u!64 &5502220325821161598
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +103,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.40000346, y: 0.44, z: 0.07560778}
-  m_Center: {x: 0.19932424, y: 0.23, z: -0.037803866}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6540031269049400098, guid: fa0a42ff0cea7804b935dc001244488e, type: 3}

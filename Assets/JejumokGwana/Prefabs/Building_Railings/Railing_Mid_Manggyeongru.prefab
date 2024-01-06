@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5619787928659837014}
   - component: {fileID: 8814288624964292595}
   - component: {fileID: 6752676517904628537}
-  - component: {fileID: 2926580998378033397}
+  - component: {fileID: 8293779913238610550}
   m_Layer: 0
   m_Name: Railing_Mid_Manggyeongru
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2926580998378033397
-BoxCollider:
+--- !u!64 &8293779913238610550
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +103,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.52, y: 0.5793051, z: 0.10753662}
-  m_Center: {x: 0.24, y: 0.28965256, z: 0.05376831}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7747976860682632836, guid: 09da3c70031a1194882d5c7d944d274c, type: 3}

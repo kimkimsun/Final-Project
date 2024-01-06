@@ -23,9 +23,9 @@ public class Aim : MonoBehaviour
         {
             if (hit.transform.TryGetComponent<IActivable>(out IActivable hitResult))
                 text.text = hit.transform.GetComponent<IActivable>().InteractionText;
+            else
+                text.text = "";
         }
-        else
-            text.text = "false";
         
     }
 }

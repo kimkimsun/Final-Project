@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 479659569512768393}
   - component: {fileID: 3533017021029805100}
   - component: {fileID: 1649226806474250470}
-  - component: {fileID: 5081683592969200254}
+  - component: {fileID: -295707943441574714}
   m_Layer: 0
   m_Name: StonePillar
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5081683592969200254
-CapsuleCollider:
+--- !u!64 &-295707943441574714
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,8 +102,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.29483375
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2484451153438863370, guid: 256dcd7a4b4a6d841ac11fc60706c4e3, type: 3}
