@@ -28,7 +28,6 @@ public class MonsterIdleState : MonsterState
     public override void Exit()
     {
         monster.StopCoroutine(monsterMoveCo);
-        Debug.Log("스탑코루틴");
     }
     public override void Update()
     {
@@ -48,7 +47,7 @@ public class MonsterRunState : MonsterState
     public override void Update()
     {
         Debug.Log("런스테이트임");
-        monster.Agent.SetDestination(monster.Cols[0].transform.position);
+        monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
     }
 }
 

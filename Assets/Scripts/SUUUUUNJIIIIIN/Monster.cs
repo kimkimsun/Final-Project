@@ -10,17 +10,24 @@ public class Monster : MonoBehaviour
     private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
     private NavMeshAgent agent;
-    private Collider[] cols;
+    private Collider[] playerLookCol;
+    private Collider[] playerHeardCol;
     private Rigidbody rb;
     private bool isNextPosition;
     private bool isCheck;
     private bool isPlayerCheck;
     private float maxDistance;
     private float stunTime;
-    public Collider[] Cols
+    private Stack<Transform> playerSoundPos;
+    //public Collider[] PlayerHeardCol
+    //{
+    //    get => playerHeardCol;
+    //    set => playerHeardCol = value;
+    //}
+    public Collider[] PlayerLookCol
     {
-        get => cols;
-        set => cols = value;
+        get => playerLookCol;
+        set => playerLookCol = value;
     }
     public NavMeshAgent Agent
     {
@@ -52,6 +59,7 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
+        playerSoundPos = new Stack<Transform>();
         monsterNextPositionList = new List<Transform>
         {
             map.transform.GetChild(0),
@@ -89,17 +97,17 @@ public class Monster : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        sm.curState.Update();
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             sm.SetState("Stun");
         }
-        sm.curState.Update();
-        cols = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
-        IsCheck = cols.Length > 0;
+        playerLookCol = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
+        IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {
             RaycastHit hit;
-            Vector3 direction = ((cols[0].transform.position) - transform.position).normalized;
+            Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
             {
@@ -116,7 +124,11 @@ public class Monster : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, 5f);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 10f);
         Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
     }
     private void OnTriggerEnter(Collider other)
@@ -141,11 +153,9 @@ public class Monster : MonoBehaviour
     public IEnumerator StunCo()
     {
         stunTime = 0f;
-        Debug.Log("µé¾î¿È");
         while(stunTime < 3.0f)
         {
             stunTime += Time.deltaTime;
-            Debug.Log("TEST" + stunTime);
             yield return null;
         }
         sm.SetState("Idle");
