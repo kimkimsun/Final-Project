@@ -16,14 +16,21 @@ public class PlayerPrevPos : MonoBehaviour
         playerPos=GetComponent<FirstPersonController>();
         posSaveCo = PosSaveCo();
         playerPos = GetComponent<FirstPersonController>();
+        for(int i = 0; i < 100; i++)
+        {
+            GameObject copyPos = Instantiate(prevPos, Vector3.zero, Quaternion.identity);
+            prevPosQ.Enqueue(copyPos);
+            copyPos.SetActive(false);
+
+        }
     }
 
     public void Update()
     {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-
             StartCoroutine(posSaveCo);
+
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
@@ -40,6 +47,7 @@ public class PlayerPrevPos : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             InsertQueue(pos);
             pos.transform.position = Vector3.zero;
+
 
         }
 
