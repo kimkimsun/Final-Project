@@ -37,6 +37,8 @@ public class Inventory : MonoBehaviour
     }
     public void SwitchItem()
     {
+        if (playerEquipSlot.item != null)
+            playerEquipSlot.item.Exit();
         tempSlot.item = equipSlot[index].item;
         tempSlot.GetComponent<Image>().sprite = equipSlot[index].GetComponent<Image>().sprite;
         equipSlot[index].item = playerEquipSlot.item;

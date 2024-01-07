@@ -8,6 +8,10 @@ public abstract class ItemStrategy
     protected UseItem useItem;
     protected EquipmentItem equipmentItem;
     public abstract void Use();
+    public virtual void Exit()
+    {
+
+    }
 }
 
 

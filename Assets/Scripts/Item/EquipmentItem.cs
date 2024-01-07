@@ -4,10 +4,10 @@ using UnityEngine;
 
 
 
-public class AdrenalineStrategy : ItemStrategy
+public class AdrenalineItemStrategy : ItemStrategy
 {
     EquipmentItem equip;
-    public AdrenalineStrategy(EquipmentItem equip)
+    public AdrenalineItemStrategy(EquipmentItem equip)
     {
         this.equip = equip;
     }
@@ -15,17 +15,25 @@ public class AdrenalineStrategy : ItemStrategy
     {
         Debug.Log("각성해버려따");
     }
+    public override void Exit()
+    {
+        Debug.Log("아드레날린 나가요");
+    }
 }
-public class RainBootsStrategy : ItemStrategy
+public class RainBootsItemStrategy : ItemStrategy
 {
     EquipmentItem equip;
-    public RainBootsStrategy(EquipmentItem equip)
+    public RainBootsItemStrategy(EquipmentItem equip)
     {
         this.equip = equip;
     }
     public override void Use()
     {
         Debug.Log("터벅터벅 소리 감소");
+    }
+    public override void Exit()
+    {
+        Debug.Log("장화 나가요");
     }
 }
 public enum EQUIPITEM_TYPE
@@ -41,11 +49,15 @@ public class EquipmentItem : Item
         switch (equipItem_Type)
         {
             case EQUIPITEM_TYPE.RAINBOOTS:
-                itemStrategy = new RainBootsStrategy(this);
+                itemStrategy = new RainBootsItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.ADRENALINE:
-                itemStrategy = new AdrenalineStrategy(this);
+                itemStrategy = new AdrenalineItemStrategy(this);
                 break;
         }
+    }
+    public void Exit()
+    {
+        itemStrategy.Exit();
     }
 }
