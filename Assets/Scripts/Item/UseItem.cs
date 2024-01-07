@@ -1,3 +1,4 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,31 +7,61 @@ using UnityEngine;
 
 public class CameraItem : ItemStrategy
 {
-    float radius = 5;
-
+    public StunLight stunLight;
     public CameraItem(UseItem useItem)
     {
         this.useItem = useItem;
+        stunLight = useItem.GetComponentInChildren<StunLight>();
 
     }
 
     public override void Use()
     {
-        
-        Debug.Log("카메라");
+        stunLight.Stun();
     }
 
 }
 public class FireCrackerItem : ItemStrategy
 {
+    Vector3 screenCenter;
+    Rigidbody itemRB;
+    SphereCollider itemCollider;
+
+    int time = 3;
     public FireCrackerItem(UseItem useItem) 
     {
         this.useItem = useItem;
+        screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
+        itemRB = useItem.GetComponentInChildren<Rigidbody>();
+        itemCollider = useItem.GetComponentInChildren<SphereCollider>();
     }
 
     public override void Use()
     {
-        Debug.Log("파지지직");
+        Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
+        
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 10))
+        {
+            Vector3 nextVec = hit.point - useItem.transform.position;
+            nextVec.y = 5;
+            itemRB.isKinematic = false;
+            itemCollider.isTrigger = false;
+
+            itemRB.AddForce(nextVec ,ForceMode.Impulse);
+            itemRB.AddTorque(Vector3.left *10 , ForceMode.Impulse);
+        
+        }
+        //폭죽 사운드
+        useItem.StartCoroutine(AttractionCo());
+    }
+
+    IEnumerator AttractionCo()
+    {
+        itemCollider.enabled = true;
+        yield return new WaitForSeconds(time);
+        itemCollider.enabled = false;
+
     }
 }
 public enum USEITEM_TYPE
@@ -42,7 +73,6 @@ public enum USEITEM_TYPE
 public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
-    public GameObject flashLight;
     
 
 
