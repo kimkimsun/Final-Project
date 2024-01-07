@@ -205,10 +205,6 @@ public class FlashlightItemStrategy : ItemStrategy
         flashlight.intensity = maxBriught;
     }
 }
-
-
-
-
 public enum USEITEM_TYPE
 {
     CAMERA,
@@ -222,6 +218,12 @@ public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
+
+    public override void Active()
+    {
+        Debug.Log("여기에 슬롯에 들어가는거 채우기만 하게 만들었어영");
+        Debug.Log("EquipmentItem 66 ~ 90줄에 있긴 있는데 안보고 하는게 더 좋을것 같아영");
+    }
 
     private void Start()
     {
@@ -253,9 +255,7 @@ public class UseItem : Item
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            
-            Active();
-
+            Use();
         }
     }
 

@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
 public class AdrenalineItemStrategy : ItemStrategy
 {
     EquipmentItem equip;
+    public string explanationText;
     public AdrenalineItemStrategy(EquipmentItem equip)
     {
         this.equip = equip;
+        explanationText = "Your stamina wears down \n a bit more and goes faster";
+        equip.ExplanationText = this.explanationText;
     }
     public override void Use()
     {
@@ -23,9 +27,12 @@ public class AdrenalineItemStrategy : ItemStrategy
 public class RainBootsItemStrategy : ItemStrategy
 {
     EquipmentItem equip;
+    public string explanationText;
     public RainBootsItemStrategy(EquipmentItem equip)
     {
         this.equip = equip;
+        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps"; 
+        equip.ExplanationText = this.explanationText;
     }
     public override void Use()
     {
@@ -44,6 +51,14 @@ public enum EQUIPITEM_TYPE
 public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
+    public Sprite sprite;
+    private string explanationText;
+
+    public string ExplanationText
+    {
+        get => explanationText;
+        set => explanationText = value;
+    }
     private void Start()
     {
         switch (equipItem_Type)
@@ -59,5 +74,30 @@ public class EquipmentItem : Item
     public void Exit()
     {
         itemStrategy.Exit();
+    }
+
+    public override void Active()
+    {
+        if (GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item == null)
+        {
+            GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item = this;
+            GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.GetComponent<Image>().sprite = this.sprite;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            for (int i = GameManager.Instance.mainPlayer.EquipInventory.EquipSlot.Length - 1; i >= 1; i--)
+            {
+
+                if (GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].item == null &&
+                   GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite == null)
+                {
+                    GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].item = this;
+                    GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite = this.sprite;
+                    gameObject.SetActive(false);
+                    break;
+                }
+            }
+        }
     }
 }

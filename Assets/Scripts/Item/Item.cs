@@ -8,28 +8,26 @@ public abstract class ItemStrategy
     protected UseItem useItem;
     protected EquipmentItem equipmentItem;
     public abstract void Use();
-    public virtual void Exit()
-    {
-
-    }
+    public virtual void Exit() { }
 }
 
 
-public class Item : MonoBehaviour, IInteraction
+public abstract class Item : MonoBehaviour, IInteraction
 {
     protected ItemStrategy itemStrategy = null;    
-    public string interactionText;
-    private void Start()
+    private string interactionText;
+    private void Awake()
     {
-        interactionText = "ащ╠Б";
+        interactionText = "Get";
     }
     public string InteractionText
     {
         get => interactionText;
     }
 
-    public void Active()
+    public virtual void Use()
     {
         itemStrategy.Use();
     }
+    public abstract void Active();
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Slot[] equipSlot = new Slot[5];
     [SerializeField] private Slot tempSlot;
     [SerializeField] private Slot playerEquipSlot;
+    [SerializeField] private Image textCoverImage;
 
     private int index;
     public Slot[] EquipSlot
@@ -16,15 +18,28 @@ public class Inventory : MonoBehaviour
         get { return equipSlot; }
         set { equipSlot = value; }
     }
+    public Slot PlayerEquipSlot
+    {
+        get => playerEquipSlot;
+    }
     public void IndexSlot(int index)
     {
         this.index = index;
         for(int i = 0; i < equipSlot.Length; i++)
         {
             if(i == index)
+            {
+                if (equipSlot[i].item == null)
+                    return;
                 equipSlot[i].GetComponent<Image>().color = Color.yellow;
+                textCoverImage.gameObject.SetActive(true);
+                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipSlot[i].item.ExplanationText;
+            }
             else
+            {
                 equipSlot[i].GetComponent<Image>().color = Color.red;
+                textCoverImage.gameObject.SetActive(false);
+            }
         }
     }
     public void ResetSlot()
@@ -51,6 +66,6 @@ public class Inventory : MonoBehaviour
     }
     public void ItemBuff()
     {
-        playerEquipSlot.item.Active();
+        playerEquipSlot.item.Use();
     }
 }

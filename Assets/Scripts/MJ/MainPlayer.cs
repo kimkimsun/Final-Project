@@ -21,6 +21,10 @@ public class MainPlayer : MonoBehaviour
     private Stack<Object> UIStack = new Stack<Object>();
 
 
+    public Inventory EquipInventory
+    {
+        get => equipInventory;
+    }
     public float Stamina
     {
         get { return stamina; }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingleTon<GameManager>
 {
-
     public MainPlayer mainPlayer;
     public Monster monster;
 }
