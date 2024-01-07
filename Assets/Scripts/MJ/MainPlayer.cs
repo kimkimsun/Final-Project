@@ -92,18 +92,6 @@ public class MainPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            playerSM.SetState("Exhaustion");
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            playerSM.SetState("Moribund");
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            playerSM.SetState("Idle");
-        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!equipInventory.gameObject.activeSelf)
