@@ -19,6 +19,10 @@ public class Item : MonoBehaviour, IInteraction
 {
     protected ItemStrategy itemStrategy = null;    
     public string interactionText;
+    private void Start()
+    {
+        interactionText = "ащ╠Б";
+    }
     public string InteractionText
     {
         get => interactionText;

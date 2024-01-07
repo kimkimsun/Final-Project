@@ -23,7 +23,12 @@ public class Aim : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.forward, Color.red);
             if (hit.transform.TryGetComponent<IInteraction>(out IInteraction hitResult))
+            {
                 text.text = hit.transform.GetComponent<IInteraction>().InteractionText;
+                if (Input.GetMouseButtonDown(0))
+                    hit.transform.GetComponent<IInteraction>().Active();
+            }
+
             else
                 text.text = "";
         }
