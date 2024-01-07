@@ -137,12 +137,39 @@ public class FlashlightItemStrategy : ItemStrategy
 
     Light flashlight;
 
-    int minBriught = 0;
-    int maxBriught = 10;
-    float battery = 30f;
+    IEnumerator minusBatteryCo;
+    IEnumerator plusBatteryCo;
+
+    int minBriught; 
+    int maxBriught; 
+    int battery;
+    int minBattery;
+    int maxBattery; 
+
+     int Battery
+    {
+        get { return battery; }
+        set 
+        {
+            battery = value;
+            if(battery < minBattery)
+                battery = minBattery;
+            if( battery > maxBattery)
+                battery = maxBattery;
+        }
+    }
 
     public FlashlightItemStrategy(UseItem useItem) 
     {
+        minBriught = 0;
+        maxBriught = 10;
+        Battery = 50;
+        minBattery = 30;
+        maxBattery = 50;
+
+        minusBatteryCo = MinusBatteryCo();
+        plusBatteryCo = PlusBatteryCo();
+
         this.useItem = useItem;
         flashlight = useItem.GetComponentInChildren<Light>();
         flashlight.intensity = minBriught;
@@ -150,17 +177,32 @@ public class FlashlightItemStrategy : ItemStrategy
 
     public override void Use()
     {
-        flashlight.intensity = maxBriught;
+        useItem.StartCoroutine(minusBatteryCo);
     }
 
-    IEnumerator MinusLightCo()
+    public override void Exit()
+    {
+        useItem.StartCoroutine(plusBatteryCo);
+    }
+
+    IEnumerator MinusBatteryCo()
     {        
-        while (battery > 0)
+        while (Battery > 0)
         {
-            battery -= 1;
+            Battery -= 1;
             yield return new WaitForSeconds(1.5f);
         }
         flashlight.intensity = minBriught;
+    }
+
+    IEnumerator PlusBatteryCo()
+    {
+        while (Battery < maxBattery)
+        {
+            battery += 1;
+            yield return new WaitForSeconds(2.5f);
+        }
+        flashlight.intensity = maxBriught;
     }
 }
 
