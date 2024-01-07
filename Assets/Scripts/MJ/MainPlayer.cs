@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 
 public class MainPlayer : MonoBehaviour
 {
     public FirstPersonController playerMove;
     private StateMachine<MainPlayer> playerSM;
 
-    [SerializeField]
-    private int hp;
+    [SerializeField] private Inventory equipInventory;
+    [SerializeField] private int hp;
     private int tension;
-    [SerializeField]
-    private float stamina;
-
+    [SerializeField] private float stamina;
+    private Stack<Object> stack = new Stack<Object>();
     public float Stamina
     {
         get { return stamina; }
@@ -100,8 +100,21 @@ public class MainPlayer : MonoBehaviour
         {
             playerSM.SetState("Idle");
         }
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            stack.Push(equipInventory);
+            equipInventory.gameObject.SetActive(true);
+        }
+        if(Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            if (stack.Count > 0)
+                stack.Pop().GameObject().SetActive(false);
+            else
+                Debug.Log("»ÌÀ»°Ô ¾øÀ½");
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            Debug.Log(stack.Count);
+        }
     }
-
-
 }
