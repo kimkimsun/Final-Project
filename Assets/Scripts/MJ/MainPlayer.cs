@@ -5,6 +5,7 @@ using StarterAssets;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEditor.Experimental.GraphView;
 
 public class MainPlayer : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class MainPlayer : MonoBehaviour
     private StateMachine<MainPlayer> playerSM;
     private int tension;
     private int slotIndexNum;
-
     //테스트용임 겜매로 이사가야됨
     private Stack<Object> UIStack = new Stack<Object>();
+
 
     public float Stamina
     {
@@ -73,6 +74,7 @@ public class MainPlayer : MonoBehaviour
             }
         } 
     }
+
     private void Start()
     {
 
@@ -92,12 +94,15 @@ public class MainPlayer : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!equipInventory.gameObject.activeSelf)
             {
-                UIStack.Push(equipInventory);
                 equipInventory.gameObject.SetActive(true);
+                slotIndexNum = 4;
+                equipInventory.IndexSlot(slotIndexNum);
+                UIStack.Push(equipInventory);
             }
             else
                 return;
@@ -107,7 +112,7 @@ public class MainPlayer : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 slotIndexNum--;
-                if (slotIndexNum == -1)
+                if (slotIndexNum == 0)
                     slotIndexNum = equipInventory.EquipSlot.Length - 1;
                 equipInventory.IndexSlot(slotIndexNum);
             }
@@ -115,9 +120,13 @@ public class MainPlayer : MonoBehaviour
             {
                 slotIndexNum++;
                 if (slotIndexNum == equipInventory.EquipSlot.Length)
-                    slotIndexNum = 0;
+                    slotIndexNum = 1;
                 equipInventory.IndexSlot(slotIndexNum);
             }
+        }
+        if (equipInventory.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        {
+            equipInventory.SwitchItem();
         }
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
