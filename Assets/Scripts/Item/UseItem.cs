@@ -74,8 +74,6 @@ public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
     
-
-
     private void Start()
     {
 
