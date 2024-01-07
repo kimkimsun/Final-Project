@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 namespace CustomInterface
 {
-    public interface IActivable
+    public interface IInteraction
     {
         public string InteractionText
         {

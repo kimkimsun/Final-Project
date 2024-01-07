@@ -35,8 +35,6 @@ public class EquipmentItem : Item
     public float batteryCharge;
     private void Start()
     {
-        
-
         switch (equipItem_Type)
         {
             case EQUIPITEM_TYPE.FLASHLIGHT:

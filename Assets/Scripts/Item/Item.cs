@@ -11,7 +11,7 @@ public abstract class ItemStrategy
 }
 
 
-public class Item : MonoBehaviour, IActivable
+public class Item : MonoBehaviour, IInteraction
 {
     protected ItemStrategy itemStrategy = null;    
     public string interactionText;
@@ -24,5 +24,4 @@ public class Item : MonoBehaviour, IActivable
     {
         itemStrategy.Use();
     }
-
 }

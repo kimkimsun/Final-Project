@@ -44,8 +44,6 @@ public class UseItem : Item
     public USEITEM_TYPE useItem_Type;
     public GameObject flashLight;
     
-
-
     private void Start()
     {
 
