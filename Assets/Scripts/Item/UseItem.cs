@@ -1,14 +1,11 @@
-using CustomInterface;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class CameraItemtrategy : ItemStrategy
+public class CameraItemStrategy : ItemStrategy
 {
     public StunLight stunLight;
-    public CameraItemtrategy(UseItem useItem)
+    public CameraItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
         stunLight = useItem.GetComponentInChildren<StunLight>();
@@ -21,14 +18,14 @@ public class CameraItemtrategy : ItemStrategy
     }
 
 }
-public class FireCrackerItemtrategy : ItemStrategy
+public class FireCrackerItemStrategy : ItemStrategy
 {
     Vector3 screenCenter;
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
     int time = 5;
-    public FireCrackerItemtrategy(UseItem useItem) 
+    public FireCrackerItemStrategy(UseItem useItem) 
     {
         this.useItem = useItem;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
@@ -64,10 +61,10 @@ public class FireCrackerItemtrategy : ItemStrategy
     }
 }
 
-public class MirrorItemtrategy : ItemStrategy
+public class MirrorItemStrategy : ItemStrategy
 {
     public StunLight stunLight;
-    public MirrorItemtrategy(UseItem useItem)
+    public MirrorItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
         stunLight = useItem.GetComponentInChildren<StunLight>();
@@ -81,11 +78,11 @@ public class MirrorItemtrategy : ItemStrategy
 
 }
 
-public class HpBuffItemtrategy : ItemStrategy
+public class HpBuffItemStrategy : ItemStrategy
 {
     int hpBuff = 5;
 
-    public HpBuffItemtrategy(UseItem useItem)
+    public HpBuffItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
     }
@@ -96,10 +93,10 @@ public class HpBuffItemtrategy : ItemStrategy
     }
 }
 
-public class StaminaBuffItemtrategy : ItemStrategy
+public class StaminaBuffItemStrategy : ItemStrategy
 {
     int staminaBuff = 5;
-    public StaminaBuffItemtrategy(UseItem useItem)
+    public StaminaBuffItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
     }
@@ -110,7 +107,7 @@ public class StaminaBuffItemtrategy : ItemStrategy
     }
 }
 
-public class SaveItemtrategy : ItemStrategy
+public class SaveItemStrategy : ItemStrategy
 {
     public override void Use()
     {
@@ -118,7 +115,7 @@ public class SaveItemtrategy : ItemStrategy
     }
 }
 
-public class KeyItemtrategy : ItemStrategy
+public class KeyItemStrategy : ItemStrategy
 {
     public override void Use()
     {
@@ -126,13 +123,48 @@ public class KeyItemtrategy : ItemStrategy
     }
 }
 
-public class AttackItemtrategy : ItemStrategy
+public class AttackItemStrategy : ItemStrategy
 {
     public override void Use()
     {
         throw new System.NotImplementedException();
     }
 }
+
+
+public class FlashlightItemStrategy : ItemStrategy
+{
+
+    Light flashlight;
+
+    int minBriught = 0;
+    int maxBriught = 10;
+    float battery = 30f;
+
+    public FlashlightItemStrategy(UseItem useItem) 
+    {
+        this.useItem = useItem;
+        flashlight = useItem.GetComponentInChildren<Light>();
+        flashlight.intensity = minBriught;
+    }
+
+    public override void Use()
+    {
+        flashlight.intensity = maxBriught;
+    }
+
+    IEnumerator MinusLightCo()
+    {        
+        while (battery > 0)
+        {
+            battery -= 1;
+            yield return new WaitForSeconds(1.5f);
+        }
+        flashlight.intensity = minBriught;
+    }
+}
+
+
 
 
 public enum USEITEM_TYPE
@@ -155,19 +187,19 @@ public class UseItem : Item
        switch (useItem_Type)
        {
            case USEITEM_TYPE.CAMERA:
-                itemStrategy = new CameraItemtrategy(this);
+                itemStrategy = new CameraItemStrategy(this);
                break;
            case USEITEM_TYPE.FIRECRACKER:
-                itemStrategy = new FireCrackerItemtrategy(this);
+                itemStrategy = new FireCrackerItemStrategy(this);
                break;
             case USEITEM_TYPE.MIRROR:
-                itemStrategy = new MirrorItemtrategy(this);
+                itemStrategy = new MirrorItemStrategy(this);
                 break;
             case USEITEM_TYPE.HPBUFF:
-                itemStrategy = new HpBuffItemtrategy(this);
+                itemStrategy = new HpBuffItemStrategy(this);
                 break;
             case USEITEM_TYPE.STAMINABUFF:
-                itemStrategy = new StaminaBuffItemtrategy(this);
+                itemStrategy = new StaminaBuffItemStrategy(this);
                 break;
 
 
