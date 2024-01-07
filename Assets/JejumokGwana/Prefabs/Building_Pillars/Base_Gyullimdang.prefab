@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1642011884660025056}
   - component: {fileID: 2406684231618947397}
   - component: {fileID: 469137178882907535}
-  - component: {fileID: 4512813643553248969}
+  - component: {fileID: 7373794230070108073}
   m_Layer: 0
   m_Name: Base_Gyullimdang
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4512813643553248969
-MeshCollider:
+--- !u!65 &7373794230070108073
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,7 +103,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6231775180297361406, guid: a5b8814011d55f94f8d04da1096a5f25, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.19871528, y: 0.7453665, z: 0.1987146}
+  m_Center: {x: 0, y: 0.37268326, z: 0}
