@@ -118,17 +118,20 @@ public class MainPlayer : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                slotIndexNum--;
+                if (slotIndexNum == -1)
+                    slotIndexNum = equipInventory.EquipSlot.Length - 1;
+                equipInventory.IndexSlot(slotIndexNum);
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
                 slotIndexNum++;
                 if (slotIndexNum == equipInventory.EquipSlot.Length)
                     slotIndexNum = 0;
                 equipInventory.IndexSlot(slotIndexNum);
             }
         }
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-
-        }
-        if(Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape)) 
         {
             if (UIStack.Count > 0)
                 UIStack.Pop().GameObject().SetActive(false);
