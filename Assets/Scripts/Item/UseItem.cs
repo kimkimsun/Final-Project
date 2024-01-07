@@ -50,7 +50,6 @@ public class FireCrackerItem : ItemStrategy
 
             itemRB.AddForce(nextVec *1.5f,ForceMode.Impulse );
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
-        
         }
         //ÆøÁ× »ç¿îµå
         useItem.StartCoroutine(AttractionCo());
@@ -71,13 +70,10 @@ public class MirrorItem : ItemStrategy
     public MirrorItem(UseItem useItem)
     {
         this.useItem = useItem;
-
-
     }
     public override void Use()
     {
         GameManager.Instance.mainPlayer.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
-
     }
 }
 public enum USEITEM_TYPE

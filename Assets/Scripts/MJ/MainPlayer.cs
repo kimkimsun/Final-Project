@@ -4,17 +4,22 @@ using UnityEngine;
 using StarterAssets;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class MainPlayer : MonoBehaviour
 {
     public FirstPersonController playerMove;
-    private StateMachine<MainPlayer> playerSM;
 
     [SerializeField] private Inventory equipInventory;
     [SerializeField] private int hp;
-    private int tension;
     [SerializeField] private float stamina;
-    private Stack<Object> stack = new Stack<Object>();
+    private StateMachine<MainPlayer> playerSM;
+    private int tension;
+    private int slotIndexNum;
+
+    //테스트용임 겜매로 이사가야됨
+    private Stack<Object> UIStack = new Stack<Object>();
+
     public float Stamina
     {
         get { return stamina; }
@@ -68,7 +73,6 @@ public class MainPlayer : MonoBehaviour
             }
         } 
     }
-
     private void Start()
     {
 
@@ -102,19 +106,34 @@ public class MainPlayer : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            stack.Push(equipInventory);
-            equipInventory.gameObject.SetActive(true);
+            if (!equipInventory.gameObject.activeSelf)
+            {
+                UIStack.Push(equipInventory);
+                equipInventory.gameObject.SetActive(true);
+            }
+            else
+                return;
+        }
+        if (equipInventory.gameObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                slotIndexNum++;
+                if (slotIndexNum == equipInventory.EquipSlot.Length)
+                    slotIndexNum = 0;
+                equipInventory.IndexSlot(slotIndexNum);
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+
         }
         if(Input.GetKeyDown(KeyCode.Escape)) 
         {
-            if (stack.Count > 0)
-                stack.Pop().GameObject().SetActive(false);
+            if (UIStack.Count > 0)
+                UIStack.Pop().GameObject().SetActive(false);
             else
-                Debug.Log("뽑을게 없음");
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            Debug.Log(stack.Count);
+                Debug.Log("여기에 설정창 나오는거 해야됩니당");
         }
     }
 }
