@@ -67,21 +67,31 @@ public class FireCrackerItem : ItemStrategy
 
 public class MirrorItem : ItemStrategy
 {
+
+    public MirrorItem(UseItem useItem)
+    {
+        this.useItem = useItem;
+
+
+    }
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        GameManager.Instance.mainPlayer.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
+
     }
 }
 public enum USEITEM_TYPE
 {
     CAMERA,
-    FIRECRACKER
+    FIRECRACKER,
+    MIRROR
 }
 
 public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
-    
+    public GameObject SponPoint;
+
     private void Start()
     {
 
@@ -93,7 +103,10 @@ public class UseItem : Item
            case USEITEM_TYPE.FIRECRACKER:
                 itemStrategy = new FireCrackerItem(this);
                break;
-       }
+            case USEITEM_TYPE.MIRROR:
+                itemStrategy = new MirrorItem(this);
+                break;
+        }
 
     }
    

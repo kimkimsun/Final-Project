@@ -6,13 +6,16 @@ using UnityEngine;
 
 public class StunLight : MonoBehaviour,IStunable
 {
+    GameObject Camera;
     SphereCollider stunCollider;
     Light lightStun;
+    
     int maxBright;
 
 
     private void Start()
     {
+        Camera = transform.parent.gameObject;
         stunCollider = GetComponent<SphereCollider>();
         lightStun = GetComponent<Light>();
         lightStun.intensity = 0;
@@ -30,12 +33,13 @@ public class StunLight : MonoBehaviour,IStunable
     IEnumerator BrightLightCo()
     {
         lightStun.intensity = maxBright;
-        while (lightStun.intensity >= 0)
+        while (lightStun.intensity > 0)
         {
             lightStun.intensity -= 1 ;
             yield return new WaitForSeconds(0.07f);
+
         }
-        stunCollider.enabled = false;
+        Destroy(Camera.gameObject);
         yield break;
     }
 
