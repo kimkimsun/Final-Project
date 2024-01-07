@@ -5,10 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class CameraItem : ItemStrategy
+public class CameraItemtrategy : ItemStrategy
 {
     public StunLight stunLight;
-    public CameraItem(UseItem useItem)
+    public CameraItemtrategy(UseItem useItem)
     {
         this.useItem = useItem;
         stunLight = useItem.GetComponentInChildren<StunLight>();
@@ -21,14 +21,14 @@ public class CameraItem : ItemStrategy
     }
 
 }
-public class FireCrackerItem : ItemStrategy
+public class FireCrackerItemtrategy : ItemStrategy
 {
     Vector3 screenCenter;
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
     int time = 5;
-    public FireCrackerItem(UseItem useItem) 
+    public FireCrackerItemtrategy(UseItem useItem) 
     {
         this.useItem = useItem;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
@@ -64,23 +64,84 @@ public class FireCrackerItem : ItemStrategy
     }
 }
 
-public class MirrorItem : ItemStrategy
+public class MirrorItemtrategy : ItemStrategy
 {
+    public StunLight stunLight;
+    public MirrorItemtrategy(UseItem useItem)
+    {
+        this.useItem = useItem;
+        stunLight = useItem.GetComponentInChildren<StunLight>();
+    }
+    public override void Use()
+    {
+        stunLight.Stun();
+        GameManager.Instance.mainPlayer.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
+    }
 
-    public MirrorItem(UseItem useItem)
+
+}
+
+public class HpBuffItemtrategy : ItemStrategy
+{
+    int hpBuff = 5;
+
+    public HpBuffItemtrategy(UseItem useItem)
     {
         this.useItem = useItem;
     }
     public override void Use()
     {
-        GameManager.Instance.mainPlayer.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
+        GameManager.Instance.mainPlayer.Hp += hpBuff;
+        GameObject.Destroy(useItem.gameObject);
     }
 }
+
+public class StaminaBuffItemtrategy : ItemStrategy
+{
+    int staminaBuff = 5;
+    public StaminaBuffItemtrategy(UseItem useItem)
+    {
+        this.useItem = useItem;
+    }
+    public override void Use()
+    {
+        GameManager.Instance.mainPlayer.Stamina += staminaBuff;
+        GameObject.Destroy(useItem.gameObject);
+    }
+}
+
+public class SaveItemtrategy : ItemStrategy
+{
+    public override void Use()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+public class KeyItemtrategy : ItemStrategy
+{
+    public override void Use()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+public class AttackItemtrategy : ItemStrategy
+{
+    public override void Use()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+
 public enum USEITEM_TYPE
 {
     CAMERA,
     FIRECRACKER,
-    MIRROR
+    MIRROR,
+    HPBUFF,
+    STAMINABUFF
 }
 
 public class UseItem : Item
@@ -94,14 +155,22 @@ public class UseItem : Item
        switch (useItem_Type)
        {
            case USEITEM_TYPE.CAMERA:
-                itemStrategy = new CameraItem(this);
+                itemStrategy = new CameraItemtrategy(this);
                break;
            case USEITEM_TYPE.FIRECRACKER:
-                itemStrategy = new FireCrackerItem(this);
+                itemStrategy = new FireCrackerItemtrategy(this);
                break;
             case USEITEM_TYPE.MIRROR:
-                itemStrategy = new MirrorItem(this);
+                itemStrategy = new MirrorItemtrategy(this);
                 break;
+            case USEITEM_TYPE.HPBUFF:
+                itemStrategy = new HpBuffItemtrategy(this);
+                break;
+            case USEITEM_TYPE.STAMINABUFF:
+                itemStrategy = new StaminaBuffItemtrategy(this);
+                break;
+
+
         }
 
     }
