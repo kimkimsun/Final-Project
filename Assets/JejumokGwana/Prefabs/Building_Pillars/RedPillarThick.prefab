@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5304583752865249937}
   - component: {fileID: 9093455135439877428}
   - component: {fileID: 6473508908320719358}
-  - component: {fileID: 5173046236954172987}
+  - component: {fileID: 5643783620639065525}
   m_Layer: 0
   m_Name: RedPillarThick
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5173046236954172987
-MeshCollider:
+--- !u!136 &5643783620639065525
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3279380977540694743, guid: d08f8691e7b17ad4ab09421aa8048a19, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.19999965
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}

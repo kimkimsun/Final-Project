@@ -11,6 +11,9 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
+		public bool isMove;
+		PlayerPrevPos prevPos;
+
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed;
@@ -97,7 +100,8 @@ namespace StarterAssets
 
 		private void Start()
 		{
-			_controller = GetComponent<CharacterController>();
+			prevPos = GetComponent<PlayerPrevPos>();
+            _controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
 			_playerInput = GetComponent<PlayerInput>();
@@ -162,6 +166,7 @@ namespace StarterAssets
 			// if there is no input, set the target speed to 0
 			if (_input.move == Vector2.zero) 
 			{
+                isMove = false;
                 targetSpeed = 0.0f;
 				GameManager.Instance.mainPlayer.Stamina += 10 * Time.deltaTime;
             }
@@ -181,10 +186,14 @@ namespace StarterAssets
 
 				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
-			}
+                isMove = true;
+            
+
+            }
 			else
 			{
-				_speed = targetSpeed;
+				isMove = true;
+                _speed = targetSpeed;
                 if(targetSpeed == SprintSpeed)
 				{
 					GameManager.Instance.mainPlayer.Stamina -= 5 * Time.deltaTime;
