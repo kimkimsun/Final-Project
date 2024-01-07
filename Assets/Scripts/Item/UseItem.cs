@@ -27,7 +27,7 @@ public class FireCrackerItem : ItemStrategy
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
-    int time = 3;
+    int time = 5;
     public FireCrackerItem(UseItem useItem) 
     {
         this.useItem = useItem;
@@ -41,15 +41,15 @@ public class FireCrackerItem : ItemStrategy
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
         
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 10))
+        if (Physics.Raycast(ray, out hit, 100))
         {
             Vector3 nextVec = hit.point - useItem.transform.position;
             nextVec.y = 5;
             itemRB.isKinematic = false;
             itemCollider.isTrigger = false;
 
-            itemRB.AddForce(nextVec ,ForceMode.Impulse);
-            itemRB.AddTorque(Vector3.left *10 , ForceMode.Impulse);
+            itemRB.AddForce(nextVec *1.5f,ForceMode.Impulse );
+            itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
         
         }
         //ÆøÁ× »ç¿îµå
@@ -60,8 +60,16 @@ public class FireCrackerItem : ItemStrategy
     {
         itemCollider.enabled = true;
         yield return new WaitForSeconds(time);
-        itemCollider.enabled = false;
+        GameObject.Destroy(useItem.gameObject);
 
+    }
+}
+
+public class MirrorItem : ItemStrategy
+{
+    public override void Use()
+    {
+        throw new System.NotImplementedException();
     }
 }
 public enum USEITEM_TYPE
