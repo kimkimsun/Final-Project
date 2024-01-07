@@ -4,42 +4,6 @@ using UnityEngine;
 
 
 
-
-//public class FlashlightItem : ItemStrategy
-//{
-
-//    private float batteryCharge;
-//    public FlashlightItem(EquipmentItem equipmentItem) 
-//    {
-//        this.batteryCharge = equipmentItem.batteryCharge;
-//    }
-
-//    public override void Use()
-//    {
-//        if (batteryCharge > 0)
-//        {
-//            /*GameManager.Instance.mainPlayer.OperationFlashLight();*/
-//        }
-//        else
-//            return;
-//    }
-//}
-
-//public class EquipmentItem : Item
-//{
-//    public EQUIPITEM_TYPE equipItem_Type;
-
-//    public float batteryCharge;
-//    private void Start()
-//    {
-//        switch (equipItem_Type)
-//        {
-//            case EQUIPITEM_TYPE.FLASHLIGHT:
-//                itemStrategy = new FlashlightItem(this);
-//                break;
-//        }
-//    }
-//}
 public class AdrenalineStrategy : ItemStrategy
 {
     EquipmentItem equip;
