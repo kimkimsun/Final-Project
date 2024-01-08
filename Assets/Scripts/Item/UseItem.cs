@@ -140,69 +140,72 @@ public class FlashlightItemStrategy : ItemStrategy
     IEnumerator minusBatteryCo;
     IEnumerator plusBatteryCo;
 
-    int minBriught; 
-    int maxBriught; 
+    int minBright; 
+    int maxBright; 
     int battery;
     int minBattery;
     int maxBattery; 
 
-     int Battery
+    public int Battery
     {
         get { return battery; }
         set 
         {
             battery = value;
-            if(battery < minBattery)
+            if(battery <= minBattery)
                 battery = minBattery;
-            if( battery > maxBattery)
+            if( battery >= maxBattery)
                 battery = maxBattery;
         }
     }
 
     public FlashlightItemStrategy(UseItem useItem) 
     {
-        minBriught = 0;
-        maxBriught = 10;
-        Battery = 50;
-        minBattery = 30;
+        minBright = 0;
+        maxBright = 10;
+        minBattery = 0;
         maxBattery = 50;
-
-        minusBatteryCo = MinusBatteryCo();
-        plusBatteryCo = PlusBatteryCo();
+        Battery = 50;
 
         this.useItem = useItem;
         flashlight = useItem.GetComponentInChildren<Light>();
-        flashlight.intensity = minBriught;
+        flashlight.intensity = minBright;
     }
 
     public override void Use()
     {
-        useItem.StartCoroutine(minusBatteryCo);
+        useItem.StopCoroutine(PlusBatteryCo());
+        useItem.StartCoroutine(MinusBatteryCo());
     }
 
     public override void Exit()
     {
-        useItem.StartCoroutine(plusBatteryCo);
+        useItem.StopCoroutine(MinusBatteryCo());
+        useItem.StartCoroutine(PlusBatteryCo());
     }
 
     IEnumerator MinusBatteryCo()
-    {        
+    {
         while (Battery > 0)
         {
-            Battery -= 1;
-            yield return new WaitForSeconds(1.5f);
+            flashlight.intensity = maxBright;
+            Battery -= 10;
+            Debug.Log(Battery);
+            yield return new WaitForSeconds(0.5f);
         }
-        flashlight.intensity = minBriught;
+        flashlight.intensity = minBright;
+        Exit();
+
     }
 
     IEnumerator PlusBatteryCo()
     {
         while (Battery < maxBattery)
         {
-            battery += 1;
+            battery += 10;
+            Debug.Log(Battery+"++");
             yield return new WaitForSeconds(2.5f);
         }
-        flashlight.intensity = maxBriught;
     }
 }
 public enum USEITEM_TYPE
@@ -211,7 +214,8 @@ public enum USEITEM_TYPE
     FIRECRACKER,
     MIRROR,
     HPBUFF,
-    STAMINABUFF
+    STAMINABUFF,
+    FLASHLIGHT
 }
 
 public class UseItem : Item
@@ -245,6 +249,9 @@ public class UseItem : Item
             case USEITEM_TYPE.STAMINABUFF:
                 itemStrategy = new StaminaBuffItemStrategy(this);
                 break;
+            case USEITEM_TYPE.FLASHLIGHT:
+                itemStrategy = new FlashlightItemStrategy(this);
+                break;
 
 
         }
@@ -256,6 +263,10 @@ public class UseItem : Item
         if (Input.GetKeyDown(KeyCode.M))
         {
             Use();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            itemStrategy.Exit();
         }
     }
 
