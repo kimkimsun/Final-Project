@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4305219008339556498}
   - component: {fileID: -3430278873934967739}
   m_Layer: 5
-  m_Name: Slot1
+  m_Name: EquipSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,3 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  ItemImage: {fileID: 0}
+  quickSlot: {fileID: 0}
