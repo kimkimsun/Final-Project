@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,8 @@ public class Monster : MonoBehaviour
     private bool isPlayerCheck;
     private float maxDistance;
     private float stunTime;
+    private float? distance= null;
+    private float tempDistance;
     private Stack<Transform> playerSoundPos;
     //public Collider[] PlayerHeardCol
     //{
@@ -131,23 +134,32 @@ public class Monster : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 10f);
         Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "coordinate")
-            isNextPosition = true;
-    }
     public IEnumerator MonsterMoveCo()
     {
+        yield return null;
+        foreach (Transform targetPos in monsterNextPositionList)
+        {
+            if (distance == null)
+                distance = Vector3.Distance(transform.position, targetPos.position);
+            else
+            {
+                tempDistance = Vector3.Distance(transform.position, targetPos.position);
+                if (distance > tempDistance)
+                {
+                    distance = tempDistance;
+                    agent.SetDestination(targetPos.position);
+                }
+            }
+        }
         for (int i = 0; i < monsterNextPositionList.Count+1; i++)
         {
             if (i == monsterNextPositionList.Count)
                 i = 0;
-            while (!isNextPosition)
+            while (1 < Vector3.Distance(monsterNextPositionList[i].position, transform.position))
             {
                 agent.SetDestination(monsterNextPositionList[i].transform.position);
                 yield return null;
             }
-            isNextPosition = false;
         }
     }
     public IEnumerator StunCo()
