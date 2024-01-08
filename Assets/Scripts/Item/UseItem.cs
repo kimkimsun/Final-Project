@@ -137,8 +137,8 @@ public class FlashlightItemStrategy : ItemStrategy
 
     Light flashlight;
 
-    IEnumerator minusBatteryCo;
-    IEnumerator plusBatteryCo;
+    //IEnumerator minusBatteryCo;
+    //IEnumerator plusBatteryCo;
 
     int minBright; 
     int maxBright; 
@@ -166,6 +166,8 @@ public class FlashlightItemStrategy : ItemStrategy
         minBattery = 0;
         maxBattery = 50;
         Battery = 50;
+        //minusBatteryCo = MinusBatteryCo();
+        //plusBatteryCo = PlusBatteryCo();
 
         this.useItem = useItem;
         flashlight = useItem.GetComponentInChildren<Light>();
@@ -174,34 +176,38 @@ public class FlashlightItemStrategy : ItemStrategy
 
     public override void Use()
     {
-        useItem.StopCoroutine(PlusBatteryCo());
+        useItem.StopAllCoroutines();
         useItem.StartCoroutine(MinusBatteryCo());
     }
 
     public override void Exit()
     {
-        useItem.StopCoroutine(MinusBatteryCo());
+        useItem.StopAllCoroutines();
         useItem.StartCoroutine(PlusBatteryCo());
     }
 
     IEnumerator MinusBatteryCo()
     {
-        while (Battery > 0)
+        while (true)
         {
+            if (Battery == 0)
+            {
+                flashlight.intensity = minBright;
+                Exit();
+            }
             flashlight.intensity = maxBright;
             Battery -= 10;
             Debug.Log(Battery);
             yield return new WaitForSeconds(0.5f);
         }
-        flashlight.intensity = minBright;
-        Exit();
-
     }
 
     IEnumerator PlusBatteryCo()
     {
-        while (Battery < maxBattery)
+        while (true)
         {
+            if (Battery == maxBattery)
+                continue;
             battery += 10;
             Debug.Log(Battery+"++");
             yield return new WaitForSeconds(2.5f);
