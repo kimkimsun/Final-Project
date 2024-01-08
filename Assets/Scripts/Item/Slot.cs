@@ -13,18 +13,18 @@ public class Slot : MonoBehaviour
         if (item != null)
         {
 
-/*            item.Use(quickSlot.owner);
-            SetImage(null);*/
+            item.itemStrategy.Use();
+            SetImage(null);
 
         }
     }
     public void SetImage(Item setItem)
     {
-/*        item = setItem;
+        item = setItem;
         if (item == null)
             ItemImage.sprite = null;
         else
-            ItemImage.sprite = item.sprite;*/
+            ItemImage.sprite = item.sprite;
     }
 
 }

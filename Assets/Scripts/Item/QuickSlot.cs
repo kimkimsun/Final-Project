@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class QuickSlot : MonoBehaviour
 {
-    public MainPlayer owner;
     public Slot[] slots = new Slot[5];
 
+    private void Start()
+    {
+        for (int i = 0; i < slots.Length; i++) 
+        {
+            slots[i] =  transform.GetChild(i).GetComponent<Slot>();
+
+        }
+    }
     public void QuickItemUse()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))

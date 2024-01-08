@@ -65,7 +65,6 @@ public enum EQUIPITEM_TYPE
 public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
-    public Sprite sprite;
 
     private void Start()
     {
@@ -79,7 +78,7 @@ public class EquipmentItem : Item
                 break;
         }
     }
-    public void Exit()
+    public override void Exit()
     {
         itemStrategy.Exit();
     }

@@ -249,12 +249,6 @@ public class UseItem : Item
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
 
-    public override void Active()
-    {
-        Debug.Log("여기에 슬롯에 들어가는거 채우기만 하게 만들었어영");
-        Debug.Log("EquipmentItem 66 ~ 90줄에 있긴 있는데 안보고 하는게 더 좋을것 같아영");
-    }
-
     private void Start()
     {
 
@@ -283,7 +277,18 @@ public class UseItem : Item
         }
 
     }
-   
+
+    public override void Active()
+    {
+        Debug.Log("아이템 먹을까");
+        QuickSlot quickSlot = GameManager.Instance.mainPlayer.QuickSlot;
+        quickSlot.setItem(this);
+        gameObject.SetActive(false);
+        transform.SetParent(quickSlot.transform);
+        Debug.Log("아이템 먹음");
+
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))

@@ -14,7 +14,8 @@ public abstract class ItemStrategy
 
 public abstract class Item : MonoBehaviour, IInteraction
 {
-    protected ItemStrategy itemStrategy = null;    
+    public ItemStrategy itemStrategy = null;
+    public Sprite sprite;
     private string interactionText;
     private string explanationText;
 
