@@ -1,13 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
-
-public class CameraItemStrategy : ItemStrategy
+public abstract class UseItemStrategy: ItemStrategy
 {
-    public StunLight stunLight;
-    public CameraItemStrategy(UseItem useItem)
+    protected UseItem useItem;
+
+    public UseItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
+    }
+
+}
+
+public class CameraItemStrategy : UseItemStrategy
+{
+    public StunLight stunLight;
+    public CameraItemStrategy(UseItem useItem):base(useItem) 
+    {
         stunLight = useItem.GetComponentInChildren<StunLight>();
 
     }
@@ -18,16 +27,15 @@ public class CameraItemStrategy : ItemStrategy
     }
 
 }
-public class FireCrackerItemStrategy : ItemStrategy
+public class FireCrackerItemStrategy : UseItemStrategy
 {
     Vector3 screenCenter;
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
     int time = 5;
-    public FireCrackerItemStrategy(UseItem useItem) 
+    public FireCrackerItemStrategy(UseItem useItem): base(useItem)
     {
-        this.useItem = useItem;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
         itemCollider = useItem.GetComponentInChildren<SphereCollider>();
@@ -61,12 +69,11 @@ public class FireCrackerItemStrategy : ItemStrategy
     }
 }
 
-public class MirrorItemStrategy : ItemStrategy
+public class MirrorItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
-    public MirrorItemStrategy(UseItem useItem)
+    public MirrorItemStrategy(UseItem useItem): base(useItem)
     {
-        this.useItem = useItem;
         stunLight = useItem.GetComponentInChildren<StunLight>();
     }
     public override void Use()
@@ -78,14 +85,12 @@ public class MirrorItemStrategy : ItemStrategy
 
 }
 
-public class HpBuffItemStrategy : ItemStrategy
+public class HpBuffItemStrategy : UseItemStrategy
 {
     int hpBuff = 5;
 
-    public HpBuffItemStrategy(UseItem useItem)
-    {
-        this.useItem = useItem;
-    }
+    public HpBuffItemStrategy(UseItem useItem): base(useItem) { }
+
     public override void Use()
     {
         GameManager.Instance.mainPlayer.Hp += hpBuff;
@@ -93,13 +98,11 @@ public class HpBuffItemStrategy : ItemStrategy
     }
 }
 
-public class StaminaBuffItemStrategy : ItemStrategy
+public class StaminaBuffItemStrategy : UseItemStrategy
 {
     int staminaBuff = 5;
-    public StaminaBuffItemStrategy(UseItem useItem)
-    {
-        this.useItem = useItem;
-    }
+    public StaminaBuffItemStrategy(UseItem useItem): base(useItem) { }
+
     public override void Use()
     {
         GameManager.Instance.mainPlayer.Stamina += staminaBuff;
@@ -107,24 +110,27 @@ public class StaminaBuffItemStrategy : ItemStrategy
     }
 }
 
-public class SaveItemStrategy : ItemStrategy
+public class SaveItemStrategy : UseItemStrategy
 {
+    public SaveItemStrategy(UseItem useItem) : base(useItem) { }
     public override void Use()
     {
         throw new System.NotImplementedException();
     }
 }
 
-public class KeyItemStrategy : ItemStrategy
+public class KeyItemStrategy : UseItemStrategy
 {
+    public KeyItemStrategy(UseItem useItem) : base(useItem) { }
     public override void Use()
     {
         throw new System.NotImplementedException();
     }
 }
 
-public class AttackItemStrategy : ItemStrategy
+public class AttackItemStrategy : UseItemStrategy
 {
+    public AttackItemStrategy(UseItem useItem) : base(useItem) { }
     public override void Use()
     {
         throw new System.NotImplementedException();
@@ -132,7 +138,7 @@ public class AttackItemStrategy : ItemStrategy
 }
 
 
-public class FlashlightItemStrategy : ItemStrategy
+public class FlashlightItemStrategy : UseItemStrategy
 {
 
     Light flashlight;
@@ -159,7 +165,7 @@ public class FlashlightItemStrategy : ItemStrategy
         }
     }
 
-    public FlashlightItemStrategy(UseItem useItem) 
+    public FlashlightItemStrategy(UseItem useItem) : base(useItem)
     {
         minBright = 0;
         maxBright = 10;
@@ -167,7 +173,6 @@ public class FlashlightItemStrategy : ItemStrategy
         maxBattery = 50;
         Battery = 50;
 
-        this.useItem = useItem;
         flashlight = useItem.GetComponentInChildren<Light>();
         flashlight.intensity = minBright;
     }
@@ -190,7 +195,7 @@ public class FlashlightItemStrategy : ItemStrategy
         {
             flashlight.intensity = maxBright;
             Battery -= 10;
-            Debug.Log(Battery);
+            Debug.Log("마이너스배터리");
             yield return new WaitForSeconds(0.5f);
         }
         flashlight.intensity = minBright;
@@ -203,7 +208,7 @@ public class FlashlightItemStrategy : ItemStrategy
         while (Battery < maxBattery)
         {
             battery += 10;
-            Debug.Log(Battery+"++");
+            Debug.Log("플러스배터리");
             yield return new WaitForSeconds(2.5f);
         }
     }
