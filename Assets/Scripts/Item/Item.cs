@@ -7,6 +7,8 @@ public abstract class ItemStrategy
     protected Item item;
     protected UseItem useItem;
     protected EquipmentItem equipmentItem;
+
+
     public abstract void Use();
     public virtual void Exit() { }
 }
@@ -29,5 +31,5 @@ public abstract class Item : MonoBehaviour, IInteraction
     {
         itemStrategy.Use();
     }
-    public abstract void Active();
+    public abstract void Active(); //ащ╠Б
 }
