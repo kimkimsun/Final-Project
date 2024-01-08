@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class QuickSlot : MonoBehaviour
 {
@@ -37,7 +38,12 @@ public class QuickSlot : MonoBehaviour
             if (slots[i].item == null)
             {
                 slots[i].SetImage(item);
+
                 return;
+            }
+            else if (slots[i].item == item)
+            {
+                slots[i].CountItem++;
             }
         }
     }
