@@ -16,7 +16,6 @@ public abstract class EquipItemStrategy: ItemStrategy
 public class AdrenalineItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
-    public string explanationText;
     public AdrenalineItemStrategy(EquipmentItem equipmentItem) :base(equipmentItem)
     {
         Init();
@@ -39,7 +38,6 @@ public class AdrenalineItemStrategy : EquipItemStrategy
 public class RainBootsItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
-    public string explanationText;
     public RainBootsItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
     {
         Init();
@@ -68,13 +66,7 @@ public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
     public Sprite sprite;
-    private string explanationText;
 
-    public string ExplanationText
-    {
-        get => explanationText;
-        set => explanationText = value;
-    }
     private void Start()
     {
         switch (equipItem_Type)
