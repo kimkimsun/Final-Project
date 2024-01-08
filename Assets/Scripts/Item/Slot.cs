@@ -34,8 +34,7 @@ public class Slot : MonoBehaviour
     }
     public void ChangeCount()
     {
-        Debug.Log(countText);
-        Debug.Log(countText.text);
+
         countText.text = CountItem.ToString();
     }
 

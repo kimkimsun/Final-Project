@@ -41,7 +41,7 @@ public class QuickSlot : MonoBehaviour
 
                 return;
             }
-            else if (slots[i].item == item)
+            if (slots[i].item.itemName == item.itemName)
             {
                 slots[i].CountItem++;
             }

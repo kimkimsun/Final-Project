@@ -89,9 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57da6dcc74cee4841bb6702056b38202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
   countText: {fileID: 294173475720153458}
-  countItem: 0
+  item: {fileID: 0}
   ItemImage: {fileID: 2272469372851578718}
   quickSlot: {fileID: 0}
 --- !u!1 &7503257014078266110
