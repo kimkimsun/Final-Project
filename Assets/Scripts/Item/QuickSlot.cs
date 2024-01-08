@@ -35,15 +35,16 @@ public class QuickSlot : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == null)
+            if (slots[i].item != null && slots[i].item.itemName == item.itemName)
+            {
+                slots[i].CountItem++;
+                return;
+            }
+            else if (slots[i].item == null)
             {
                 slots[i].SetImage(item);
 
                 return;
-            }
-            if (slots[i].item.itemName == item.itemName)
-            {
-                slots[i].CountItem++;
             }
         }
     }
