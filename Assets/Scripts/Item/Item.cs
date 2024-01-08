@@ -5,9 +5,6 @@ using CustomInterface;
 public abstract class ItemStrategy
 {
     protected Item item;
-    protected UseItem useItem;
-    protected EquipmentItem equipmentItem;
-
 
     public abstract void Use();
     public virtual void Exit() { }

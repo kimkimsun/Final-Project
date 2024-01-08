@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
@@ -18,7 +19,6 @@ public class CameraItemStrategy : UseItemStrategy
     public CameraItemStrategy(UseItem useItem):base(useItem) 
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
-
     }
 
     public override void Use()
@@ -35,6 +35,11 @@ public class FireCrackerItemStrategy : UseItemStrategy
 
     int time = 5;
     public FireCrackerItemStrategy(UseItem useItem): base(useItem)
+    {
+        Init();
+    }
+
+    public override void Init()
     {
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
@@ -73,6 +78,11 @@ public class MirrorItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
     public MirrorItemStrategy(UseItem useItem): base(useItem)
+    {
+        Init();
+    }
+
+    public override void Init()
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
     }
@@ -167,6 +177,11 @@ public class FlashlightItemStrategy : UseItemStrategy
 
     public FlashlightItemStrategy(UseItem useItem) : base(useItem)
     {
+        Init();
+    }
+
+    public override void Init()
+    {
         minBright = 0;
         maxBright = 10;
         minBattery = 0;
@@ -181,13 +196,13 @@ public class FlashlightItemStrategy : UseItemStrategy
 
     public override void Use()
     {
-        useItem.StopAllCoroutines();
+        //useItem.StopAllCoroutines();
         useItem.StartCoroutine(MinusBatteryCo());
     }
 
     public override void Exit()
     {
-        useItem.StopAllCoroutines();
+        //useItem.StopAllCoroutines();
         useItem.StartCoroutine(PlusBatteryCo());
     }
 

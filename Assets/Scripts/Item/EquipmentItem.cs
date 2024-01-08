@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public abstract class EquipItemStrategy: ItemStrategy
+{
+    protected EquipmentItem equipmentItem;
+    public EquipItemStrategy(EquipmentItem equipmentItem)
+    {
+        this.equipmentItem = equipmentItem;
+    }
+}
 
 
-public class AdrenalineItemStrategy : ItemStrategy
+public class AdrenalineItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
     public string explanationText;
-    public AdrenalineItemStrategy(EquipmentItem equip)
+    public AdrenalineItemStrategy(EquipmentItem equipmentItem) :base(equipmentItem)
     {
-        this.equip = equip;
+        Init();
+    }
+    public override void Init()
+    {
         explanationText = "Your stamina wears down \n a bit more and goes faster";
         equip.ExplanationText = this.explanationText;
     }
+
     public override void Use()
     {
         Debug.Log("각성해버려따");
@@ -24,14 +36,18 @@ public class AdrenalineItemStrategy : ItemStrategy
         Debug.Log("아드레날린 나가요");
     }
 }
-public class RainBootsItemStrategy : ItemStrategy
+public class RainBootsItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
     public string explanationText;
-    public RainBootsItemStrategy(EquipmentItem equip)
+    public RainBootsItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
     {
-        this.equip = equip;
-        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps"; 
+        Init();
+    }
+
+    public override void Init()
+    {
+        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps";
         equip.ExplanationText = this.explanationText;
     }
     public override void Use()
