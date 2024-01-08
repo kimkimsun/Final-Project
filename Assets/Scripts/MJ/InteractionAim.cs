@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Aim : MonoBehaviour
+public class InteractionAim : MonoBehaviour
 {
     private Vector3 screenCenter;
     public TextMeshProUGUI text;

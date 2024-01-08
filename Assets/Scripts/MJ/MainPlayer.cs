@@ -10,11 +10,12 @@ using UnityEditor.Experimental.GraphView;
 public class MainPlayer : MonoBehaviour
 {
     public FirstPersonController playerMove;
+    private StateMachine<MainPlayer> playerSM;
 
     [SerializeField] private Inventory equipInventory;
+    [SerializeField] private QuickSlot quickSlot;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
-    private StateMachine<MainPlayer> playerSM;
     private int tension;
     private int slotIndexNum;
     //테스트용임 겜매로 이사가야됨
@@ -25,6 +26,12 @@ public class MainPlayer : MonoBehaviour
     {
         get => equipInventory;
     }
+
+    public QuickSlot QuickSlot
+    {
+        get => quickSlot;
+    }
+
     public float Stamina
     {
         get { return stamina; }
