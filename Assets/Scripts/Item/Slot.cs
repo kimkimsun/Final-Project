@@ -50,18 +50,24 @@ public class Slot : MonoBehaviour
     {
         if (items != null)
         {
+            items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
-            CurItem--;
             items.RemoveAt(CurItem);
-            SetImage(null);
+            CurItem--;
+            CountItem--;
+            if (items.Count == 0)
+                SetImage(null);
+
         }
+        else if (items.Count == 0)
+            return;
+        
     }
     public void SetImage(Item setItem)
     {
-        items[curItem] = setItem;
-        if (items == null)
+        if (items.Count == 0)
             ItemImage.sprite = null;
         else
-            ItemImage.sprite = items[curItem].sprite;
+            ItemImage.sprite = setItem.sprite;
     }
 }

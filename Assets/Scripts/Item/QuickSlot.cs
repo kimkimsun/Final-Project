@@ -31,18 +31,20 @@ public class QuickSlot : MonoBehaviour
 
     public void setItem(Item item)
     {
+
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].items != null && 
-                slots[i].items[slots[i].CurItem].itemName == item.itemName)
+            if ( slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName== item.itemName)
             {
+                Debug.Log("들어왔던 아이템");
                 slots[i].items.Add(item);
                 slots[i].CountItem++;
                 slots[i].CurItem++;
                 return;
             }
-            else if (slots[i].items == null)
+            else if (slots[i].items.Count == 0)
             {
+                Debug.Log("처음들어온 아이템");
                 slots[i].items.Add(item);
                 slots[i].SetImage(item);
                 slots[i].CountItem++;
