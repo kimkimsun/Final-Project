@@ -10,7 +10,7 @@ public class SingleTon<T> : MonoBehaviour where T : SingleTon<T>
             return instance;
         }
     }
-    protected void Awake()
+    protected virtual void Awake()
     {
         if (instance == null)
             instance = (T)this;

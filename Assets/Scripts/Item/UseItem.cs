@@ -89,7 +89,7 @@ public class MirrorItemStrategy : UseItemStrategy
     public override void Use()
     {
         stunLight.Stun();
-        GameManager.Instance.mainPlayer.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
+        GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
     }
 
 
@@ -103,7 +103,7 @@ public class HpBuffItemStrategy : UseItemStrategy
 
     public override void Use()
     {
-        GameManager.Instance.mainPlayer.Hp += hpBuff;
+        GameManager.Instance.player.Hp += hpBuff;
         GameObject.Destroy(useItem.gameObject);
     }
 }
@@ -115,7 +115,7 @@ public class StaminaBuffItemStrategy : UseItemStrategy
 
     public override void Use()
     {
-        GameManager.Instance.mainPlayer.Stamina += staminaBuff;
+        GameManager.Instance.player.Stamina += staminaBuff;
         GameObject.Destroy(useItem.gameObject);
     }
 }
@@ -281,7 +281,7 @@ public class UseItem : Item
     public override void Active()
     {
         Debug.Log("아이템 먹을까");
-        QuickSlot quickSlot = GameManager.Instance.mainPlayer.QuickSlot;
+        QuickSlot quickSlot = GameManager.Instance.player.QuickSlot;
         quickSlot.setItem(this);
         gameObject.SetActive(false);
         transform.SetParent(quickSlot.transform);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class PlayerState : State
 {
-    public MainPlayer player;
+    public Player player;
 
     protected int damege;
     protected float plus;
@@ -16,7 +16,7 @@ public abstract class PlayerState : State
     public override void Init(IStateMachine sm)
     {
         this.sm = sm;
-        player = (MainPlayer)sm.GetOwner();
+        player = (Player)sm.GetOwner();
     }
 /*    protected IEnumerator PlusStaminaCo(float plus, float time)
     {

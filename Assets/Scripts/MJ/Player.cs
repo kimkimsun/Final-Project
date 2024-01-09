@@ -7,10 +7,10 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEditor.Experimental.GraphView;
 
-public class MainPlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public FirstPersonController playerMove;
-    private StateMachine<MainPlayer> playerSM;
+    private StateMachine<Player> playerSM;
 
     [SerializeField] private Inventory equipInventory;
     [SerializeField] private QuickSlot quickSlot;
@@ -18,10 +18,22 @@ public class MainPlayer : MonoBehaviour
     [SerializeField] private float stamina;
     private int tension;
     private int slotIndexNum;
+    private int a;
     //테스트용임 겜매로 이사가야됨
     private Stack<Object> UIStack = new Stack<Object>();
 
-
+    public int A
+    {
+        get => a;
+        set
+        {
+            a = value;
+            if (a >= 5)
+            {
+                GameManager.StartAttraction();
+            }
+        }
+    }
     public Inventory EquipInventory
     {
         get => equipInventory;
@@ -90,7 +102,7 @@ public class MainPlayer : MonoBehaviour
     {
 
         playerMove = GetComponent<FirstPersonController>();
-        playerSM = new StateMachine<MainPlayer>();
+        playerSM = new StateMachine<Player>();
         playerSM.owner = this;
 
         playerSM.AddState("Idle", new IdleState());
@@ -105,7 +117,10 @@ public class MainPlayer : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            A++;
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!equipInventory.gameObject.activeSelf)

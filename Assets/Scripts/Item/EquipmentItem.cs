@@ -85,22 +85,22 @@ public class EquipmentItem : Item
 
     public override void Active()
     {
-        if (GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item == null)
+        if (GameManager.Instance.player.EquipInventory.PlayerEquipSlot.item == null)
         {
-            GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item = this;
-            GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.GetComponent<Image>().sprite = this.sprite;
+            GameManager.Instance.player.EquipInventory.PlayerEquipSlot.item = this;
+            GameManager.Instance.player.EquipInventory.PlayerEquipSlot.GetComponent<Image>().sprite = this.sprite;
             gameObject.SetActive(false);
         }
         else
         {
-            for (int i = GameManager.Instance.mainPlayer.EquipInventory.EquipSlot.Length - 1; i >= 1; i--)
+            for (int i = GameManager.Instance.player.EquipInventory.EquipSlot.Length - 1; i >= 1; i--)
             {
 
-                if (GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].item == null &&
-                   GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite == null)
+                if (GameManager.Instance.player.EquipInventory.EquipSlot[i].item == null &&
+                   GameManager.Instance.player.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite == null)
                 {
-                    GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].item = this;
-                    GameManager.Instance.mainPlayer.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite = this.sprite;
+                    GameManager.Instance.player.EquipInventory.EquipSlot[i].item = this;
+                    GameManager.Instance.player.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite = this.sprite;
                     gameObject.SetActive(false);
                     break;
                 }

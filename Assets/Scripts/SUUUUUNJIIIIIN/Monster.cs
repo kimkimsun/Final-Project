@@ -27,6 +27,7 @@ public class Monster : MonoBehaviour
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    
     public Collider[] PlayerLookCol
     {
         get => playerLookCol;
@@ -59,7 +60,19 @@ public class Monster : MonoBehaviour
     { get => rb; 
       set => rb = value;
     }
-
+    private void OnEnable()
+    {
+        GameManager.Subscribe(FinalAttraction);
+    }
+    private void OnDisable()
+    {
+        GameManager.UnSubscribe(FinalAttraction);
+    }
+    private void FinalAttraction()
+    {
+        Debug.Log("출력되는지 확인");
+        agent.SetDestination(GameManager.Instance.player.transform.position);
+    }
     private void Awake()
     {
         playerSoundPos = new Stack<Transform>();
@@ -85,6 +98,7 @@ public class Monster : MonoBehaviour
         sm.AddState("Stun", new MonsterStunState());
         sm.SetState("Idle");
     }
+
     bool CheckInLayerMask(int layerIndex)
     {
         return (targetLayerMask & (1 << layerIndex)) != 0;
@@ -101,7 +115,7 @@ public class Monster : MonoBehaviour
     private void Update()
     {
         sm.curState.Update();
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             sm.SetState("Stun");
         }

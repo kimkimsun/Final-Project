@@ -168,7 +168,7 @@ namespace StarterAssets
 			{
                 isMove = false;
                 targetSpeed = 0.0f;
-				GameManager.Instance.mainPlayer.Stamina += 10 * Time.deltaTime;
+				GameManager.Instance.player.Stamina += 10 * Time.deltaTime;
             }
 
 			// a reference to the players current horizontal velocity
@@ -196,7 +196,7 @@ namespace StarterAssets
                 _speed = targetSpeed;
                 if(targetSpeed == SprintSpeed)
 				{
-					GameManager.Instance.mainPlayer.Stamina -= 5 * Time.deltaTime;
+					GameManager.Instance.player.Stamina -= 5 * Time.deltaTime;
 				}
             }
 
