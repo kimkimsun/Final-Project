@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     public FirstPersonController playerMove;
     private StateMachine<Player> playerSM;
 
-    [SerializeField] private Inventory equipInventory;
-    [SerializeField] private QuickSlot quickSlot;
+    [SerializeField] private Inventory inven;
+    [SerializeField] private Inventory quickSlot;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     private int tension;
@@ -30,15 +30,16 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public Inventory EquipInventory
+    public Inventory Inven
     {
-        get => equipInventory;
+        get => inven;
     }
 
-    public QuickSlot QuickSlot
+    public Inventory QuickSlot
     {
         get => quickSlot;
     }
+
 
     public float Stamina
     {
@@ -118,36 +119,36 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!equipInventory.gameObject.activeSelf)
+            if (!inven.gameObject.activeSelf)
             {
-                equipInventory.gameObject.SetActive(true);
+                inven.gameObject.SetActive(true);
                 slotIndexNum = 4;
-                equipInventory.IndexSlot(slotIndexNum);
-                UIStack.Push(equipInventory);
+                inven.IndexSlot(slotIndexNum);
+                UIStack.Push(inven);
             }
             else
                 return;
         }
-        if (equipInventory.gameObject.activeSelf)
+        if (inven.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 slotIndexNum--;
                 if (slotIndexNum == 0)
-                    slotIndexNum = equipInventory.EquipQuickSlot.Length - 1;
-                equipInventory.IndexSlot(slotIndexNum);
+                    slotIndexNum = inven.EquipQuickSlot.Length - 1;
+                inven.IndexSlot(slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 slotIndexNum++;
-                if (slotIndexNum == equipInventory.EquipQuickSlot.Length)
+                if (slotIndexNum == inven.EquipQuickSlot.Length)
                     slotIndexNum = 1;
-                equipInventory.IndexSlot(slotIndexNum);
+                inven.IndexSlot(slotIndexNum);
             }
         }
-        if (equipInventory.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        if (inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
-            equipInventory.SwitchItem();
+            inven.SwitchItem();
         }
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {

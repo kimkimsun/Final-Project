@@ -11,7 +11,6 @@ public class Slot : MonoBehaviour
     public TextMeshProUGUI countText;
     public List <Item> items;
     public Image ItemImage;
-    public QuickSlot quickSlot;
 
     int curItem; 
     int countItem;

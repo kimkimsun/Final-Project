@@ -341,8 +341,8 @@ public class UseItem : Item
 
     public override void Active()
     {
-        QuickSlot quickSlot = GameManager.Instance.player.QuickSlot;
-        quickSlot.setItem(this);
+        Inventory quickSlot = GameManager.Instance.player.QuickSlot;
+        quickSlot.AddItem(this);
         gameObject.SetActive(false);
         transform.SetParent(quickSlot.transform);
     }
