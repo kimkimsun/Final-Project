@@ -14,6 +14,7 @@ public class Monster : MonoBehaviour
     private Collider[] playerLookCol;
     private Collider[] playerHeardCol;
     private Rigidbody rb;
+    private Animator animator;
     private bool isNextPosition;
     private bool isCheck;
     private bool isPlayerCheck;
@@ -21,12 +22,19 @@ public class Monster : MonoBehaviour
     private float stunTime;
     private float? distance= null;
     private float tempDistance;
+    private float extraRotationSpeed = 3f;
     private Stack<Transform> playerSoundPos;
     //public Collider[] PlayerHeardCol
     //{
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    public Animator Animator
+    {
+        get => animator;
+        set => animator = value;
+    }
+
     public Collider[] PlayerLookCol
     {
         get => playerLookCol;
@@ -85,11 +93,14 @@ public class Monster : MonoBehaviour
     }
     private void Start()
     {
-        maxDistance = 10f;
+        maxDistance = 20f;
 
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = maxDistance;
+        agent.speed = 5;
+
+
         sm = new StateMachine<Monster>();
         sm.owner = this;
         sm.AddState("Idle", new MonsterIdleState());
@@ -113,12 +124,14 @@ public class Monster : MonoBehaviour
     }
     private void Update()
     {
-        sm.curState.Update();
+        sm.curState?.Update();
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             sm.SetState("Stun");
         }
-        playerLookCol = Physics.OverlapSphere(transform.position, 5f, targetLayerMask);
+        Vector3 lookrotation = agent.steeringTarget - transform.position;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
+        playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
         IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {

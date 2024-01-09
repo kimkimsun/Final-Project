@@ -39,10 +39,12 @@ public class MonsterRunState : MonsterState
 
     public override void Enter()
     {
-        Debug.Log("엔터");
+        monster.Animator.SetBool("isRun", true);
+        monster.Agent.speed = 7;
     }
     public override void Exit()
     {
+        monster.Animator.SetBool("isRun", false);
     }
     public override void Update()
     {
@@ -58,9 +60,11 @@ public class MonsterStunState : MonsterState
         // ++) 귀신 비명 소리 추가
         monster.StartCoroutine(monster.StunCo());
         monster.Agent.enabled = false;
+        monster.Animator.SetBool("isStun", true);
     }
     public override void Exit()
     {
+        monster.Animator.SetBool("isStun", false);
         monster.Agent.enabled = true;
     }
     public override void Update()
