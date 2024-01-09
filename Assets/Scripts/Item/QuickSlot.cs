@@ -43,7 +43,7 @@ public class QuickSlot : MonoBehaviour
             else if (slots[i].item == null)
             {
                 slots[i].SetImage(item);
-
+                slots[i].CountItem++;
                 return;
             }
         }
