@@ -301,8 +301,8 @@ public class FlashlightItemStrategy : UseItemStrategy
 
     Light flashlight;
 
-    //IEnumerator minusBatteryCo;
-    //IEnumerator plusBatteryCo;
+    IEnumerator minusBatteryCo;
+    IEnumerator plusBatteryCo;
 
     int minBright; 
     int maxBright; 
@@ -335,8 +335,8 @@ public class FlashlightItemStrategy : UseItemStrategy
         minBattery = 0;
         maxBattery = 50;
         Battery = 50;
-        //minusBatteryCo = MinusBatteryCo();
-        //plusBatteryCo = PlusBatteryCo();
+        minusBatteryCo = MinusBatteryCo();
+        plusBatteryCo = PlusBatteryCo();
 
         flashlight = useItem.GetComponentInChildren<Light>();
         flashlight.intensity = minBright;
@@ -344,41 +344,41 @@ public class FlashlightItemStrategy : UseItemStrategy
 
     public override void Use()
     {
-        //useItem.StopAllCoroutines();
-        useItem.StartCoroutine(MinusBatteryCo());
+        useItem.StopCoroutine(plusBatteryCo);
+        useItem.StartCoroutine(minusBatteryCo);
     }
 
     public override void Exit()
     {
-        //useItem.StopAllCoroutines();
-        useItem.StartCoroutine(PlusBatteryCo());
+        useItem.StopCoroutine(minusBatteryCo);
+        useItem.StartCoroutine(plusBatteryCo);
     }
 
     IEnumerator MinusBatteryCo()
     {
-        while (true)
+        while (Battery > minBattery)
         {
-            if (Battery == 0)
-            {
-                flashlight.intensity = minBright;
-                Exit();
-            }
             flashlight.intensity = maxBright;
             Battery -= 10;
-            Debug.Log("���̳ʽ����͸�");
+            Debug.Log("마이너스");
             yield return new WaitForSeconds(0.5f);
+            if(Battery <= minBattery)
+            {
+                Exit();
+            }
+            yield return new WaitUntil(() => Battery > minBattery);
         }
     }
 
     IEnumerator PlusBatteryCo()
     {
-        while (true)
+        while (Battery < maxBattery)
         {
-            if (Battery == maxBattery)
-                continue;
+            flashlight.intensity = minBright;
             battery += 10;
-            Debug.Log("�÷������͸�");
+            Debug.Log("플러스");
             yield return new WaitForSeconds(2.5f);
+            yield return new WaitUntil(() => Battery < maxBattery);
         }
     }
 }
@@ -436,6 +436,10 @@ public class UseItem : Item
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            itemStrategy.Use();
+        }
         if (Input.GetKeyDown(KeyCode.N))
         {
             itemStrategy.Exit();
