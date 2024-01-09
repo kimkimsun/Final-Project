@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoroutineTest : MonoBehaviour
 {
-    int a = 10;
+    int a = 5;
     IEnumerator aaa;
     IEnumerator bbb;
     private void Start()

@@ -8,6 +8,7 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
+    private IEnumerator escapeCo;
     private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
     private NavMeshAgent agent;
@@ -15,9 +16,10 @@ public class Monster : MonoBehaviour
     private Collider[] playerHeardCol;
     private Rigidbody rb;
     private Animator animator;
-    private bool isNextPosition;
     private bool isCheck;
     private bool isPlayerCheck;
+    private bool isStun;
+    private float escape;
     private float maxDistance;
     private float stunTime;
     private float? distance= null;
@@ -52,9 +54,9 @@ public class Monster : MonoBehaviour
         set
         {
             isPlayerCheck = value;
-            if (isPlayerCheck)
+            if (isPlayerCheck && isStun)
                 sm.SetState("Run");
-            else if (!isPlayerCheck)
+            else if (!isPlayerCheck && isStun)
                 sm.SetState("Idle");
         }
 
@@ -94,7 +96,8 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         maxDistance = 20f;
-
+        escape = 0;
+        isStun = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
@@ -106,6 +109,7 @@ public class Monster : MonoBehaviour
         sm.AddState("Idle", new MonsterIdleState());
         sm.AddState("Run", new MonsterRunState());
         sm.AddState("Stun", new MonsterStunState());
+        sm.AddState("Attack", new MonsterAttackState());
         sm.SetState("Idle");
     }
 
@@ -131,7 +135,10 @@ public class Monster : MonoBehaviour
         }
         Vector3 lookrotation = agent.steeringTarget - transform.position;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
+
+
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
+        Collider[] playerAttackCol = Physics.OverlapSphere(transform.position, 2, targetLayerMask);
         IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {
@@ -150,6 +157,10 @@ public class Monster : MonoBehaviour
             else
                 return;
         }
+        if (playerAttackCol.Length > 0)
+        {
+            animator.SetBool("isAttack", true);
+        }
     }
     private void OnDrawGizmos()
     {
@@ -159,6 +170,9 @@ public class Monster : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 10f);
         Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, 2f);
     }
     public IEnumerator MonsterMoveCo()
     {
@@ -193,9 +207,11 @@ public class Monster : MonoBehaviour
         stunTime = 0f;
         while(stunTime < 3.0f)
         {
+            isStun = false;
             stunTime += Time.deltaTime;
             yield return null;
         }
         sm.SetState("Idle");
+        isStun = true;
     }
 }
