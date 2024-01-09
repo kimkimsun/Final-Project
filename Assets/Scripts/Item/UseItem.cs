@@ -280,13 +280,10 @@ public class UseItem : Item
 
     public override void Active()
     {
-        Debug.Log("아이템 먹을까");
         QuickSlot quickSlot = GameManager.Instance.player.QuickSlot;
         quickSlot.setItem(this);
         gameObject.SetActive(false);
         transform.SetParent(quickSlot.transform);
-        Debug.Log("아이템 먹음");
-
     }
 
     private void Update()

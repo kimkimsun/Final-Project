@@ -6,7 +6,7 @@ using System;
 public class QuickSlot : MonoBehaviour
 {
     public Slot[] slots = new Slot[5];
-
+     
     private void Start()
     {
         for (int i = 0; i < slots.Length; i++) 
@@ -35,15 +35,19 @@ public class QuickSlot : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item != null && slots[i].item.itemName == item.itemName)
+            if (slots[i].items != null && 
+                slots[i].items[slots[i].CurItem].itemName == item.itemName)
             {
+                slots[i].items.Add(item);
                 slots[i].CountItem++;
+                slots[i].CurItem++;
                 return;
             }
-            else if (slots[i].item == null)
+            else if (slots[i].items == null)
             {
+                slots[i].items.Add(item);
                 slots[i].SetImage(item);
-
+                slots[i].CountItem++;
                 return;
             }
         }

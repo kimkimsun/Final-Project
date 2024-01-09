@@ -29,11 +29,11 @@ public class Inventory : MonoBehaviour
         {
             if(i == index)
             {
-                if (equipSlot[i].item == null)
+/*                if (equipSlot[i].item == null)
                     return;
                 equipSlot[i].GetComponent<Image>().color = Color.yellow;
                 textCoverImage.gameObject.SetActive(true);
-                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipSlot[i].item.ExplanationText;
+                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipSlot[i].item.ExplanationText;*/
             }
             else
             {
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
             equipSlot[j].GetComponent<Image>().color = Color.red;
         }
     }
-    public void SwitchItem()
+  /*  public void SwitchItem()
     {
         if (playerEquipSlot.item != null)
             playerEquipSlot.item.Exit();
@@ -67,5 +67,5 @@ public class Inventory : MonoBehaviour
     public void ItemBuff()
     {
         playerEquipSlot.item.Use();
-    }
+    }*/
 }

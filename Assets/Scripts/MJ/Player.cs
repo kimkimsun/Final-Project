@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
         }
         if (equipInventory.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
-            equipInventory.SwitchItem();
+            //equipInventory.SwitchItem();
         }
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
