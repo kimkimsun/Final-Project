@@ -85,7 +85,7 @@ public class EquipmentItem : Item
 
     public override void Active()
     {
-        if (GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item == null)
+        /*if (GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item == null)
         {
             GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item = this;
             GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.GetComponent<Image>().sprite = this.sprite;
@@ -105,6 +105,6 @@ public class EquipmentItem : Item
                     break;
                 }
             }
-        }
+        }*/
     }
 }
