@@ -100,7 +100,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
@@ -117,6 +116,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        #region 플레이어 상호작용 키
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             A++;
@@ -139,20 +139,20 @@ public class Player : MonoBehaviour
             {
                 slotIndexNum--;
                 if (slotIndexNum == 0)
-                    slotIndexNum = equipInventory.EquipSlot.Length - 1;
+                    slotIndexNum = equipInventory.EquipQuickSlot.Length - 1;
                 equipInventory.IndexSlot(slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 slotIndexNum++;
-                if (slotIndexNum == equipInventory.EquipSlot.Length)
+                if (slotIndexNum == equipInventory.EquipQuickSlot.Length)
                     slotIndexNum = 1;
                 equipInventory.IndexSlot(slotIndexNum);
             }
         }
         if (equipInventory.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
-            //equipInventory.SwitchItem();
+            equipInventory.SwitchItem();
         }
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
@@ -161,5 +161,6 @@ public class Player : MonoBehaviour
             else
                 Debug.Log("여기에 설정창 나오는거 해야됩니당");
         }
+        #endregion
     }
 }

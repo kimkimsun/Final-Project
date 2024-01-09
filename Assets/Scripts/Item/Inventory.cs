@@ -2,42 +2,105 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private Slot[] equipSlot = new Slot[5];
+    [SerializeField] Slot[] slots = new Slot[5];
+    [SerializeField] private Slot[] equipQuickSlot = new Slot[4];
     [SerializeField] private Slot tempSlot;
     [SerializeField] private Slot playerEquipSlot;
     [SerializeField] private Image textCoverImage;
 
     private int index;
-    public Slot[] EquipSlot
+    public Slot[] EquipQuickSlot
     {
-        get { return equipSlot; }
-        set { equipSlot = value; }
+        get { return equipQuickSlot; }
+        set { equipQuickSlot = value; }
     }
     public Slot PlayerEquipSlot
     {
         get => playerEquipSlot;
     }
-    public void IndexSlot(int index)
+    public void AddItem(Item item)
     {
-        this.index = index;
-        for(int i = 0; i < equipSlot.Length; i++)
+        if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
         {
-            if(i == index)
+            if (PlayerEquipSlot.item == null)
             {
-/*                if (equipSlot[i].item == null)
-                    return;
-                equipSlot[i].GetComponent<Image>().color = Color.yellow;
-                textCoverImage.gameObject.SetActive(true);
-                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipSlot[i].item.ExplanationText;*/
+                PlayerEquipSlot.item = item;
+                PlayerEquipSlot.GetComponent<Image>().sprite = item.sprite;
+                item.Use();
+                item.gameObject.SetActive(false);
             }
             else
             {
-                equipSlot[i].GetComponent<Image>().color = Color.red;
+                for (int i = EquipQuickSlot.Length - 1; i >= 1; i--)
+                {
+                    if (EquipQuickSlot[i].item == null)
+                    {
+                        EquipQuickSlot[i].item = item;
+                        EquipQuickSlot[i].GetComponent<Image>().sprite = item.sprite;
+                        item.gameObject.SetActive(false);
+                        break;
+                    }
+                }
+            }
+        }
+        else if (item.TryGetComponent<UseItem>(out UseItem uI))
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].items != null &&
+                    slots[i].items[slots[i].CurItem].itemName == item.itemName)
+                {
+                    slots[i].items.Add(item);
+                    slots[i].CountItem++;
+                    slots[i].CurItem++;
+                    return;
+                }
+                else if (slots[i].items == null)
+                {
+                    slots[i].items.Add(item);
+                    slots[i].SetImage(item);
+                    slots[i].CountItem++;
+                    return;
+                }
+            }
+        }
+    }
+    public void QuickItemUse()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            slots[0].SlotItemUse();
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            slots[1].SlotItemUse();
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            slots[2].SlotItemUse();
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            slots[3].SlotItemUse();
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            slots[4].SlotItemUse();
+    }
+    public void IndexSlot(int index)
+    {
+        this.index = index;
+        for(int i = 0; i < equipQuickSlot.Length; i++)
+        {
+            if(i == index)
+            {
+                if (equipQuickSlot[i].item == null)
+                    return;
+                equipQuickSlot[i].GetComponent<Image>().color = Color.yellow;
+                textCoverImage.gameObject.SetActive(true);
+                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipQuickSlot[i].item.ExplanationText;
+            }
+            else
+            {
+                equipQuickSlot[i].GetComponent<Image>().color = Color.red;
                 textCoverImage.gameObject.SetActive(false);
             }
         }
@@ -45,27 +108,30 @@ public class Inventory : MonoBehaviour
     public void ResetSlot()
     {
         Debug.Log("¸®¼Âµé¾î¿È");
-        for (int j = 0; j < equipSlot.Length; j++)
+        for (int j = 0; j < equipQuickSlot.Length; j++)
         {
-            equipSlot[j].GetComponent<Image>().color = Color.red;
+            equipQuickSlot[j].GetComponent<Image>().color = Color.red;
         }
     }
-  /*  public void SwitchItem()
+    public void SwitchItem()
     {
         if (playerEquipSlot.item != null)
             playerEquipSlot.item.Exit();
-        tempSlot.item = equipSlot[index].item;
-        tempSlot.GetComponent<Image>().sprite = equipSlot[index].GetComponent<Image>().sprite;
-        equipSlot[index].item = playerEquipSlot.item;
-        equipSlot[index].GetComponent<Image>().sprite = playerEquipSlot.GetComponent<Image>().sprite;
+        tempSlot.item = equipQuickSlot[index].item;
+        tempSlot.GetComponent<Image>().sprite = equipQuickSlot[index].GetComponent<Image>().sprite;
+
+        equipQuickSlot[index].item = playerEquipSlot.item;
+        equipQuickSlot[index].GetComponent<Image>().sprite = playerEquipSlot.GetComponent<Image>().sprite;
+
         playerEquipSlot.item = tempSlot.item;
         playerEquipSlot.GetComponent<Image>().sprite = tempSlot.GetComponent<Image>().sprite;
+
         tempSlot.item = null;
         tempSlot.GetComponent<Image>().sprite = null;
-        ItemBuff();
-    }
-    public void ItemBuff()
-    {
         playerEquipSlot.item.Use();
-    }*/
+    }
+    private void Update()
+    {
+        QuickItemUse();
+    }
 }

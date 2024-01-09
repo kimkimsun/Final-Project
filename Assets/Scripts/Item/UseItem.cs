@@ -251,7 +251,6 @@ public class UseItem : Item
 
     private void Start()
     {
-
        switch (useItem_Type)
        {
            case USEITEM_TYPE.CAMERA:
@@ -272,8 +271,6 @@ public class UseItem : Item
             case USEITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
-
-
         }
 
     }

@@ -1,25 +1,25 @@
 using UnityEngine;
-using System;
 using CustomInterface;
+using System;
 
 public abstract class ItemStrategy
 {
     protected Item item;
     public string explanationText;
+    public ItemStrategy itemstrategy;
     public abstract void Use();
     public virtual void Init() { }
     public virtual void Exit() { }
 }
 
-
-public abstract class Item : MonoBehaviour, IInteraction
+public class Item : MonoBehaviour, IInteraction
 {
     public ItemStrategy itemStrategy = null;
     public string itemName;
     public Sprite sprite;
     private string interactionText;
     private string explanationText;
-
+    
     public string ExplanationText
     {
         get => explanationText;
@@ -40,5 +40,5 @@ public abstract class Item : MonoBehaviour, IInteraction
     }
     public virtual void Exit() { }
 
-    public abstract void Active(); //ащ╠Б
+    public virtual void Active() { }
 }

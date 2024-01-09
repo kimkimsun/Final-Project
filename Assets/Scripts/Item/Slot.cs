@@ -9,6 +9,7 @@ using static UnityEditor.Progress;
 
 public class Slot : MonoBehaviour
 {
+    public Item item;
     public event Action OnCountChange;
     public TextMeshProUGUI countText;
     public List <Item> items;
@@ -35,15 +36,13 @@ public class Slot : MonoBehaviour
 
     private void Start()
     {
-        items = new List <Item> ();
+        items = new List<Item>();
         OnCountChange += ChangeCount;
         CountItem = 0;
         CurItem = 0;
-
     }
     public void ChangeCount()
     {
-
         countText.text = CountItem.ToString();
     }
 
@@ -55,7 +54,6 @@ public class Slot : MonoBehaviour
             CurItem--;
             items.RemoveAt(CurItem);
             SetImage(null);
-
         }
     }
     public void SetImage(Item setItem)
@@ -66,5 +64,4 @@ public class Slot : MonoBehaviour
         else
             ItemImage.sprite = items[curItem].sprite;
     }
-
 }

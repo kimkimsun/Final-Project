@@ -12,7 +12,6 @@ public class QuickSlot : MonoBehaviour
         for (int i = 0; i < slots.Length; i++) 
         {
             slots[i] =  transform.GetChild(i).GetComponent<Slot>();
-
         }
     }
     public void QuickItemUse()
@@ -27,7 +26,6 @@ public class QuickSlot : MonoBehaviour
             slots[3].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
-
     }
 
 
