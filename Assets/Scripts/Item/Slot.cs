@@ -44,6 +44,7 @@ public class Slot : MonoBehaviour
     {
         if (items.Count != 0)
         {
+            Debug.Log(items.Count);
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);

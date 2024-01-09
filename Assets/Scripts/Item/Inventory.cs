@@ -55,7 +55,6 @@ public class Inventory : MonoBehaviour
             {
                 if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
                 {
-                    Debug.Log("들어왔던 아이템");
                     slots[i].items.Add(item);
                     slots[i].CountItem++;
                     slots[i].CurItem++;
@@ -63,7 +62,6 @@ public class Inventory : MonoBehaviour
                 }
                 else if (slots[i].items.Count == 0)
                 {
-                    Debug.Log("처음들어온 아이템");
                     slots[i].items.Add(item);
                     slots[i].SetImage(item);
                     slots[i].CountItem++;
