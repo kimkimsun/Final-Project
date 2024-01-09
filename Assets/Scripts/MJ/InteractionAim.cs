@@ -28,10 +28,8 @@ public class InteractionAim : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                     hit.transform.GetComponent<IInteraction>().Active();
             }
-
             else
                 text.text = "";
         }
-        
     }
 }

@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Slot : MonoBehaviour
 {
+    public Item item;
     public event Action OnCountChange;
     public TextMeshProUGUI countText;
     public List <Item> items;
@@ -22,7 +20,6 @@ public class Slot : MonoBehaviour
         get => curItem;
         set{curItem = value;}
     }
-
     public int CountItem
     {
         get { return countItem; }
@@ -32,18 +29,15 @@ public class Slot : MonoBehaviour
             OnCountChange();
         }
     }
-
     private void Start()
     {
-        items = new List <Item> ();
+        items = new List<Item>();
         OnCountChange += ChangeCount;
         CountItem = 0;
         CurItem = 0;
-
     }
     public void ChangeCount()
     {
-
         countText.text = CountItem.ToString();
     }
 
@@ -71,5 +65,4 @@ public class Slot : MonoBehaviour
         else
             ItemImage.sprite = setItem.sprite;
     }
-
 }

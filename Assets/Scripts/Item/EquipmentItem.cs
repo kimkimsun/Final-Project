@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public abstract class EquipItemStrategy: ItemStrategy
 {
     protected EquipmentItem equipmentItem;
@@ -11,13 +7,12 @@ public abstract class EquipItemStrategy: ItemStrategy
         this.equipmentItem = equipmentItem;
     }
 }
-
-
 public class AdrenalineItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
     public AdrenalineItemStrategy(EquipmentItem equipmentItem) :base(equipmentItem)
     {
+        this.equip = equipmentItem;
         Init();
     }
     public override void Init()
@@ -40,6 +35,7 @@ public class RainBootsItemStrategy : EquipItemStrategy
     EquipmentItem equip;
     public RainBootsItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
     {
+        this.equip = equipmentItem;
         Init();
     }
 
@@ -82,29 +78,9 @@ public class EquipmentItem : Item
     {
         itemStrategy.Exit();
     }
-
     public override void Active()
     {
-        /*if (GameManager.Instance.mainPlayer.EquipInventory.PlayerEquipSlot.item == null)
-        {
-            GameManager.Instance.player.EquipInventory.PlayerEquipSlot.item = this;
-            GameManager.Instance.player.EquipInventory.PlayerEquipSlot.GetComponent<Image>().sprite = this.sprite;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            for (int i = GameManager.Instance.player.EquipInventory.EquipSlot.Length - 1; i >= 1; i--)
-            {
-
-                if (GameManager.Instance.player.EquipInventory.EquipSlot[i].item == null &&
-                   GameManager.Instance.player.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite == null)
-                {
-                    GameManager.Instance.player.EquipInventory.EquipSlot[i].item = this;
-                    GameManager.Instance.player.EquipInventory.EquipSlot[i].GetComponent<Image>().sprite = this.sprite;
-                    gameObject.SetActive(false);
-                    break;
-                }
-            }
-        }*/
+        Inventory playerInven = GameManager.Instance.player.EquipInventory;
+        playerInven.AddItem(this);
     }
 }

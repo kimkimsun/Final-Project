@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
@@ -9,7 +8,6 @@ public abstract class UseItemStrategy: ItemStrategy
     {
         this.useItem = useItem;
     }
-
 }
 
 public class CameraItemStrategy : UseItemStrategy
@@ -26,7 +24,6 @@ public class CameraItemStrategy : UseItemStrategy
         stunLight = useItem.GetComponentInChildren<StunLight>();
         isCamera = true;
     }
-
     public override void Use()
     {
         if(isCamera)
@@ -37,7 +34,6 @@ public class CameraItemStrategy : UseItemStrategy
         }
         stunLight.Stun();
     }
-
 }
 public class FireCrackerItemStrategy : UseItemStrategy
 {
@@ -51,7 +47,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
     {
         Init();
     }
-
     public override void Init()
     {
         isFireCracker = true;
@@ -81,10 +76,9 @@ public class FireCrackerItemStrategy : UseItemStrategy
             itemRB.AddForce(nextVec *1.5f,ForceMode.Impulse );
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
         }
-        //ÆøÁ× »ç¿îµå
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         useItem.StartCoroutine(AttractionCo());
     }
-
     IEnumerator AttractionCo()
     {
         itemCollider.enabled = true;
@@ -119,8 +113,6 @@ public class MirrorItemStrategy : UseItemStrategy
         stunLight.Stun();
         GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
     }
-
-
 }
 
 public class HpBuffItemStrategy : UseItemStrategy
@@ -169,7 +161,6 @@ public class StaminaBuffItemStrategy : UseItemStrategy
         GameObject.Destroy(useItem.gameObject);
     }
 }
-
 public class SaveItemStrategy : UseItemStrategy
 {
     public SaveItemStrategy(UseItem useItem) : base(useItem) { }
@@ -290,7 +281,7 @@ public class FlashlightItemStrategy : UseItemStrategy
             }
             flashlight.intensity = maxBright;
             Battery -= 10;
-            Debug.Log("¸¶ÀÌ³Ê½º¹èÅÍ¸®");
+            Debug.Log("ï¿½ï¿½ï¿½Ì³Ê½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½");
             yield return new WaitForSeconds(0.5f);
         }
     }
@@ -302,7 +293,7 @@ public class FlashlightItemStrategy : UseItemStrategy
             if (Battery == maxBattery)
                 continue;
             battery += 10;
-            Debug.Log("ÇÃ·¯½º¹èÅÍ¸®");
+            Debug.Log("ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½");
             yield return new WaitForSeconds(2.5f);
         }
     }
@@ -323,7 +314,6 @@ public class UseItem : Item
     public GameObject SponPoint;
     private void Start()
     {
-        
        switch (useItem_Type)
        {
            case USEITEM_TYPE.CAMERA:
@@ -344,8 +334,6 @@ public class UseItem : Item
             case USEITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
-
-
         }
 
     }
@@ -358,7 +346,6 @@ public class UseItem : Item
         gameObject.SetActive(false);
         transform.SetParent(quickSlot.transform);
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
@@ -366,6 +353,4 @@ public class UseItem : Item
             itemStrategy.Exit();
         }
     }
-
-
 }
