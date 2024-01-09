@@ -6,12 +6,13 @@ using Unity.VisualScripting;
 public class Player : MonoBehaviour
 {
     public FirstPersonController playerMove;
-    private StateMachine<Player> playerSM;
+    public FinalEvent finalEvent;
 
     [SerializeField] private Inventory inven;
     [SerializeField] private Inventory quickSlot;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
+    private StateMachine<Player> playerSM;
     private int tension;
     private int slotIndexNum;
     private int a;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
             a = value;
             if (a >= 5)
             {
-                GameManager.StartAttraction();
+                finalEvent.Raise();
             }
         }
     }
@@ -44,10 +45,10 @@ public class Player : MonoBehaviour
     public float Stamina
     {
         get { return stamina; }
-        set 
-        { 
-            stamina = value; 
-            if(stamina >= 100)
+        set
+        {
+            stamina = value;
+            if (stamina >= 100)
             {
                 stamina = 100;
                 playerMove.MoveSpeed = 4.0f;
@@ -59,16 +60,16 @@ public class Player : MonoBehaviour
                 playerMove.MoveSpeed = 2.5f;
                 playerMove.SprintSpeed = 0f;
             }
-        } 
+        }
     }
     public int Tension
     {
         get { return tension; }
-        set 
+        set
         {
             tension = value;
             //텐션은 몬스터와 마주칠시 줄어들음
-            if(tension <=50)
+            if (tension <= 50)
             {
                 //UI 변화
                 //심장소리
@@ -77,12 +78,12 @@ public class Player : MonoBehaviour
         }
     }
     public int Hp
-    { 
-        get { return hp; } 
-        set 
-        {  
+    {
+        get { return hp; }
+        set
+        {
             hp = value;
-            if (hp <=30)
+            if (hp <= 30)
             {
                 playerSM.SetState("Moribund");
             }
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
                 hp = 0;
                 ScenesManager.Instance.Die();
             }
-        } 
+        }
     }
 
     private void Start()
@@ -135,6 +136,9 @@ public class Player : MonoBehaviour
             {
                 Debug.Log(slotIndexNum);
                 slotIndexNum--;
+                if (slotIndexNum == -1)
+                    slotIndexNum = inven.EquipQuickSlot.Length - 1;
+                inven.IndexSlot(slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -144,11 +148,13 @@ public class Player : MonoBehaviour
                 inven.IndexSlot(slotIndexNum);
             }
         }
+        else
+            return;
         if (inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
         {
             inven.SwitchItem();
         }
-        if (Input.GetKeyDown(KeyCode.Escape)) 
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (UIStack.Count > 0)
                 UIStack.Pop().GameObject().SetActive(false);

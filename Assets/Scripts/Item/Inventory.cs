@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
             if(i == index)
             {
                 equipQuickSlot[i].GetComponent<Image>().color = Color.yellow;
-                if (equipQuickSlot[i].item != null && GameManager.Instance.player.EquipInventory.gameObject.activeSelf)
+                if (equipQuickSlot[i].item != null && GameManager.Instance.player.Inven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
                     textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = equipQuickSlot[i].item.ExplanationText;
