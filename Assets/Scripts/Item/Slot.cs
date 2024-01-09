@@ -17,7 +17,14 @@ public class Slot : MonoBehaviour
     public int CurItem
     {
         get => curItem;
-        set{curItem = value;}
+        set
+        {
+            curItem = value;
+            if(curItem <= 0) 
+            {
+                curItem = 0;
+            }
+        }
     }
     public int CountItem
     {
@@ -44,7 +51,7 @@ public class Slot : MonoBehaviour
     {
         if (items.Count != 0)
         {
-            Debug.Log(items.Count);
+            Debug.Log(CurItem);
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);

@@ -16,6 +16,11 @@ public abstract class UseItemStrategy: ItemStrategy
         UIManager.Instance.useItemInfo.SetInfo(useItem);
         UIManager.Instance.useItemInfo.gameObject.SetActive(true);
     }
+
+    public override void Use()
+    {
+        useItem.transform.SetParent(null);
+    }
 }
 
 public class CameraItemStrategy : UseItemStrategy
@@ -44,6 +49,7 @@ public class CameraItemStrategy : UseItemStrategy
     }
     public override void Use()
     {
+        base.Use();
         stunLight.Stun();
     }
 }
@@ -80,7 +86,8 @@ public class FireCrackerItemStrategy : UseItemStrategy
 
     public override void Use()
     {
-        if(isFirstFireCracker)
+        base.Use();
+        if (isFirstFireCracker)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
@@ -137,6 +144,7 @@ public class MirrorItemStrategy : UseItemStrategy
 
     public override void Use()
     {
+        base.Use();
         if (isFirstMirror)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
@@ -171,6 +179,7 @@ public class HpBuffItemStrategy : UseItemStrategy
     }
     public override void Use()
     {
+        base.Use();
         if (isFirstHpBuff)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
@@ -204,6 +213,7 @@ public class StaminaBuffItemStrategy : UseItemStrategy
 
     public override void Use()
     {
+        base.Use();
         if (isFirstStaminaBuff)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
@@ -244,6 +254,7 @@ public class KeyItemStrategy : UseItemStrategy
     }
     public override void Use()
     {
+        base.Use();
         if (isFirstKey)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
@@ -274,6 +285,7 @@ public class AttackItemStrategy : UseItemStrategy
     }
     public override void Use()
     {
+        base.Use();
         if (isFirstAttackItem)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
@@ -417,9 +429,10 @@ public class UseItem : Item
     {
         ((UseItemStrategy)itemStrategy).PrintInfo();
         Inventory quickSlot = GameManager.Instance.player.QuickSlot;
+        GameObject itemBox = GameManager.Instance.player.itemBox;
         quickSlot.AddItem(this);
         gameObject.SetActive(false);
-        transform.SetParent(quickSlot.transform);
+        transform.SetParent(itemBox.transform);
     }
     private void Update()
     {

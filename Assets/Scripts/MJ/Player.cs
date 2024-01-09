@@ -7,12 +7,13 @@ public class Player : MonoBehaviour
 {
     public FirstPersonController playerMove;
     public FinalEvent finalEvent;
+    private StateMachine<Player> playerSM;
 
-    [SerializeField] private Inventory inven;
-    [SerializeField] private Inventory quickSlot;
+    public GameObject itemBox;
+    public Inventory inven;
+    public Inventory quickSlot;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
-    private StateMachine<Player> playerSM;
     private int tension;
     private int slotIndexNum;
     private int a;
