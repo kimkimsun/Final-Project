@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
             {
                 PlayerEquipSlot.item = item;
                 PlayerEquipSlot.GetComponent<Image>().sprite = item.sprite;
-                item.Use();
+               // item.Use();
                 item.gameObject.SetActive(false);
             }
             else
@@ -125,7 +125,7 @@ public class Inventory : MonoBehaviour
 
         tempSlot.item = null;
         tempSlot.GetComponent<Image>().sprite = null;
-        playerEquipSlot.item.Use();
+       // playerEquipSlot.item.Use();
     }
     private void Update()
     {

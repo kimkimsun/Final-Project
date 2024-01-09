@@ -42,7 +42,7 @@ public class Slot : MonoBehaviour
 
     public void SlotItemUse()
     {
-        if (items != null)
+        if (items.Count != 0)
         {
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
@@ -53,7 +53,7 @@ public class Slot : MonoBehaviour
                 SetImage(null);
 
         }
-        else if (items.Count == 0)
+        else if (items.Count <= 0)
             return;
         
     }

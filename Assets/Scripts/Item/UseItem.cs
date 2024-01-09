@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class UseItemStrategy: ItemStrategy
@@ -8,12 +10,18 @@ public abstract class UseItemStrategy: ItemStrategy
     {
         this.useItem = useItem;
     }
+
+    public virtual void PrintInfo() 
+    {
+        UIManager.Instance.useItemInfo.SetInfo(useItem);
+        UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+    }
 }
 
 public class CameraItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
-    static bool isCamera;
+    static bool isFirstCamera;
     public CameraItemStrategy(UseItem useItem):base(useItem) 
     {
         Init();
@@ -22,16 +30,20 @@ public class CameraItemStrategy : UseItemStrategy
     public override void Init()
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
-        isCamera = true;
+        isFirstCamera = true;
+        useItem.firstDic.Add(this, isFirstCamera);
+    }
+
+    public override void PrintInfo() 
+    { 
+        if (isFirstCamera) 
+        { 
+            base.PrintInfo();
+        }
+        isFirstCamera = false;
     }
     public override void Use()
     {
-        if(isCamera)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isCamera = false;
-        }
         stunLight.Stun();
     }
 }
@@ -41,27 +53,38 @@ public class FireCrackerItemStrategy : UseItemStrategy
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
-    static bool isFireCracker;
+    static bool isFirstFireCracker;
     int time = 5;
-    public FireCrackerItemStrategy(UseItem useItem): base(useItem)
+    public FireCrackerItemStrategy(UseItem useItem) : base(useItem)
     {
         Init();
     }
+
     public override void Init()
     {
-        isFireCracker = true;
+        isFirstFireCracker = true;
+        useItem.firstDic.Add(this, isFirstFireCracker);
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
         itemCollider = useItem.GetComponentInChildren<SphereCollider>();
     }
 
+    public override void PrintInfo()
+    {
+        if (isFirstFireCracker)
+        {
+            base.PrintInfo();
+        }
+        isFirstFireCracker = false;
+    }
+
     public override void Use()
     {
-        if(isFireCracker)
+        if(isFirstFireCracker)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFireCracker = false;
+            isFirstFireCracker = false;
         }
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
         
@@ -91,7 +114,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
 public class MirrorItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
-    static bool isMirror;
+    static bool isFirstMirror;
     public MirrorItemStrategy(UseItem useItem): base(useItem)
     {
         Init();
@@ -100,15 +123,25 @@ public class MirrorItemStrategy : UseItemStrategy
     public override void Init()
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
-        isMirror = true;
+        isFirstMirror = true;
+        useItem.firstDic.Add(this, isFirstMirror);
     }
+    public override void PrintInfo()
+    {
+        if (isFirstMirror)
+        {
+            base.PrintInfo();
+        }
+        isFirstMirror = false;
+    }
+
     public override void Use()
     {
-        if (isMirror)
+        if (isFirstMirror)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isMirror = false;
+            isFirstMirror = false;
         }
         stunLight.Stun();
         GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
@@ -118,21 +151,31 @@ public class MirrorItemStrategy : UseItemStrategy
 public class HpBuffItemStrategy : UseItemStrategy
 {
     int hpBuff = 5;
-    static bool isHpBuff;
+    static bool isFirstHpBuff;
 
     public HpBuffItemStrategy(UseItem useItem): base(useItem) { Init(); }
 
     public override void Init()
     {
-        isHpBuff = true;
+        isFirstHpBuff = true;
+        useItem.firstDic.Add(this, isFirstHpBuff);
+    }
+
+    public override void PrintInfo()
+    {
+        if (isFirstHpBuff)
+        {
+            base.PrintInfo();
+        }
+        isFirstHpBuff = false;
     }
     public override void Use()
     {
-        if (isHpBuff)
+        if (isFirstHpBuff)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isHpBuff = false;
+            isFirstHpBuff = false;
         }
         GameManager.Instance.player.Hp += hpBuff;
         GameObject.Destroy(useItem.gameObject);
@@ -142,20 +185,30 @@ public class HpBuffItemStrategy : UseItemStrategy
 public class StaminaBuffItemStrategy : UseItemStrategy
 {
     int staminaBuff = 5;
-    static bool isStaminaBuff;
+    static bool isFirstStaminaBuff;
     public StaminaBuffItemStrategy(UseItem useItem): base(useItem) { Init(); }
 
     public override void Init()
     {
-        isStaminaBuff = true;
+        isFirstStaminaBuff = true;
+        useItem.firstDic.Add(this, isFirstStaminaBuff);
     }
+    public override void PrintInfo()
+    {
+        if (isFirstStaminaBuff)
+        {
+            base.PrintInfo();
+        }
+        isFirstStaminaBuff = false;
+    }
+
     public override void Use()
     {
-        if (isStaminaBuff)
+        if (isFirstStaminaBuff)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isStaminaBuff = false;
+            isFirstStaminaBuff = false;
         }
         GameManager.Instance.player.Stamina += staminaBuff;
         GameObject.Destroy(useItem.gameObject);
@@ -164,6 +217,7 @@ public class StaminaBuffItemStrategy : UseItemStrategy
 public class SaveItemStrategy : UseItemStrategy
 {
     public SaveItemStrategy(UseItem useItem) : base(useItem) { }
+
     public override void Use()
     {
         throw new System.NotImplementedException();
@@ -172,41 +226,59 @@ public class SaveItemStrategy : UseItemStrategy
 
 public class KeyItemStrategy : UseItemStrategy
 {
-    static bool isKey;
+    static bool isFirstKey;
     public KeyItemStrategy(UseItem useItem) : base(useItem) { Init(); }
 
     public override void Init()
     {
-        isKey = true;
+        isFirstKey = true;
+        useItem.firstDic.Add(this, isFirstKey);
     }
-
+    public override void PrintInfo()
+    {
+        if (isFirstKey)
+        {
+            base.PrintInfo();
+        }
+        isFirstKey = false;
+    }
     public override void Use()
     {
-        if (isKey)
+        if (isFirstKey)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isKey = false;
+            isFirstKey = false;
         }
     }
 }
 
 public class AttackItemStrategy : UseItemStrategy
 {
-    static bool isAttackItem;
+    static bool isFirstAttackItem;
     public AttackItemStrategy(UseItem useItem) : base(useItem) { }
 
     public override void Init()
     {
-        isAttackItem = true;
+        isFirstAttackItem = true;
+        useItem.firstDic.Add(this, isFirstAttackItem);
+    }
+
+    public override void PrintInfo()
+    {
+        if (isFirstAttackItem)
+        {
+            base.PrintInfo();
+        }
+        isFirstAttackItem = false;
     }
     public override void Use()
     {
-        if (isAttackItem)
+        if (isFirstAttackItem)
         {
             UIManager.Instance.useItemInfo.SetInfo(useItem);
             UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isAttackItem = false;
+            isFirstAttackItem = false;
         }
     }
 }
@@ -310,8 +382,10 @@ public enum USEITEM_TYPE
 
 public class UseItem : Item
 {
+    public UseItemStrategy UseItemstrategy;
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
+    public Dictionary<ItemStrategy,bool> firstDic = new Dictionary<ItemStrategy,bool>();
     private void Start()
     {
        switch (useItem_Type)
@@ -341,6 +415,7 @@ public class UseItem : Item
 
     public override void Active()
     {
+        ((UseItemStrategy)itemStrategy).PrintInfo();
         Inventory quickSlot = GameManager.Instance.player.QuickSlot;
         quickSlot.AddItem(this);
         gameObject.SetActive(false);
