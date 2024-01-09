@@ -4,8 +4,7 @@ using static UnityEditor.Progress;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
-    protected UseItem useItem;
-
+    protected UseItem useItem;   
     public UseItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
@@ -16,13 +15,26 @@ public abstract class UseItemStrategy: ItemStrategy
 public class CameraItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
+    static bool isCamera;
     public CameraItemStrategy(UseItem useItem):base(useItem) 
     {
+        Init();
+    }
+
+    public override void Init()
+    {
         stunLight = useItem.GetComponentInChildren<StunLight>();
+        isCamera = true;
     }
 
     public override void Use()
     {
+        if(isCamera)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isCamera = false;
+        }
         stunLight.Stun();
     }
 
@@ -33,6 +45,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
     Rigidbody itemRB;
     SphereCollider itemCollider;
 
+    static bool isFireCracker;
     int time = 5;
     public FireCrackerItemStrategy(UseItem useItem): base(useItem)
     {
@@ -41,6 +54,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
 
     public override void Init()
     {
+        isFireCracker = true;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
         itemCollider = useItem.GetComponentInChildren<SphereCollider>();
@@ -48,6 +62,12 @@ public class FireCrackerItemStrategy : UseItemStrategy
 
     public override void Use()
     {
+        if(isFireCracker)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isFireCracker = false;
+        }
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
         
         RaycastHit hit;
@@ -77,6 +97,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
 public class MirrorItemStrategy : UseItemStrategy
 {
     public StunLight stunLight;
+    static bool isMirror;
     public MirrorItemStrategy(UseItem useItem): base(useItem)
     {
         Init();
@@ -85,9 +106,16 @@ public class MirrorItemStrategy : UseItemStrategy
     public override void Init()
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
+        isMirror = true;
     }
     public override void Use()
     {
+        if (isMirror)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isMirror = false;
+        }
         stunLight.Stun();
         GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
     }
@@ -98,11 +126,22 @@ public class MirrorItemStrategy : UseItemStrategy
 public class HpBuffItemStrategy : UseItemStrategy
 {
     int hpBuff = 5;
+    static bool isHpBuff;
 
-    public HpBuffItemStrategy(UseItem useItem): base(useItem) { }
+    public HpBuffItemStrategy(UseItem useItem): base(useItem) { Init(); }
 
+    public override void Init()
+    {
+        isHpBuff = true;
+    }
     public override void Use()
     {
+        if (isHpBuff)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isHpBuff = false;
+        }
         GameManager.Instance.player.Hp += hpBuff;
         GameObject.Destroy(useItem.gameObject);
     }
@@ -111,10 +150,21 @@ public class HpBuffItemStrategy : UseItemStrategy
 public class StaminaBuffItemStrategy : UseItemStrategy
 {
     int staminaBuff = 5;
-    public StaminaBuffItemStrategy(UseItem useItem): base(useItem) { }
+    static bool isStaminaBuff;
+    public StaminaBuffItemStrategy(UseItem useItem): base(useItem) { Init(); }
 
+    public override void Init()
+    {
+        isStaminaBuff = true;
+    }
     public override void Use()
     {
+        if (isStaminaBuff)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isStaminaBuff = false;
+        }
         GameManager.Instance.player.Stamina += staminaBuff;
         GameObject.Destroy(useItem.gameObject);
     }
@@ -131,19 +181,42 @@ public class SaveItemStrategy : UseItemStrategy
 
 public class KeyItemStrategy : UseItemStrategy
 {
-    public KeyItemStrategy(UseItem useItem) : base(useItem) { }
+    static bool isKey;
+    public KeyItemStrategy(UseItem useItem) : base(useItem) { Init(); }
+
+    public override void Init()
+    {
+        isKey = true;
+    }
+
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        if (isKey)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isKey = false;
+        }
     }
 }
 
 public class AttackItemStrategy : UseItemStrategy
 {
+    static bool isAttackItem;
     public AttackItemStrategy(UseItem useItem) : base(useItem) { }
+
+    public override void Init()
+    {
+        isAttackItem = true;
+    }
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        if (isAttackItem)
+        {
+            UIManager.Instance.useItemInfo.SetInfo(useItem);
+            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
+            isAttackItem = false;
+        }
     }
 }
 
@@ -248,10 +321,9 @@ public class UseItem : Item
 {
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
-
     private void Start()
     {
-
+        
        switch (useItem_Type)
        {
            case USEITEM_TYPE.CAMERA:
@@ -278,6 +350,7 @@ public class UseItem : Item
 
     }
 
+
     public override void Active()
     {
         QuickSlot quickSlot = GameManager.Instance.player.QuickSlot;
@@ -288,10 +361,6 @@ public class UseItem : Item
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Use();
-        }
         if (Input.GetKeyDown(KeyCode.N))
         {
             itemStrategy.Exit();
