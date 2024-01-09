@@ -16,8 +16,9 @@ public class Item : MonoBehaviour, IInteraction
     public string itemName;
     public Sprite sprite;
     private string interactionText;
-    private string explanationText;
-    
+    public string explanationText;
+
+
     public string ExplanationText
     {
         get => explanationText;
