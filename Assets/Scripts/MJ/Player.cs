@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
-using UnityEngine.UI;
-using UnityEditor.Experimental.GraphView;
 
 public class Player : MonoBehaviour
 {
@@ -79,7 +75,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public int Hp
     { 
         get { return hp; } 
@@ -117,7 +112,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         #region 플레이어 상호작용 키
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
             A++;
         }

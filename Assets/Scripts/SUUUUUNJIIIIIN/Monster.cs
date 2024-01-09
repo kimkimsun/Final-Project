@@ -27,7 +27,6 @@ public class Monster : MonoBehaviour
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
-    
     public Collider[] PlayerLookCol
     {
         get => playerLookCol;

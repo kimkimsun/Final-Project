@@ -1,7 +1,5 @@
 using UnityEngine;
 using CustomInterface;
-using System;
-
 public abstract class ItemStrategy
 {
     protected Item item;
@@ -33,12 +31,10 @@ public class Item : MonoBehaviour, IInteraction
     {
         interactionText = "Get";
     }
-
     public virtual void Use()
     {
         itemStrategy.Use();
     }
     public virtual void Exit() { }
-
     public virtual void Active() { }
 }

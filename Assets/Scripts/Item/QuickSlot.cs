@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class QuickSlot : MonoBehaviour
 {
@@ -27,8 +24,6 @@ public class QuickSlot : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
     }
-
-
     public void setItem(Item item)
     {
 
@@ -52,7 +47,6 @@ public class QuickSlot : MonoBehaviour
             }
         }
     }
-
     private void Update()
     {
         QuickItemUse();

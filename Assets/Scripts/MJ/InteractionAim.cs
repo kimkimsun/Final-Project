@@ -31,6 +31,5 @@ public class InteractionAim : MonoBehaviour
             else
                 text.text = "";
         }
-        
     }
 }

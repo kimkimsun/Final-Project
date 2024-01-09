@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public abstract class EquipItemStrategy: ItemStrategy
 {
     protected EquipmentItem equipmentItem;
@@ -11,8 +7,6 @@ public abstract class EquipItemStrategy: ItemStrategy
         this.equipmentItem = equipmentItem;
     }
 }
-
-
 public class AdrenalineItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
@@ -10,7 +9,6 @@ public abstract class UseItemStrategy: ItemStrategy
     {
         this.useItem = useItem;
     }
-
 }
 
 public class CameraItemStrategy : UseItemStrategy
@@ -20,12 +18,10 @@ public class CameraItemStrategy : UseItemStrategy
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
     }
-
     public override void Use()
     {
         stunLight.Stun();
     }
-
 }
 public class FireCrackerItemStrategy : UseItemStrategy
 {
@@ -38,7 +34,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
     {
         Init();
     }
-
     public override void Init()
     {
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
@@ -64,7 +59,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
         //ÆøÁ× »ç¿îµå
         useItem.StartCoroutine(AttractionCo());
     }
-
     IEnumerator AttractionCo()
     {
         itemCollider.enabled = true;
@@ -91,8 +85,6 @@ public class MirrorItemStrategy : UseItemStrategy
         stunLight.Stun();
         GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
     }
-
-
 }
 
 public class HpBuffItemStrategy : UseItemStrategy
@@ -119,7 +111,6 @@ public class StaminaBuffItemStrategy : UseItemStrategy
         GameObject.Destroy(useItem.gameObject);
     }
 }
-
 public class SaveItemStrategy : UseItemStrategy
 {
     public SaveItemStrategy(UseItem useItem) : base(useItem) { }
@@ -282,7 +273,6 @@ public class UseItem : Item
         gameObject.SetActive(false);
         transform.SetParent(quickSlot.transform);
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -294,6 +284,4 @@ public class UseItem : Item
             itemStrategy.Exit();
         }
     }
-
-
 }

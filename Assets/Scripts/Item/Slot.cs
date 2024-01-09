@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Slot : MonoBehaviour
 {
@@ -23,7 +20,6 @@ public class Slot : MonoBehaviour
         get => curItem;
         set{curItem = value;}
     }
-
     public int CountItem
     {
         get { return countItem; }
@@ -33,7 +29,6 @@ public class Slot : MonoBehaviour
             OnCountChange();
         }
     }
-
     private void Start()
     {
         items = new List<Item>();
