@@ -11,6 +11,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Image textCoverImage;
 
     private int index;
+
+    public int Index
+    { get => index;}
+
     public Slot[] EquipQuickSlot
     {
         get { return equipQuickSlot; }
@@ -87,31 +91,27 @@ public class Inventory : MonoBehaviour
         {
             if(i == index)
             {
-                if (equipQuickSlot[i].item == null)
-                    return;
                 equipQuickSlot[i].GetComponent<Image>().color = Color.yellow;
-                textCoverImage.gameObject.SetActive(true);
-                textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text= equipQuickSlot[i].item.ExplanationText;
+                if (equipQuickSlot[i].item != null && GameManager.Instance.player.EquipInventory.gameObject.activeSelf)
+                {
+                    textCoverImage.gameObject.SetActive(true);
+                    textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = equipQuickSlot[i].item.ExplanationText;
+                }
             }
             else
             {
+                Debug.Log("TSST" + i);
                 equipQuickSlot[i].GetComponent<Image>().color = Color.red;
                 textCoverImage.gameObject.SetActive(false);
             }
-        }
-    }
-    public void ResetSlot()
-    {
-        Debug.Log("¸®¼Âµé¾î¿È");
-        for (int j = 0; j < equipQuickSlot.Length; j++)
-        {
-            equipQuickSlot[j].GetComponent<Image>().color = Color.red;
         }
     }
     public void SwitchItem()
     {
         if (playerEquipSlot.item != null)
             playerEquipSlot.item.Exit();
+        if (equipQuickSlot[index].item == null)
+            return;
         tempSlot.item = equipQuickSlot[index].item;
         tempSlot.GetComponent<Image>().sprite = equipQuickSlot[index].GetComponent<Image>().sprite;
 

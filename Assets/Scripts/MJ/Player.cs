@@ -132,8 +132,9 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                Debug.Log(slotIndexNum);
                 slotIndexNum--;
-                if (slotIndexNum == 0)
+                if (slotIndexNum == -1)
                     slotIndexNum = equipInventory.EquipQuickSlot.Length - 1;
                 equipInventory.IndexSlot(slotIndexNum);
             }
