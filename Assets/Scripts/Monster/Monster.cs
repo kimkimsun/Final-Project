@@ -227,29 +227,25 @@ public class Monster : MonoBehaviour
     }
     public IEnumerator StunCo()
     {
+        isStun = false;
         stunTime = 0f;
         while(stunTime < 3.0f)
         {
-            isStun = false;
             stunTime += Time.deltaTime;
             yield return null;
         }
         sm.SetState("Idle");
         isStun = true;
-        isAttack = true;
     }
     public IEnumerator EscapeCo()
     {
         Debug.Log("µé¾î¿È");
-        isAttack = false;
         escape = 0;
         while (escape < 2)
         {
-            isAttack = false;
             escape += Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.J))
             {
-                isStun = true;
                 sm.SetState("Stun");
             }
             yield return new WaitUntil(() => escape < 2);
