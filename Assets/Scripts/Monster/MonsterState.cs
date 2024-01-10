@@ -62,7 +62,7 @@ public class MonsterStunState : MonsterState
         monster.StartCoroutine(monster.StunCo());
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isStun", true);
-        monster.transform.forward = GameManager.Instance.transform.position;
+        //monster.transform.forward = GameManager.Instance.player.transform.position;
     }
     public override void Exit()
     {
