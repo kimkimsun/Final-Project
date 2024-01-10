@@ -18,6 +18,17 @@ namespace CustomInterface
         public object GetOwner();
     }
 
+    public interface ISubscribeable
+    {
+        public void OnEvent();
+    }
+
+    public interface IEventable
+    {
+        public void Raise();
+        public void RegisterListener(object listener);
+        public void UnregisterListener(object listener);
+    }
     public interface IStunable
     {
         public void Stun();

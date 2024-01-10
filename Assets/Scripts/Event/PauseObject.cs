@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Events;
+using CustomInterface;
 
-public class Follower : MonoBehaviour
+public class PauseObject : MonoBehaviour, ISubscribeable
 {
     public Pause pause;
     public UnityEvent respons;
-
-    public void Stop()
+    public void OnEvent()
     {
-
+        throw new NotImplementedException();
     }
+
     private void OnEnable()
     {
-        pause.Subscribe(this);
+        pause.RegisterListener(this);
     }
 
     private void OnDisable()
     {
-        pause.Subscribecancel(this);
+        pause.UnregisterListener(this);
     }
+
 }
