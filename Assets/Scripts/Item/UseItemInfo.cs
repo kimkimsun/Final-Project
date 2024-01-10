@@ -16,6 +16,7 @@ public class UseItemInfo : MonoBehaviour
 
     public void SetInfo(Item item)
     {
+        UIManager.Instance.UIStack.Push(this.gameObject);
         itemImage.sprite = item.sprite;
         itemName.text = item.itemName;
         itemInfo.text = item.explanationText;

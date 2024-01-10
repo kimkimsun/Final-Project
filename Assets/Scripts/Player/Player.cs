@@ -14,13 +14,12 @@ public class Player : MonoBehaviour
     public Inventory quickSlot;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
+    public int slotIndexNum;
     private int tension;
-    private int slotIndexNum;
     private int a;
     //테스트용임 겜매로 이사가야됨
-    private Stack<Object> UIStack = new Stack<Object>();
 
-    public int A
+/*    public int A
     {
         get => a;
         set
@@ -31,7 +30,7 @@ public class Player : MonoBehaviour
                 finalEvent.Raise();
             }
         }
-    }
+    }*/
     public Inventory Inven
     {
         get => inven;
@@ -114,54 +113,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        #region 플레이어 상호작용 키
-        if (Input.GetKeyDown(KeyCode.Keypad0))
+/*        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
             A++;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!inven.gameObject.activeSelf)
-            {
-                inven.gameObject.SetActive(true);
-                slotIndexNum = 4;
-                inven.IndexSlot(slotIndexNum);
-                UIStack.Push(inven);
-            }
-            else
-                return;
-        }
-        if (inven.gameObject.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                Debug.Log(slotIndexNum);
-                slotIndexNum--;
-                if (slotIndexNum == -1)
-                    slotIndexNum = inven.EquipQuickSlot.Length - 1;
-                inven.IndexSlot(slotIndexNum);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                slotIndexNum++;
-                if (slotIndexNum == inven.EquipQuickSlot.Length)
-                    slotIndexNum = 1;
-                inven.IndexSlot(slotIndexNum);
-            }
-        }
-        else
-            return;
-        if (inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
-        {
-            inven.SwitchItem();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (UIStack.Count > 0)
-                UIStack.Pop().GameObject().SetActive(false);
-            else
-                Debug.Log("여기에 설정창 나오는거 해야됩니당");
-        }
-        #endregion
+        }*/
     }
 }
