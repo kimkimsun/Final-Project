@@ -44,15 +44,10 @@ public class PlayerPrevPos : MonoBehaviour
         while(playerPos.isMove == true)
         {
             GameObject pos = GetQueue(this.transform);
-            yield return new WaitForSeconds(1.5f);
-            InsertQueue(pos);
+            yield return new WaitForSeconds(0.5f);
             pos.transform.position = Vector3.zero;
-
-
         }
-
     }
-
     public void PushObject(GameObject obj)
     {
         for (int i = 0; i < 100; i++)
@@ -60,7 +55,6 @@ public class PlayerPrevPos : MonoBehaviour
             GameObject copyPos = Instantiate(obj, Vector3.zero, Quaternion.identity);
             prevPosQ.Enqueue(copyPos);
             copyPos.SetActive(false);
-
         }
     }
     public GameObject GetQueue(Transform pos)
@@ -76,6 +70,4 @@ public class PlayerPrevPos : MonoBehaviour
         prevPosQ.Enqueue(prevPosPrefab);
         prevPosPrefab.SetActive(false);
     }
-
-
 }
