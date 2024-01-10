@@ -15,7 +15,6 @@ public class PlayerPrevPos : MonoBehaviour
     {
         playerPos=GetComponent<FirstPersonController>();
         posSaveCo = PosSaveCo();
-        playerPos = GetComponent<FirstPersonController>();
         for(int i = 0; i < 100; i++)
         {
             GameObject copyPos = Instantiate(prevPos, Vector3.zero, Quaternion.identity);
@@ -41,33 +40,22 @@ public class PlayerPrevPos : MonoBehaviour
 
     IEnumerator PosSaveCo()
     {
-        while(playerPos.isMove == true)
+        while(playerPos.isMove)
         {
-            GameObject pos = GetQueue(this.transform);
-            yield return new WaitForSeconds(1.5f);
+            GameObject pos = GetQueue();
+            yield return new WaitForSeconds(0.5f);
             InsertQueue(pos);
             pos.transform.position = Vector3.zero;
-
-
-        }
-
-    }
-
-    public void PushObject(GameObject obj)
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            GameObject copyPos = Instantiate(obj, Vector3.zero, Quaternion.identity);
-            prevPosQ.Enqueue(copyPos);
-            copyPos.SetActive(false);
-
+            yield return new WaitUntil(() => playerPos.isMove);
         }
     }
-    public GameObject GetQueue(Transform pos)
+
+    public GameObject GetQueue()
     {
         GameObject copyObj = prevPosQ.Dequeue();
-        copyObj.transform.position = pos.position;
+        copyObj.transform.position = transform.position;
         copyObj.SetActive(true);
+        
         return copyObj;
     }
 

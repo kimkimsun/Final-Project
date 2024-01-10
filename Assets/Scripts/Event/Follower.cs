@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Follower : MonoBehaviour
 {
-    public PauseManager pause;
+    public Pause pause;
     public UnityEvent respons;
 
     public void Stop()

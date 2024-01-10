@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Properties;
 
-public class PauseManager : MonoBehaviour
+
+public class Pause : MonoBehaviour
 {
     public static event Action allstop;
     private List<Follower> followers = new List<Follower>();

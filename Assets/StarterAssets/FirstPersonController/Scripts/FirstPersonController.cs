@@ -12,6 +12,7 @@ namespace StarterAssets
 	public class FirstPersonController : MonoBehaviour
 	{
 		public bool isMove;
+		public bool isRun;
 		PlayerPrevPos prevPos;
 
 		[Header("Player")]
@@ -187,7 +188,7 @@ namespace StarterAssets
 				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
                 isMove = true;
-            
+                isRun = false;
 
             }
 			else
@@ -196,8 +197,11 @@ namespace StarterAssets
                 _speed = targetSpeed;
                 if(targetSpeed == SprintSpeed)
 				{
-					GameManager.Instance.player.Stamina -= 5 * Time.deltaTime;
+					isRun = true;
+                    GameManager.Instance.player.Stamina -= 5 * Time.deltaTime;
 				}
+
+
             }
 
 			// normalise input direction
