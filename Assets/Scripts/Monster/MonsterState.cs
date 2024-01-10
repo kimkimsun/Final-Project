@@ -1,4 +1,5 @@
 using CustomInterface;
+using StarterAssets;
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ public class MonsterRunState : MonsterState
 {
 
     public override void Enter()
-    {
+    { 
         monster.Animator.SetBool("isRun", true);
         monster.Agent.speed = 7;
     }
@@ -78,10 +79,14 @@ public class MonsterAttackState : MonsterState
     {
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isAttack",true);
+        monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = false;
+        monster.StartCoroutine(monster.EscapeCor);
     }
     public override void Exit()
     {
         monster.Agent.enabled = true;
+        monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = false;
+        monster.Animator.SetBool("isAttack",false);
     }
     public override void Update()
     {

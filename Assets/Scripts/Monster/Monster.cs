@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
+    #region 변수
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
     private IEnumerator escapeCo;
@@ -14,6 +16,7 @@ public class Monster : MonoBehaviour
     private NavMeshAgent agent;
     private Collider[] playerLookCol;
     private Collider[] playerHeardCol;
+    private Collider[] playerAttackCol;
     private Rigidbody rb;
     private Animator animator;
     private bool isCheck;
@@ -26,11 +29,20 @@ public class Monster : MonoBehaviour
     private float tempDistance;
     private float extraRotationSpeed = 3f;
     private Stack<Transform> playerSoundPos;
+    #endregion
+    #region 프로퍼티
     //public Collider[] PlayerHeardCol
     //{
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+
+    public IEnumerator EscapeCor
+    {
+        get => escapeCo; 
+        set => escapeCo = value;
+    }
+
     public StateMachine<Monster> Sm
     {
         get => sm;
@@ -47,6 +59,11 @@ public class Monster : MonoBehaviour
         get => playerLookCol;
         set => playerLookCol = value;
     }
+    public Collider[] PlayerAttackCol
+    {
+        get => playerAttackCol;
+        set => playerLookCol = value;
+    }
     public NavMeshAgent Agent
     {
         get => agent;
@@ -60,20 +77,19 @@ public class Monster : MonoBehaviour
         {
             isPlayerCheck = value;
             if (isPlayerCheck && isStun)
+            {
                 sm.SetState("Run");
+            }
             else if (!isPlayerCheck && isStun)
                 sm.SetState("Idle");
         }
 
     }
-    public bool IsCheck
-    { get { return isCheck; } 
-      set { isCheck = value; }
-    }
     public Rigidbody Rb
     { get => rb; 
       set => rb = value;
     }
+    #endregion
     private void OnEnable()
     {
         GameManager.Subscribe(FinalAttraction);
@@ -100,8 +116,8 @@ public class Monster : MonoBehaviour
     }
     private void Start()
     {
+        escapeCo = EscapeCo();
         maxDistance = 20f;
-        escape = 0;
         isStun = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -147,17 +163,15 @@ public class Monster : MonoBehaviour
 
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
-        Collider[] playerAttackCol = Physics.OverlapSphere(transform.position, 2, targetLayerMask);
-        IsCheck = playerLookCol.Length > 0;
-        if (IsCheck)
+        playerAttackCol = Physics.OverlapSphere(transform.position, 2, targetLayerMask);
+        isCheck = playerLookCol.Length > 0;
+        if (isCheck)
         {
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-            {
                 IsPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-            }
         }
         else
         {
@@ -166,10 +180,12 @@ public class Monster : MonoBehaviour
             else
                 return;
         }
-        if (playerAttackCol.Length > 0)
+        if (playerAttackCol.Length > 0 && isStun)
         {
-            animator.SetBool("isAttack", true);
+            sm.SetState("Attack");
         }
+        //else
+        //    sm.SetState("Idle");
     }
     private void OnDrawGizmos()
     {
@@ -222,5 +238,20 @@ public class Monster : MonoBehaviour
         }
         sm.SetState("Idle");
         isStun = true;
+    }
+    public IEnumerator EscapeCo()
+    {
+        escape = 0;
+        while (escape < 2)
+        {
+            escape += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                sm.SetState("Stun");
+                isStun = false;
+            }
+            yield return null;
+        }
+        Debug.Log("주금");
     }
 }

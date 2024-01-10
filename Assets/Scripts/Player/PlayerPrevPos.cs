@@ -64,6 +64,4 @@ public class PlayerPrevPos : MonoBehaviour
         prevPosQ.Enqueue(prevPosPrefab);
         prevPosPrefab.SetActive(false);
     }
-
-
 }
