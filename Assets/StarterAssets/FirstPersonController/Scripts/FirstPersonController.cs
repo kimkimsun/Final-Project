@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CustomInterface;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -9,11 +10,12 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour
-	{
+	public class FirstPersonController : MonoBehaviour, ISubscribeable
+    {
 		public bool isMove;
 		public bool isRun;
-		PlayerPrevPos prevPos;
+		public Pause pause;
+
 
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
@@ -101,7 +103,6 @@ namespace StarterAssets
 
 		private void Start()
 		{
-			prevPos = GetComponent<PlayerPrevPos>();
             _controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -109,9 +110,8 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
-			// reset our timeouts on start
-			_jumpTimeoutDelta = JumpTimeout;
+            // reset our timeouts on start
+            _jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
 		}
 
@@ -127,7 +127,17 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-		private void GroundedCheck()
+        private void OnEnable()
+        {
+			pause.RegisterListener(this);
+        }
+
+        private void OnDisable()
+        {
+            pause.UnregisterListener(this);
+        }
+
+        private void GroundedCheck()
 		{
 			// set sphere position, with offset
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
@@ -285,5 +295,11 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
+        public void OnEvent()
+        {
+            this.enabled = false;
+        }
+
 	}
 }

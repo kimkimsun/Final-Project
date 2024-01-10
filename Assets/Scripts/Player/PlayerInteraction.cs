@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     Player player;
+    [SerializeField]Pause pause;
 
     private void Start()
     {
@@ -22,8 +23,12 @@ public class PlayerInteraction : MonoBehaviour
                 UIManager.Instance.UIStack.Pop().GameObject().SetActive(false);
 
             }
-            else
-                Debug.Log("여기에 설정창 나오는거 해야됩니당");
+            else if(UIManager.Instance.UIStack.Count <= 0)
+            {
+                Debug.Log(pause.followers.Count);
+                pause.Raise();
+            }
+                
         }
 
         if (player.inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))

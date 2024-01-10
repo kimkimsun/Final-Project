@@ -21,13 +21,14 @@ namespace CustomInterface
     public interface ISubscribeable
     {
         public void OnEvent();
+
     }
 
     public interface IEventable
     {
         public void Raise();
-        public void RegisterListener(object listener);
-        public void UnregisterListener(object listener);
+        public void RegisterListener(ISubscribeable listener);
+        public void UnregisterListener(ISubscribeable listener);
     }
     public interface IStunable
     {

@@ -5,23 +5,23 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FinalEvent : ScriptableObject, IEventable
 {
-    public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
+    public List<ISubscribeable> gameEventListeners = new List<ISubscribeable>();
 
     public void Raise()
     {
-        foreach(GameEventListener listener in gameEventListeners)
+        foreach(ISubscribeable listener in gameEventListeners)
         {
             listener.OnEvent();
         }
     }
-    public void RegisterListener(object listener)
+    public void RegisterListener(ISubscribeable listener)
     {
-        gameEventListeners.Add((GameEventListener)listener);
+        gameEventListeners.Add(listener);
     }
 
-    public void UnregisterListener(object listener)
+    public void UnregisterListener(ISubscribeable listener)
     {
-        gameEventListeners.Remove((GameEventListener)listener);
+        gameEventListeners.Remove(listener);
     }
 
 }

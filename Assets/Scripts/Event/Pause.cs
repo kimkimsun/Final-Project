@@ -8,24 +8,23 @@ using CustomInterface;
 [CreateAssetMenu]
 public class Pause : ScriptableObject, IEventable
 {
-    public static event Action allstop;
-    private List<PauseObject> followers = new List<PauseObject>();
+    public List<ISubscribeable> followers = new List<ISubscribeable>();
     public void Raise()
     {
-        foreach (PauseObject follower in followers)
+        foreach (ISubscribeable follower in followers)
         {
             follower.OnEvent();
         }
     }
 
-    public void RegisterListener(object follower)
+    public void RegisterListener(ISubscribeable follower)
     {
-        followers.Add((PauseObject)follower);
+        followers.Add( follower);
     }
 
-    public void UnregisterListener(object follower)
+    public void UnregisterListener(ISubscribeable follower)
     {
-        followers.Remove((PauseObject)follower);
+        followers.Remove(follower);
     }
 
 
