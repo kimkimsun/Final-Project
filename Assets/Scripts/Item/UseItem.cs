@@ -36,7 +36,6 @@ public class CameraItemStrategy : UseItemStrategy
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
         isFirstCamera = true;
-        useItem.firstDic.Add(this, isFirstCamera);
     }
 
     public override void PrintInfo() 
@@ -69,7 +68,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstFireCracker = true;
-        useItem.firstDic.Add(this, isFirstFireCracker);
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
         itemCollider = useItem.GetComponentInChildren<SphereCollider>();
@@ -106,7 +104,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
             itemRB.AddForce(nextVec *1.5f,ForceMode.Impulse );
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
         }
-        //���� ����
         useItem.StartCoroutine(AttractionCo());
     }
     IEnumerator AttractionCo()
@@ -131,7 +128,6 @@ public class MirrorItemStrategy : UseItemStrategy
     {
         stunLight = useItem.GetComponentInChildren<StunLight>();
         isFirstMirror = true;
-        useItem.firstDic.Add(this, isFirstMirror);
     }
     public override void PrintInfo()
     {
@@ -166,7 +162,6 @@ public class HpBuffItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstHpBuff = true;
-        useItem.firstDic.Add(this, isFirstHpBuff);
     }
 
     public override void PrintInfo()
@@ -200,7 +195,6 @@ public class StaminaBuffItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstStaminaBuff = true;
-        useItem.firstDic.Add(this, isFirstStaminaBuff);
     }
     public override void PrintInfo()
     {
@@ -242,7 +236,6 @@ public class KeyItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstKey = true;
-        useItem.firstDic.Add(this, isFirstKey);
     }
     public override void PrintInfo()
     {
@@ -272,7 +265,6 @@ public class AttackItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstAttackItem = true;
-        useItem.firstDic.Add(this, isFirstAttackItem);
     }
 
     public override void PrintInfo()
@@ -397,7 +389,6 @@ public class UseItem : Item
     public UseItemStrategy UseItemstrategy;
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
-    public Dictionary<ItemStrategy,bool> firstDic = new Dictionary<ItemStrategy,bool>();
     private void Start()
     {
        switch (useItem_Type)
