@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +22,7 @@ public class Monster : MonoBehaviour
     private bool isPlayerCheck;
     private bool isStun;
     private bool isAttack;
-    private float escape;
+    public float escape;
     private float maxDistance;
     private float stunTime;
     private float? distance= null;
@@ -35,7 +36,6 @@ public class Monster : MonoBehaviour
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
-
     public IEnumerator EscapeCor
     {
         get => escapeCo; 
@@ -76,13 +76,21 @@ public class Monster : MonoBehaviour
         {
             isPlayerCheck = value;
             if (isPlayerCheck && isStun)
-            {
                 sm.SetState("Run");
-            }
-            else if (!isPlayerCheck && isStun)
+            else if (isPlayerCheck && isStun)
                 sm.SetState("Idle");
         }
 
+    }
+    public bool IsCheck 
+    {
+        get => isCheck;
+        set 
+        { 
+            isCheck = value;  
+            if (!isCheck && isStun) 
+                sm.SetState("Idle"); 
+        } 
     }
     public Rigidbody Rb
     { get => rb; 
@@ -149,7 +157,8 @@ public class Monster : MonoBehaviour
     }
     public void MonsterAttack()
     {
-        Debug.Log("event Àß µé¾î¿È");
+        Debug.Log("Å»ÃâÇØ ¾ß¹ß");
+        StartCoroutine(escapeCo);
     }
     private void Update()
     {
@@ -164,8 +173,8 @@ public class Monster : MonoBehaviour
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
         playerAttackCol = Physics.OverlapSphere(transform.position, 2, targetLayerMask);
-        isCheck = playerLookCol.Length > 0;
-        if (isCheck)
+        IsCheck = playerLookCol.Length > 0;
+        if (IsCheck)
         {
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
@@ -173,17 +182,12 @@ public class Monster : MonoBehaviour
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
                 IsPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
         }
-/*        else
-        {
-            if (IsPlayerCheck)
-                IsPlayerCheck = false;
-            else
-                return;
-        }*/
         if (playerAttackCol.Length > 0 && isAttack)
+        {
             sm.SetState("Attack");
-        //else
-          //  sm.SetState("Idle");
+            isAttack = false;
+            isStun = false;
+        }
     }
     private void OnDrawGizmos()
     {
@@ -236,12 +240,13 @@ public class Monster : MonoBehaviour
         }
         sm.SetState("Idle");
         isStun = true;
+        isAttack = true;
     }
     public IEnumerator EscapeCo()
     {
         Debug.Log("µé¾î¿È");
         escape = 0;
-        while (escape < 2)
+        while (escape < 5)
         {
             escape += Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.J))

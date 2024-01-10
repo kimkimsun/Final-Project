@@ -32,6 +32,7 @@ public class MonsterIdleState : MonsterState
     }
     public override void Update()
     {
+        Debug.Log("IDLE µé¾î¿È");
     }
 }
 
@@ -62,7 +63,7 @@ public class MonsterStunState : MonsterState
         monster.StartCoroutine(monster.StunCo());
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isStun", true);
-        //monster.transform.forward = GameManager.Instance.player.transform.position;
+        monster.Animator.bodyRotation = GameManager.Instance.transform.rotation;
     }
     public override void Exit()
     {
@@ -80,13 +81,14 @@ public class MonsterAttackState : MonsterState
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isAttack",true);
         monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = false;
-        monster.StartCoroutine(monster.EscapeCo());
+        monster.escape = 0f;
     }
     public override void Exit()
     {
         monster.Agent.enabled = true;
         monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = true;
         monster.Animator.SetBool("isAttack",false);
+        monster.StopCoroutine(monster.EscapeCor);
     }
     public override void Update()
     {
