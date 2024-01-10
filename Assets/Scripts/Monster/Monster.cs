@@ -173,13 +173,13 @@ public class Monster : MonoBehaviour
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
                 IsPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
         }
-        else
+/*        else
         {
             if (IsPlayerCheck)
                 IsPlayerCheck = false;
             else
                 return;
-        }
+        }*/
         if (playerAttackCol.Length > 0 && isAttack)
             sm.SetState("Attack");
         //else
