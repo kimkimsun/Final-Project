@@ -107,7 +107,6 @@ public class Monster : MonoBehaviour
     }
     private void FinalAttraction()
     {
-        Debug.Log("출력되는지 확인");
         agent.SetDestination(GameManager.Instance.player.transform.position);
     }
     private void Awake()
@@ -157,7 +156,6 @@ public class Monster : MonoBehaviour
     }
     public void MonsterAttack()
     {
-        Debug.Log("탈출해 야발");
         StartCoroutine(escapeCo);
     }
     private void Update()
@@ -244,7 +242,6 @@ public class Monster : MonoBehaviour
     }
     public IEnumerator EscapeCo()
     {
-        Debug.Log("들어옴");
         escape = 0;
         while (escape < 5)
         {
@@ -255,6 +252,5 @@ public class Monster : MonoBehaviour
             }
             yield return new WaitUntil(() => escape < 2);
         }
-        Debug.Log("주금");
     }
 }
