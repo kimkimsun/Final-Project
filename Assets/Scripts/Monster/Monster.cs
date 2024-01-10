@@ -1,7 +1,5 @@
-using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +20,7 @@ public class Monster : MonoBehaviour
     private bool isCheck;
     private bool isPlayerCheck;
     private bool isStun;
+    private bool isAttack;
     private float escape;
     private float maxDistance;
     private float stunTime;
@@ -117,16 +116,17 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         escapeCo = EscapeCo();
-        maxDistance = 20f;
-        isStun = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = 5;
-
-
+        maxDistance = 20f;
+        agent.speed = 5f;
+        isStun = true;
+        isAttack = true;
         sm = new StateMachine<Monster>();
         sm.owner = this;
+
+
         sm.AddState("Idle", new MonsterIdleState());
         sm.AddState("Run", new MonsterRunState());
         sm.AddState("Stun", new MonsterStunState());
@@ -180,12 +180,10 @@ public class Monster : MonoBehaviour
             else
                 return;
         }
-        if (playerAttackCol.Length > 0 && isStun)
-        {
+        if (playerAttackCol.Length > 0 && isAttack)
             sm.SetState("Attack");
-        }
         //else
-        //    sm.SetState("Idle");
+          //  sm.SetState("Idle");
     }
     private void OnDrawGizmos()
     {
@@ -238,19 +236,23 @@ public class Monster : MonoBehaviour
         }
         sm.SetState("Idle");
         isStun = true;
+        isAttack = true;
     }
     public IEnumerator EscapeCo()
     {
+        Debug.Log("╣И╬Н©х");
+        isAttack = false;
         escape = 0;
         while (escape < 2)
         {
+            isAttack = false;
             escape += Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.J))
             {
+                isStun = true;
                 sm.SetState("Stun");
-                isStun = false;
             }
-            yield return null;
+            yield return new WaitUntil(() => escape < 2);
         }
         Debug.Log("аж╠щ");
     }
