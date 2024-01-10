@@ -131,6 +131,10 @@ public class Monster : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
     }
+    public void MonsterAttack()
+    {
+        Debug.Log("event Àß µé¾î¿È");
+    }
     private void Update()
     {
         sm.curState?.Update();
