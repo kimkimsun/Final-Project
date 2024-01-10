@@ -1,8 +1,9 @@
+using CustomInterface;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class FinalEvent : ScriptableObject
+public class FinalEvent : ScriptableObject, IEventable
 {
     public List<GameEventListener> gameEventListeners = new List<GameEventListener>();
 
@@ -10,16 +11,17 @@ public class FinalEvent : ScriptableObject
     {
         foreach(GameEventListener listener in gameEventListeners)
         {
-            listener.onEventRaised();
+            listener.OnEvent();
         }
     }
-    public void RegisterListener(GameEventListener listener)
+    public void RegisterListener(object listener)
     {
-        gameEventListeners.Add(listener);
+        gameEventListeners.Add((GameEventListener)listener);
     }
-    public void UnregisterListener(GameEventListener listener)
+
+    public void UnregisterListener(object listener)
     {
-        gameEventListeners.Remove(listener);
+        gameEventListeners.Remove((GameEventListener)listener);
     }
 
 }

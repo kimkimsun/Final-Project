@@ -1,13 +1,14 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+public class GameEventListener : ISubscribeable
 {
     public FinalEvent Event;
     public UnityEvent Response;
-    public void onEventRaised()
+    public void OnEvent()
     {
         Response.Invoke();
     }
