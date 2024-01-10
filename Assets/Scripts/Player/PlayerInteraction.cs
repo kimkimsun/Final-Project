@@ -18,7 +18,10 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (UIManager.Instance.UIStack.Count > 0)
+            {
                 UIManager.Instance.UIStack.Pop().GameObject().SetActive(false);
+
+            }
             else
                 Debug.Log("여기에 설정창 나오는거 해야됩니당");
         }
