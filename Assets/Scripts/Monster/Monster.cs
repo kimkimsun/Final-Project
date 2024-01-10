@@ -31,6 +31,11 @@ public class Monster : MonoBehaviour
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    public StateMachine<Monster> Sm
+    {
+        get => sm;
+        set => sm = value;
+    }
     public Animator Animator
     {
         get => animator;
