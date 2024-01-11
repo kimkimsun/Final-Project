@@ -18,14 +18,15 @@ public class InteractionAim : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 10))
+        if (Physics.Raycast(ray, out hit, 5))
         {
-
             if (hit.transform.TryGetComponent<IInteraction>(out IInteraction hitResult))
             {
-                text.text = hit.transform.GetComponent<IInteraction>().InteractionText;
+                text.text = hitResult.InteractionText;
                 if (Input.GetMouseButtonDown(0))
-                    hit.transform.GetComponent<IInteraction>().Active();
+                {
+                    hitResult.Active();
+                }
             }
             else
                 text.text = "";

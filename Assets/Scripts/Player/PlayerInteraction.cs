@@ -26,7 +26,7 @@ public class PlayerInteraction : MonoBehaviour
             else if(UIManager.Instance.UIStack.Count <= 0)
             {
                 Debug.Log(pause.followers.Count);
-                pause.Raise();
+                //pause.Raise();
             }
                 
         }
