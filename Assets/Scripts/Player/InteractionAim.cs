@@ -11,7 +11,7 @@ public class InteractionAim : MonoBehaviour
     private int maxDistance;
     private void Start()
     {
-        maxDistance = 1;
+        maxDistance = 15;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
     }
     void Update()
@@ -30,7 +30,10 @@ public class InteractionAim : MonoBehaviour
                 }
             }
             if (hit.transform.TryGetComponent<Monster>(out Monster mon))
+            {
+                Debug.Log("°¨ÁöÇÔ");
                 monsterCheck();
+            }
             else
                 return;
         }
