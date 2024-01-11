@@ -7,12 +7,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour, IEventable
 {
+    private static int exitItemCount;
+
     public FirstPersonController playerMove;
     public FinalEvent finalEvent;
     private StateMachine<Player> playerSM;
     [SerializeField] private InteractionAim aim;
 
     public GameObject itemBox;
+    public Inventory oneSlot;
     public Inventory inven;
     public Inventory quickSlot;
     public Inventory portableInven;
@@ -20,18 +23,17 @@ public class Player : MonoBehaviour, IEventable
     public List<ISubscribeable> eventObjs = new List<ISubscribeable>();
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
-    public int slotIndexNum;
-    private static int exitItemCount;
-    private int finalKey = 5;
-    private int maxDistance = 5;
-    private int tension;
+    [SerializeField] private int tension;
     private int tensionDwon = 5;
     private int tensionUp = 3;
+    private int maxDistance = 5;
     private int max = 100;
     private int zero = 0;
-    private bool isMonsterCheck = false;
+    private int finalKey = 5;
+    private bool isMonsterCheck;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
+    public int slotIndexNum;
 
     public Inventory Inven
     {
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour, IEventable
             stamina = value;
             if (stamina >= max)
             {
-                stamina = 100;
+                stamina = max;
                 playerMove.MoveSpeed = 4.0f;
                 playerMove.SprintSpeed = 6.0f;
             }
@@ -145,9 +147,9 @@ public class Player : MonoBehaviour, IEventable
         playerSM.AddState("Caught", new CaughtState());
         playerSM.SetState("Idle");
 
-        hp = 100;
-        tension = 100;
-        stamina = 100;
+        Hp = max;
+        Tension = max;
+        Stamina = max;
         monsterMask = 1 << 9;
 
         minusTensionCo = MinusTensionCo(tensionDwon);

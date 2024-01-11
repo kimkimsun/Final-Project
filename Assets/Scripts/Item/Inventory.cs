@@ -54,15 +54,15 @@ public class Inventory : MonoBehaviour
         }
         else if (item.TryGetComponent<UseItem>(out UseItem uI))
         {
-            if (item.GetComponent<UseItem>().useItem_Type == USEITEM_TYPE.HAIRPIN)
+/*            if (item.GetComponent<UseItem>().useItem_Type == USEITEM_TYPE.HAIRPIN)
             {
                 portableSlot[1].item = item;
                 portableSlot[1].GetComponent<Image>().sprite = item.sprite;
-            }
-            else
-            {
+            }*/
+
                 for (int i = 0; i < slots.Length; i++)
                 {
+                Debug.Log(slots[i] == null);
                     if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
                     {
                         slots[i].items.Add(item);
@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour
                         return;
                     }
                 }
-            }
+
         }
     }
     public void QuickItemUse()
