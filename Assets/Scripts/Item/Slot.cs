@@ -46,7 +46,10 @@ public class Slot : MonoBehaviour
     {
         countText.text = CountItem.ToString();
     }
-
+    public void Use()
+    {
+        item.Use();
+    }
     public void SlotItemUse()
     {
         if (items.Count != 0)

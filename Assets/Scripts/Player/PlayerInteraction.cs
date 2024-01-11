@@ -15,7 +15,6 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
-        #region 플레이어 상호작용 키
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (UIManager.Instance.UIStack.Count > 0)
@@ -32,10 +31,11 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         if (player.inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
-        {
             player.inven.SwitchItem();
-        }
-
+        if (Input.GetKeyDown(KeyCode.Q))
+            player.portableInven.setActive(true);
+        if (Input.GetKeyDown(KeyCode.Q))
+            player.portableInven.setActive(false);
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!player.inven.gameObject.activeSelf)
@@ -68,6 +68,5 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
             return;
-        #endregion
     }
 }

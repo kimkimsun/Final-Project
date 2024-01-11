@@ -34,4 +34,5 @@ namespace CustomInterface
     {
         public void Stun();
     }
+    public interface IPortable { }
 }
