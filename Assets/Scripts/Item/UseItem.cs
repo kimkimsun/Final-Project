@@ -376,6 +376,35 @@ public class ExitItemStrategy : UseItemStrategy
             return;
     }
 }
+public class HairPinItemStrategy : UseItemStrategy
+{
+    static bool isExitItme;
+    public HairPinItemStrategy(UseItem useItem) : base(useItem) { }
+
+    public override void Init()
+    {
+        isExitItme = true;
+    }
+    public override void PrintInfo()
+    {
+        if (isExitItme)
+        {
+            base.PrintInfo();
+        }
+        isExitItme = false;
+    }
+    public override void Use()
+    {
+        base.Use();
+        if (GameManager.Instance.player.ExitItemCount <= 5)
+        {
+            //어떤 이벤트 실행
+            useItem.transform.SetParent(null);
+        }
+        else
+            return;
+    }
+}
 
 public enum USEITEM_TYPE
 {
@@ -384,7 +413,8 @@ public enum USEITEM_TYPE
     MIRROR,
     HPBUFF,
     STAMINABUFF,
-    FLASHLIGHT
+    FLASHLIGHT,
+    HAIRPIN,
 }
 
 public class UseItem : Item
@@ -414,6 +444,9 @@ public class UseItem : Item
             case USEITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
+            case USEITEM_TYPE.HAIRPIN:
+                itemStrategy = new HairPinItemStrategy(this);
+                break;
         }
 
     }
@@ -422,8 +455,9 @@ public class UseItem : Item
     public override void Active()
     {
         ((UseItemStrategy)itemStrategy).PrintInfo();
-        Inventory quickSlot = GameManager.Instance.player.QuickSlot;
+        Inventory quickSlot = GameManager.Instance.player.inven;
         GameObject itemBox = GameManager.Instance.player.itemBox;
+        Debug.Log(this.itemName);
         quickSlot.AddItem(this);
         gameObject.SetActive(false);
         transform.SetParent(itemBox.transform);
