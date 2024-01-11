@@ -5,10 +5,10 @@ using System;
 public class InteractionAim : MonoBehaviour
 {
     [SerializeField] private LayerMask monsterLayerMask;
-    public Action monsterCheck;
     private Vector3 screenCenter;
-    public TextMeshProUGUI text;
     private int maxDistance;
+    public TextMeshProUGUI text;
+    public bool isLookMonster;
     private void Start()
     {
         maxDistance = 2;
@@ -29,9 +29,9 @@ public class InteractionAim : MonoBehaviour
                     hitResult.Active();
                 }
             }
-            else if (hit.transform.GetComponent<Monster>())
+            else if (hit.transform.GetComponent<Monster>() != null)
             {
-                monsterCheck();
+                isLookMonster = true;
             }
         }
         else

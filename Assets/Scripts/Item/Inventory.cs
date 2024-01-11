@@ -18,6 +18,11 @@ public class Inventory : MonoBehaviour
 
     public int Index { get => index;}
 
+    public Slot[] Slots
+    {
+        get { return slots; }
+        set { slots = value; }
+    }
     public Slot[] EquipQuickSlot
     {
         get { return equipQuickSlot; }
@@ -54,31 +59,24 @@ public class Inventory : MonoBehaviour
         }
         else if (item.TryGetComponent<UseItem>(out UseItem uI))
         {
-/*            if (item.GetComponent<UseItem>().useItem_Type == USEITEM_TYPE.HAIRPIN)
+            for (int i = 0; i < slots.Length; i++)
             {
-                portableSlot[1].item = item;
-                portableSlot[1].GetComponent<Image>().sprite = item.sprite;
-            }*/
-
-                for (int i = 0; i < slots.Length; i++)
-                {
                 Debug.Log(slots[i] == null);
-                    if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
-                    {
-                        slots[i].items.Add(item);
-                        slots[i].CountItem++;
-                        slots[i].CurItem++;
-                        return;
-                    }
-                    else if (slots[i].items.Count == 0)
-                    {
-                        slots[i].items.Add(item);
-                        slots[i].SetImage(item);
-                        slots[i].CountItem++;
-                        return;
-                    }
+                if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
+                {
+                    slots[i].items.Add(item);
+                    slots[i].CountItem++;
+                    slots[i].CurItem++;
+                    return;
                 }
-
+                else if (slots[i].items.Count == 0)
+                {
+                    slots[i].items.Add(item);
+                    slots[i].SetImage(item);
+                    slots[i].CountItem++;
+                    return;
+                }
+            }
         }
     }
     public void QuickItemUse()

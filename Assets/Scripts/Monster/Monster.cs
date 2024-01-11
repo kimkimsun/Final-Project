@@ -215,7 +215,7 @@ public class Monster : MonoBehaviour, ISubscribeable
         Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
 
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, 2f);
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
     public IEnumerator MonsterMoveCo()
     {
