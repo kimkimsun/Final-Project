@@ -25,12 +25,13 @@ public class Player : MonoBehaviour, IEventable
     private int finalKey = 5;
     private int maxDistance = 5;
     private int tension;
-    private int damage;
-    private int plusHp;
-    private int maxDamage = 10;
+    private int tensionDwon = 5;
+    private int tensionUp = 3;
+    private int max = 100;
+    private int zero = 0;
     private bool isMonsterCheck = false;
-    private IEnumerator minusHpCo;
-    private IEnumerator plusHpCo;
+    private IEnumerator minusTensionCo;
+    private IEnumerator plusTensionCo;
 
     public Inventory Inven
     {
@@ -47,26 +48,19 @@ public class Player : MonoBehaviour, IEventable
         get { return isMonsterCheck; }
         set 
         { 
-            isMonsterCheck = value; 
-            if(isMonsterCheck)
+            isMonsterCheck = value;
+            if (isMonsterCheck)
             {
-                StartCoroutine(minusHpCo);
+                StopCoroutine(plusTensionCo);
+                StartCoroutine(minusTensionCo);
+            }
+            else
+            {
+                StopCoroutine(minusTensionCo);
+                StartCoroutine(plusTensionCo);
             }
         }
     }
-    public int Damage
-    {          
-        set
-        {
-            damage = value;
-            if (damage >= maxDamage)
-                damage = maxDamage;
-            if(damage <= 0)
-                damage = 0;
-
-        }
-    }    
-
 
     public int ExitItemCount
     {
@@ -86,17 +80,17 @@ public class Player : MonoBehaviour, IEventable
         set
         {
             stamina = value;
-            if (stamina >= 100)
+            if (stamina >= max)
             {
                 stamina = 100;
                 playerMove.MoveSpeed = 4.0f;
                 playerMove.SprintSpeed = 6.0f;
             }
-            if (stamina <= 0)
+            if (stamina <= zero)
             {
-                stamina = 0;
+                stamina = zero;
                 playerMove.MoveSpeed = 2.5f;
-                playerMove.SprintSpeed = 0f;
+                playerMove.SprintSpeed = zero;
             }
         }
     }
@@ -107,11 +101,15 @@ public class Player : MonoBehaviour, IEventable
         {
             tension = value;
             //텐션은 몬스터와 마주칠시 줄어들음
-            if (tension <= 50)
+            if(tension <= max)
+                tension = max;
+            if (tension <= 60)
             {
-                //UI 변화
-                //심장소리
                 playerSM.SetState("Exhaustion");
+            }
+            if (tension >= 60)
+            {
+                playerSM.SetState("IdleState");
             }
         }
     }
@@ -121,13 +119,15 @@ public class Player : MonoBehaviour, IEventable
         set
         {
             hp = value;
+            if (hp >= max)
+                hp = max;
             if (hp <= 30)
             {
                 playerSM.SetState("Moribund");
             }
-            if (hp <= 0)
+            if (hp <= zero)
             {
-                hp = 0;
+                hp = zero;
                 ScenesManager.Instance.Die();
             }
         }
@@ -150,8 +150,9 @@ public class Player : MonoBehaviour, IEventable
         stamina = 100;
         monsterMask = 1 << 9;
 
-        minusHpCo = MinusHpCo(damage);
-        plusHpCo = PlusHpCo(plusHp);
+        minusTensionCo = MinusTensionCo(tensionDwon);
+        plusTensionCo = PlusTensionCo(tensionUp);
+
         aim.monsterCheck += () => {playerSM.SetState("Caught");};
     }
 
@@ -172,9 +173,9 @@ public class Player : MonoBehaviour, IEventable
     {
         throw new System.NotImplementedException();
     }
-    public IEnumerator MinusHpCo(int damege)
+    public IEnumerator MinusTensionCo(int damege)
     {
-        while (Hp > 0)
+        while (Tension > zero)
         {
             yield return new WaitForSeconds(3);
             Hp -= damege;
@@ -182,12 +183,12 @@ public class Player : MonoBehaviour, IEventable
         }
         yield break;
     }
-    public IEnumerator PlusHpCo(int plusHp)
+    public IEnumerator PlusTensionCo(int tensionUp)
     {
-        while (Hp < 100)
+        while (Tension < zero)
         {
             yield return new WaitForSeconds(5);
-            Hp += plusHp;
+            Hp += tensionUp;
             yield return new WaitUntil(() => Hp < 100);
         }
     }
@@ -195,13 +196,17 @@ public class Player : MonoBehaviour, IEventable
     private void Update()
     {
 
-        RaycastHit hit;
-        Debug.DrawLine(transform.position, transform.position + (transform.forward * maxDistance), Color.blue);
-        if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance,monsterMask))
+        Collider[] MonsterZoneCol = Physics.OverlapSphere(transform.position, 10, monsterMask);
+        bool isMonsterZon = MonsterZoneCol.Length > 0;
+        if (isMonsterZon)
         {
-            isMonsterCheck = true;
+            RaycastHit hit;
+            Vector3 direction = ((MonsterZoneCol[0].transform.position) - transform.position).normalized;
+            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
+            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
+            {
+                IsMonsterCheck = hit.collider.gameObject.layer == monsterMask;
+            }
         }
-        else
-            isMonsterCheck = false;
     }
 }

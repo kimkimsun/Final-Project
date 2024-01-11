@@ -4,28 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-/*public static class BrightLight
-{
-    
-    public static void Action(GameObject gameObject)
-    {
-        
-    }
-
-   static IEnumerator BrightLightCo(Light light, int bright, GameObject gameObject)
-    {
-        light.intensity = bright;
-        while (light.intensity > 0)
-        {
-            light.intensity -= 1;
-            yield return new WaitForSeconds(0.07f);
-
-        }
-        GameObject.Destroy(gameObject);
-        yield break;
-    }
-}
-*/
 public class StunLight : MonoBehaviour,IStunable
 {
     GameObject Camera;
