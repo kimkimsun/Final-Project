@@ -176,7 +176,7 @@ public class Monster : MonoBehaviour, ISubscribeable
 
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
-        playerAttackCol = Physics.OverlapSphere(transform.position, 2, targetLayerMask);
+        playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
         IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {
