@@ -1,19 +1,21 @@
+using CustomInterface;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] Slot[] slots = new Slot[5];
+    [SerializeField] private Slot[] slots = new Slot[5];
     [SerializeField] private Slot[] equipQuickSlot = new Slot[4];
+
+    [SerializeField] private Slot[] portableSlot = new Slot[2];
     [SerializeField] private Slot tempSlot;
     [SerializeField] private Slot playerEquipSlot;
     [SerializeField] private Image textCoverImage;
 
     private int index;
 
-    public int Index
-    { get => index;}
+    public int Index { get => index;}
 
     public Slot[] EquipQuickSlot
     {
@@ -26,13 +28,25 @@ public class Inventory : MonoBehaviour
     }
     public void AddItem(Item item)
     {
-        if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
+        if (item.TryGetComponent<IPortable>(out IPortable por))
+        {
+            Debug.Log("ぬだづしぉ格ぬづしぉい");
+            for (int i = 0; i < portableSlot.Length; i++)
+            {
+                if (portableSlot[i] == null)
+                {
+                    portableSlot[i].item = item;
+                    portableSlot[i].GetComponent<Image>().sprite = item.sprite;
+                }
+            }
+        }
+        else if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
         {
             if (PlayerEquipSlot.item == null)
             {
                 PlayerEquipSlot.item = item;
                 PlayerEquipSlot.GetComponent<Image>().sprite = item.sprite;
-               // item.Use();
+                item.Use();
                 item.gameObject.SetActive(false);
             }
             else
@@ -68,7 +82,6 @@ public class Inventory : MonoBehaviour
                     return;
                 }
             }
-
         }
     }
     public void QuickItemUse()
@@ -83,6 +96,8 @@ public class Inventory : MonoBehaviour
             slots[3].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
+        else if (Input.GetKeyDown(KeyCode.F))
+            portableSlot[0].Use();
     }
     public void IndexSlot(int index)
     {

@@ -1,7 +1,9 @@
+using Cinemachine;
 using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +12,7 @@ public class Monster : MonoBehaviour, ISubscribeable
     #region º¯¼ö
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
+    [SerializeField] private CinemachineVirtualCamera monsterVirtualCamera;
     private IEnumerator escapeCo;
     private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
@@ -37,6 +40,11 @@ public class Monster : MonoBehaviour, ISubscribeable
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    public CinemachineVirtualCamera MonsterVirtualCamera
+    {
+        get => monsterVirtualCamera;
+        set => monsterVirtualCamera = value;
+    }
     public float Escape
     {
         get => escape;
@@ -168,12 +176,11 @@ public class Monster : MonoBehaviour, ISubscribeable
     {
         sm.curState?.Update();
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
             sm.SetState("Stun");
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            monsterVirtualCamera.Priority = 11;
         Vector3 lookrotation = agent.steeringTarget - transform.position;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
-
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
         playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
@@ -192,6 +199,11 @@ public class Monster : MonoBehaviour, ISubscribeable
             isAttack = false;
             isStun = false;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IStunable>(out IStunable stun))
+            sm.SetState("Stun");
     }
     private void OnDrawGizmos()
     {

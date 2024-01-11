@@ -38,7 +38,7 @@ public class Slot : MonoBehaviour
     private void Start()
     {
         items = new List<Item>();
-        OnCountChange += ChangeCount;
+        //OnCountChange += ChangeCount;
         CountItem = 0;
         CurItem = 0;
     }
@@ -46,7 +46,10 @@ public class Slot : MonoBehaviour
     {
         countText.text = CountItem.ToString();
     }
-
+    public void Use()
+    {
+        item.Use();
+    }
     public void SlotItemUse()
     {
         if (items.Count != 0)
