@@ -80,13 +80,11 @@ public class MonsterAttackState : MonsterState
     {
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isAttack",true);
-        monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = false;
-        monster.escape = 0f;
+        monster.Escape = 0f;
     }
     public override void Exit()
     {
         monster.Agent.enabled = true;
-        monster.PlayerAttackCol[0].GetComponentInParent<FirstPersonController>().enabled = true;
         monster.Animator.SetBool("isAttack",false);
         monster.StopCoroutine(monster.EscapeCor);
     }

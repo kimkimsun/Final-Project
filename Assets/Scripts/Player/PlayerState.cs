@@ -126,5 +126,21 @@ public class MoribundState : PlayerState // บ๓ป็ ป๓ลย
     }
 
 }
+public class CaughtState: PlayerState // บ๓ป็ ป๓ลย
+{
 
+    public override void Enter()
+    {
+        player.playerMove.enabled = false;
+    }
 
+    public override void Exit()
+    {
+        player.playerMove.enabled = true;
+    }
+
+    public override void Update()
+    {
+
+    }
+}
