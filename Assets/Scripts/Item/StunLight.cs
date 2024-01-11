@@ -26,7 +26,6 @@ public class StunLight : MonoBehaviour,IStunable
 
     public void Stun()
     {
-        stunCollider.enabled = true;
         StartCoroutine(BrightLightCo());
     }
 
