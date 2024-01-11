@@ -4,6 +4,7 @@ using StarterAssets;
 using Unity.VisualScripting;
 using CustomInterface;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IEventable
 {
@@ -12,8 +13,9 @@ public class Player : MonoBehaviour, IEventable
     public FirstPersonController playerMove;
     public FinalEvent finalEvent;
     private StateMachine<Player> playerSM;
-    [SerializeField] private InteractionAim aim;
+    public Image escapeCircle;
 
+    public InteractionAim aim;
     public GameObject itemBox;
     public Inventory oneSlot;
     public Inventory inven;
@@ -31,10 +33,13 @@ public class Player : MonoBehaviour, IEventable
     private int zero = 0;
     private int finalKey = 5;
     private bool isMonsterCheck;
+    private bool isMonsterAttackCheck;
+    private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
     public int slotIndexNum;
 
+    #region 프로퍼티
     public Inventory Inven
     {
         get => inven;
@@ -44,6 +49,12 @@ public class Player : MonoBehaviour, IEventable
     {
         get => quickSlot;
     }
+    public bool CaughtSetState
+    {
+        get => caughtSetState;
+        set => caughtSetState = value;
+    }
+
 
     public bool IsMonsterCheck
     {
@@ -63,7 +74,19 @@ public class Player : MonoBehaviour, IEventable
             }
         }
     }
-
+    public bool IsMonsterAttackCheck
+    {
+        get => isMonsterAttackCheck;
+        set
+        {
+            isMonsterAttackCheck = value;
+            if (isMonsterAttackCheck && caughtSetState)
+            {
+                playerSM.SetState("Caught");
+                caughtSetState = false;
+            }
+        }
+    }
     public int ExitItemCount
     {
         get { return exitItemCount; }
@@ -105,11 +128,11 @@ public class Player : MonoBehaviour, IEventable
             //텐션은 몬스터와 마주칠시 줄어들음
             if(tension <= max)
                 tension = max;
-            if (tension <= 60)
+            if (tension <= 60) // && bool값 true로 있어야됨 false는 setstate밑 다시 true는 exit에서
             {
                 playerSM.SetState("Exhaustion");
             }
-            if (tension >= 60)
+            if (tension > 60)
             {
                 playerSM.SetState("IdleState");
             }
@@ -134,7 +157,7 @@ public class Player : MonoBehaviour, IEventable
             }
         }
     }
-
+    #endregion
     private void Start()
     {
         playerMove = GetComponent<FirstPersonController>();
@@ -151,11 +174,10 @@ public class Player : MonoBehaviour, IEventable
         Tension = max;
         Stamina = max;
         monsterMask = 1 << 9;
+        caughtSetState = true;
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
-
-        aim.monsterCheck += () => {playerSM.SetState("Caught");};
     }
 
     public void Raise()
@@ -194,16 +216,34 @@ public class Player : MonoBehaviour, IEventable
             yield return new WaitUntil(() => Hp < 100);
         }
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(new Vector3(transform.position.x,transform.position.y + 5, transform.position.z), 1f);
+    }
+    bool CheckInLayerMask(int layerIndex)
+    {
+        return (monsterMask & (1 << layerIndex)) != 0;
+    }
     private void Update()
     {
-
-        Collider[] MonsterZoneCol = Physics.OverlapSphere(transform.position, 10, monsterMask);
-        bool isMonsterZon = MonsterZoneCol.Length > 0;
-        if (isMonsterZon)
+        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), 1, monsterMask);
+        bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
+        if(isMonsterAttackZone)
         {
             RaycastHit hit;
-            Vector3 direction = ((MonsterZoneCol[0].transform.position) - transform.position).normalized;
+            Vector3 direction = ((monsterAttackZoneCol[0].transform.position) - transform.position).normalized;
+            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
+            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
+                IsMonsterAttackCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+        }
+
+        Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, 10, monsterMask);
+        bool isMonsterZone = monsterZoneCol.Length > 0;
+        if (isMonsterZone)
+        {
+            RaycastHit hit;
+            Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
             {
