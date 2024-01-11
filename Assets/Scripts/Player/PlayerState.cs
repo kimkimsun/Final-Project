@@ -73,19 +73,16 @@ public class ExhaustionState : PlayerState //Å»Áø»óÅÂ
         plus = 2.5f;
         time = 2f;
         damege = 5;
-        //plusStaminaCo = PlusStaminaCo(plus, time);
         minusHpCo = MinusHpCo(damege);
         player.playerMove.MoveSpeed = 3.0f;
         player.playerMove.SprintSpeed = 4.5f;
         player.StartCoroutine(minusHpCo);
-       // player.StartCoroutine(plusStaminaCo);
 
     }
 
     public override void Exit()
     {
         player.StopCoroutine(minusHpCo);
-       // player.StopCoroutine(plusStaminaCo);
     }
 
     public override void Update()
