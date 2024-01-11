@@ -3,6 +3,7 @@ using UnityEngine;
 using StarterAssets;
 using Unity.VisualScripting;
 using CustomInterface;
+using System.Collections;
 
 public class Player : MonoBehaviour, IEventable
 {
@@ -14,13 +15,22 @@ public class Player : MonoBehaviour, IEventable
     public GameObject itemBox;
     public Inventory inven;
     public Inventory quickSlot;
+    public Inventory portableInven;
+    private LayerMask monsterMask;
     public List<ISubscribeable> eventObjs = new List<ISubscribeable>();
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     public int slotIndexNum;
     private static int exitItemCount;
     private int finalKey = 5;
+    private int maxDistance = 5;
     private int tension;
+    private int damage;
+    private int plusHp;
+    private int maxDamage = 10;
+    private bool isMonsterCheck = false;
+    private IEnumerator minusHpCo;
+    private IEnumerator plusHpCo;
 
     public Inventory Inven
     {
@@ -31,6 +41,32 @@ public class Player : MonoBehaviour, IEventable
     {
         get => quickSlot;
     }
+
+    public bool IsMonsterCheck
+    {
+        get { return isMonsterCheck; }
+        set 
+        { 
+            isMonsterCheck = value; 
+            if(isMonsterCheck)
+            {
+                StartCoroutine(minusHpCo);
+            }
+        }
+    }
+    public int Damage
+    {          
+        set
+        {
+            damage = value;
+            if (damage >= maxDamage)
+                damage = maxDamage;
+            if(damage <= 0)
+                damage = 0;
+
+        }
+    }    
+
 
     public int ExitItemCount
     {
@@ -112,7 +148,10 @@ public class Player : MonoBehaviour, IEventable
         hp = 100;
         tension = 100;
         stamina = 100;
+        monsterMask = 1 << 9;
 
+        minusHpCo = MinusHpCo(damage);
+        plusHpCo = PlusHpCo(plusHp);
         aim.monsterCheck += () => {playerSM.SetState("Caught");};
     }
 
@@ -132,5 +171,37 @@ public class Player : MonoBehaviour, IEventable
     public void UnregisterListener(ISubscribeable listener)
     {
         throw new System.NotImplementedException();
+    }
+    public IEnumerator MinusHpCo(int damege)
+    {
+        while (Hp > 0)
+        {
+            yield return new WaitForSeconds(3);
+            Hp -= damege;
+            Debug.Log(damege);
+        }
+        yield break;
+    }
+    public IEnumerator PlusHpCo(int plusHp)
+    {
+        while (Hp < 100)
+        {
+            yield return new WaitForSeconds(5);
+            Hp += plusHp;
+            yield return new WaitUntil(() => Hp < 100);
+        }
+    }
+
+    private void Update()
+    {
+
+        RaycastHit hit;
+        Debug.DrawLine(transform.position, transform.position + (transform.forward * maxDistance), Color.blue);
+        if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance,monsterMask))
+        {
+            isMonsterCheck = true;
+        }
+        else
+            isMonsterCheck = false;
     }
 }

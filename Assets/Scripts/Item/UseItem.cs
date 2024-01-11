@@ -49,6 +49,7 @@ public class CameraItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
+        stunLight.enabled = true;   
         stunLight.Stun();
     }
 }
