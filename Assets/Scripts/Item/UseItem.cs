@@ -85,12 +85,6 @@ public class FireCrackerItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstFireCracker)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstFireCracker = false;
-        }
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
         
         RaycastHit hit;
@@ -142,12 +136,6 @@ public class MirrorItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstMirror)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstMirror = false;
-        }
         stunLight.Stun();
         GameManager.Instance.player.gameObject.transform.position = useItem.SponPoint.gameObject.transform.position;
     }
@@ -176,12 +164,6 @@ public class HpBuffItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstHpBuff)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstHpBuff = false;
-        }
         GameManager.Instance.player.Hp += hpBuff;
         GameObject.Destroy(useItem.gameObject);
     }
@@ -209,12 +191,6 @@ public class StaminaBuffItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstStaminaBuff)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstStaminaBuff = false;
-        }
         GameManager.Instance.player.Stamina += staminaBuff;
         GameObject.Destroy(useItem.gameObject);
     }
@@ -279,12 +255,6 @@ public class AttackItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstAttackItem)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstAttackItem = false;
-        }
     }
 }
 
@@ -378,16 +348,24 @@ public class FlashlightItemStrategy : UseItemStrategy
 public class ExitItemStrategy : UseItemStrategy
 {
     static bool isExitItme;
-    public ExitItemStrategy(UseItem useItem) : base(useItem)
-    {
-    }
+    public ExitItemStrategy(UseItem useItem) : base(useItem) { }
 
     public override void Init()
     {
         isExitItme = true;
     }
+
+    public override void PrintInfo()
+    {
+        if (isExitItme)
+        {
+            base.PrintInfo();
+        }
+        isExitItme = false;
+    }
     public override void Use()
     {
+        base.Use();
         if (GameManager.Instance.player.ExitItemCount <= 5)
         {
             //어떤 이벤트 실행
