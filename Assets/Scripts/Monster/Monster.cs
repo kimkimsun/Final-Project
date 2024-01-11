@@ -37,6 +37,11 @@ public class Monster : MonoBehaviour, ISubscribeable
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    public float Escape
+    {
+        get => escape;
+        set => escape = value;
+    }
     public IEnumerator EscapeCor
     {
         get => escapeCo; 
@@ -232,7 +237,7 @@ public class Monster : MonoBehaviour, ISubscribeable
     {
         isStun = false;
         stunTime = 0f;
-        while(stunTime < 3.0f)
+        while(stunTime < 5.0f)
         {
             stunTime += Time.deltaTime;
             yield return null;
@@ -243,7 +248,6 @@ public class Monster : MonoBehaviour, ISubscribeable
     }
     public IEnumerator EscapeCo()
     {
-        escape = 0;
         while (escape < 5)
         {
             escape += Time.deltaTime;
@@ -251,7 +255,7 @@ public class Monster : MonoBehaviour, ISubscribeable
             {
                 sm.SetState("Stun");
             }
-            yield return new WaitUntil(() => escape < 2);
+            yield return new WaitUntil(() => escape < 5);
         }
     }
 

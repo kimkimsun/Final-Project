@@ -375,6 +375,29 @@ public class FlashlightItemStrategy : UseItemStrategy
         }
     }
 }
+public class ExitItemStrategy : UseItemStrategy
+{
+    static bool isExitItme;
+    public ExitItemStrategy(UseItem useItem) : base(useItem)
+    {
+    }
+
+    public override void Init()
+    {
+        isExitItme = true;
+    }
+    public override void Use()
+    {
+        if (GameManager.Instance.player.ExitItemCount <= 5)
+        {
+            //어떤 이벤트 실행
+            useItem.transform.SetParent(null);
+        }
+        else
+            return;
+    }
+}
+
 public enum USEITEM_TYPE
 {
     CAMERA,

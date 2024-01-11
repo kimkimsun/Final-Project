@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IEventable
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     public int slotIndexNum;
-    private static int keyCount;
+    private static int exitItemCount;
     private int finalKey = 5;
     private int tension;
     //테스트용임 겜매로 이사가야됨
@@ -32,13 +32,13 @@ public class Player : MonoBehaviour, IEventable
         get => quickSlot;
     }
 
-    public int KeyCount
+    public int ExitItemCount
     {
-        get { return keyCount; }
+        get { return exitItemCount; }
         set 
         {
-            keyCount = value; 
-            if(keyCount <= finalKey) 
+            exitItemCount = value; 
+            if(exitItemCount <= finalKey) 
             {
                 Raise();
             }
