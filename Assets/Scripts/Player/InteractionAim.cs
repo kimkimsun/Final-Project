@@ -23,7 +23,6 @@ public class InteractionAim : MonoBehaviour
             //Debug.DrawRay(transform.position, transform.forward, Color.red);
             if (hit.transform.TryGetComponent<IInteraction>(out IInteraction hitResult))
             {
-                Debug.Log(hit.transform.gameObject.name);
                 text.text = hit.transform.GetComponent<IInteraction>().InteractionText;
                 if (Input.GetMouseButtonDown(0))
                     hit.transform.GetComponent<IInteraction>().Active();

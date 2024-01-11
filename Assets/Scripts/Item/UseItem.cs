@@ -101,8 +101,9 @@ public class FireCrackerItemStrategy : UseItemStrategy
             itemRB.isKinematic = false;
             itemCollider.isTrigger = false;
 
-            itemRB.AddForce(nextVec *1.5f,ForceMode.Impulse );
+            itemRB.AddForce(nextVec.normalized, ForceMode.Impulse); ;
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
+            
         }
         useItem.StartCoroutine(AttractionCo());
     }
