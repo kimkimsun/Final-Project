@@ -38,7 +38,7 @@ public class Slot : MonoBehaviour
     private void Start()
     {
         items = new List<Item>();
-        OnCountChange += ChangeCount;
+        //OnCountChange += ChangeCount;
         CountItem = 0;
         CurItem = 0;
     }

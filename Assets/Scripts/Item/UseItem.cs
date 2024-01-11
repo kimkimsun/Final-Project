@@ -1,3 +1,4 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -260,7 +261,7 @@ public class AttackItemStrategy : UseItemStrategy
 }
 
 
-public class FlashlightItemStrategy : UseItemStrategy
+public class FlashlightItemStrategy : UseItemStrategy,IPortable
 {
 
     Light flashlight;
@@ -291,7 +292,6 @@ public class FlashlightItemStrategy : UseItemStrategy
     {
         Init();
     }
-
     public override void Init()
     {
         minBright = 0;

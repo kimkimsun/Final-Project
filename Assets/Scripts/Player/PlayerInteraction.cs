@@ -33,9 +33,12 @@ public class PlayerInteraction : MonoBehaviour
         if (player.inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
             player.inven.SwitchItem();
         if (Input.GetKeyDown(KeyCode.Q))
-            player.portableInven.setActive(true);
-        if (Input.GetKeyDown(KeyCode.Q))
-            player.portableInven.setActive(false);
+        {
+            Debug.Log("Q´©¸§");
+            player.portableInven.gameObject.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+            player.portableInven.gameObject.SetActive(false);
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!player.inven.gameObject.activeSelf)

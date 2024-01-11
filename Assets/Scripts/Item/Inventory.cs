@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private Slot[] slots = new Slot[5];
     [SerializeField] private Slot[] equipQuickSlot = new Slot[4];
+
     [SerializeField] private Slot[] portableSlot = new Slot[2];
     [SerializeField] private Slot tempSlot;
     [SerializeField] private Slot playerEquipSlot;
@@ -29,6 +30,7 @@ public class Inventory : MonoBehaviour
     {
         if (item.TryGetComponent<IPortable>(out IPortable por))
         {
+            Debug.Log("ぬだづしぉ格ぬづしぉい");
             for (int i = 0; i < portableSlot.Length; i++)
             {
                 if (portableSlot[i] == null)
