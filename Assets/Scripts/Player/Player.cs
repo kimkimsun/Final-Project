@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using Unity.VisualScripting;
+using CustomInterface;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IEventable
 {
     public FirstPersonController playerMove;
     public FinalEvent finalEvent;
@@ -12,25 +13,15 @@ public class Player : MonoBehaviour
     public GameObject itemBox;
     public Inventory inven;
     public Inventory quickSlot;
+    public List<ISubscribeable> eventObjs = new List<ISubscribeable>();
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     public int slotIndexNum;
+    private static int keyCount;
+    private int finalKey = 5;
     private int tension;
-    private int a;
     //테스트용임 겜매로 이사가야됨
 
-/*    public int A
-    {
-        get => a;
-        set
-        {
-            a = value;
-            if (a >= 5)
-            {
-                finalEvent.Raise();
-            }
-        }
-    }*/
     public Inventory Inven
     {
         get => inven;
@@ -41,7 +32,18 @@ public class Player : MonoBehaviour
         get => quickSlot;
     }
 
-
+    public int KeyCount
+    {
+        get { return keyCount; }
+        set 
+        {
+            keyCount = value; 
+            if(keyCount <= finalKey) 
+            {
+                Raise();
+            }
+        }
+    }
     public float Stamina
     {
         get { return stamina; }
@@ -111,11 +113,21 @@ public class Player : MonoBehaviour
         stamina = 100;
     }
 
-    private void Update()
+    public void Raise()
     {
-/*        if (Input.GetKeyDown(KeyCode.Keypad0))
+        foreach(ISubscribeable eventObj in eventObjs)
         {
-            A++;
-        }*/
+            eventObj.OnEvent();
+        }
+    }
+
+    public void RegisterListener(ISubscribeable listener)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UnregisterListener(ISubscribeable listener)
+    {
+        throw new System.NotImplementedException();
     }
 }
