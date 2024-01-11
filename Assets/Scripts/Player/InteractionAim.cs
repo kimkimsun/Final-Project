@@ -8,9 +8,11 @@ public class InteractionAim : MonoBehaviour
 {
     private Vector3 screenCenter;
     public TextMeshProUGUI text;
+    private int maxDistance;
 
     private void Start()
     {
+        maxDistance = 1;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
     }
     void Update()
@@ -18,8 +20,9 @@ public class InteractionAim : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 5))
+        if (Physics.Raycast(ray, out hit, maxDistance))
         {
+
             if (hit.transform.TryGetComponent<IInteraction>(out IInteraction hitResult))
             {
                 text.text = hitResult.InteractionText;
@@ -28,8 +31,8 @@ public class InteractionAim : MonoBehaviour
                     hitResult.Active();
                 }
             }
-            else
-                text.text = "";
         }
+        else
+            text.text = "";
     }
 }
