@@ -414,7 +414,7 @@ public enum USEITEM_TYPE
     HPBUFF,
     STAMINABUFF,
     FLASHLIGHT,
-    HAIRPIN,
+    HAIRPIN
 }
 
 public class UseItem : Item
@@ -453,13 +453,25 @@ public class UseItem : Item
 
 
     public override void Active()
-    {
+    {        
         ((UseItemStrategy)itemStrategy).PrintInfo();
-        Inventory quickSlot = GameManager.Instance.player.QuickSlot;
-        GameObject itemBox = GameManager.Instance.player.itemBox;
-        quickSlot.AddItem(this);
-        gameObject.SetActive(false);
-        transform.SetParent(itemBox.transform);
+        if(useItem_Type == USEITEM_TYPE.HAIRPIN)
+        {
+            Inventory oneSlot = GameManager.Instance.player.oneSlot;
+            GameObject itemBox = GameManager.Instance.player.itemBox;
+            oneSlot.AddItem(this);
+            gameObject.SetActive(false);
+            transform.SetParent(itemBox.transform);
+
+        }
+        else
+        {
+            Inventory quickSlot = GameManager.Instance.player.QuickSlot;
+            GameObject itemBox = GameManager.Instance.player.itemBox;
+            quickSlot.AddItem(this);
+            gameObject.SetActive(false);
+            transform.SetParent(itemBox.transform);
+        }
     }
     private void Update()
     {

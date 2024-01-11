@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IEventable
     [SerializeField] private InteractionAim aim;
 
     public GameObject itemBox;
+    public Inventory oneSlot;
     public Inventory inven;
     public Inventory quickSlot;
     public Inventory portableInven;
