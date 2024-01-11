@@ -1,15 +1,14 @@
 using CustomInterface;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using System;
 public class InteractionAim : MonoBehaviour
 {
+    [SerializeField] private LayerMask monsterLayerMask;
+    public Action monsterCheck;
     private Vector3 screenCenter;
     public TextMeshProUGUI text;
     private int maxDistance;
-
     private void Start()
     {
         maxDistance = 1;
@@ -22,7 +21,6 @@ public class InteractionAim : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
-
             if (hit.transform.TryGetComponent<IInteraction>(out IInteraction hitResult))
             {
                 text.text = hitResult.InteractionText;
@@ -31,6 +29,10 @@ public class InteractionAim : MonoBehaviour
                     hitResult.Active();
                 }
             }
+            if (hit.transform.TryGetComponent<Monster>(out Monster mon))
+                monsterCheck();
+            else
+                return;
         }
         else
             text.text = "";

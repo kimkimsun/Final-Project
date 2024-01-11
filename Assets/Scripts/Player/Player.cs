@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IEventable
     public FirstPersonController playerMove;
     public FinalEvent finalEvent;
     private StateMachine<Player> playerSM;
+    [SerializeField] private InteractionAim aim;
 
     public GameObject itemBox;
     public Inventory inven;
@@ -20,7 +21,6 @@ public class Player : MonoBehaviour, IEventable
     private static int exitItemCount;
     private int finalKey = 5;
     private int tension;
-    //테스트용임 겜매로 이사가야됨
 
     public Inventory Inven
     {
@@ -106,11 +106,14 @@ public class Player : MonoBehaviour, IEventable
         playerSM.AddState("Idle", new IdleState());
         playerSM.AddState("Exhaustion", new ExhaustionState());
         playerSM.AddState("Moribund", new MoribundState());
+        playerSM.AddState("Caught", new CaughtState());
         playerSM.SetState("Idle");
 
         hp = 100;
         tension = 100;
         stamina = 100;
+
+        aim.monsterCheck += () => {playerSM.SetState("Caught");};
     }
 
     public void Raise()
