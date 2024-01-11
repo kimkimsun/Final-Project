@@ -132,7 +132,7 @@ public class CaughtState: PlayerState // ╨С╩Г ╩Себ
     public override void Enter()
     {
         player.playerMove.enabled = false;
-        Debug.Log("╣И╬Н©х");
+        
     }
 
     public override void Exit()
