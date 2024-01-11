@@ -1,5 +1,6 @@
 using CustomInterface;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,19 +29,7 @@ public class Inventory : MonoBehaviour
     }
     public void AddItem(Item item)
     {
-        if (item.TryGetComponent<IPortable>(out IPortable por))
-        {
-            Debug.Log("ぬだづしぉ格ぬづしぉい");
-            for (int i = 0; i < portableSlot.Length; i++)
-            {
-                if (portableSlot[i] == null)
-                {
-                    portableSlot[i].item = item;
-                    portableSlot[i].GetComponent<Image>().sprite = item.sprite;
-                }
-            }
-        }
-        else if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
+        if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
         {
             if (PlayerEquipSlot.item == null)
             {
@@ -65,21 +54,29 @@ public class Inventory : MonoBehaviour
         }
         else if (item.TryGetComponent<UseItem>(out UseItem uI))
         {
-            for (int i = 0; i < slots.Length; i++)
+            if (item.GetComponent<UseItem>().useItem_Type == USEITEM_TYPE.HAIRPIN)
             {
-                if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
+                portableSlot[1].item = item;
+                portableSlot[1].GetComponent<Image>().sprite = item.sprite;
+            }
+            else
+            {
+                for (int i = 0; i < slots.Length; i++)
                 {
-                    slots[i].items.Add(item);
-                    slots[i].CountItem++;
-                    slots[i].CurItem++;
-                    return;
-                }
-                else if (slots[i].items.Count == 0)
-                {
-                    slots[i].items.Add(item);
-                    slots[i].SetImage(item);
-                    slots[i].CountItem++;
-                    return;
+                    if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
+                    {
+                        slots[i].items.Add(item);
+                        slots[i].CountItem++;
+                        slots[i].CurItem++;
+                        return;
+                    }
+                    else if (slots[i].items.Count == 0)
+                    {
+                        slots[i].items.Add(item);
+                        slots[i].SetImage(item);
+                        slots[i].CountItem++;
+                        return;
+                    }
                 }
             }
         }
