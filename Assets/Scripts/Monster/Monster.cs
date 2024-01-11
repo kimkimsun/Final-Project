@@ -1,10 +1,11 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, ISubscribeable
 {
     #region º¯¼ö
     [SerializeField] private GameObject map;
@@ -252,5 +253,10 @@ public class Monster : MonoBehaviour
             }
             yield return new WaitUntil(() => escape < 2);
         }
+    }
+
+    public void OnEvent()
+    {
+        throw new System.NotImplementedException();
     }
 }
