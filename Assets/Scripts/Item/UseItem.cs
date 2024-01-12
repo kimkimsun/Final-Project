@@ -261,7 +261,7 @@ public class AttackItemStrategy : UseItemStrategy
 }
 
 
-public class FlashlightItemStrategy : UseItemStrategy,IPortable
+public class FlashlightItemStrategy : UseItemStrategy
 {
 
     Light flashlight;

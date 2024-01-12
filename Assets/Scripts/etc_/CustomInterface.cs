@@ -21,5 +21,8 @@ namespace CustomInterface
     {
         public void Stun();
     }
-    public interface IPortable { }
+    public interface IStorable
+    {
+        public void AddItem(Item item);
+    }
 }
