@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
-        finalEvent.RegisterListener(() => { if (exitItemCount <= finalKey) ; });
+        finalEvent.RegisterListener(() => { this.enabled = true; });
     }
     public IEnumerator MinusTensionCo(int damege)
     {
