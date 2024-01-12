@@ -10,14 +10,16 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour, ISubscribeable
+	public class FirstPersonController : MonoBehaviour
     {
 		public bool isMove;
 		public bool isRun;
-		public Pause pause;
+		[SerializeField] 
+		private GameEvent pauseEvent;
 
 
-		[Header("Player")]
+
+        [Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed;
 		[Tooltip("Sprint speed of the character in m/s")]
@@ -130,12 +132,12 @@ namespace StarterAssets
 
         private void OnEnable()
         {
-			pause.RegisterListener(this);
+			pauseEvent.RegisterListener(() => {enabled = false; });
         }
 
         private void OnDisable()
         {
-            pause.UnregisterListener(this);
+            pauseEvent.UnregisterListener(() => { enabled = true; });
         }
 
         private void GroundedCheck()

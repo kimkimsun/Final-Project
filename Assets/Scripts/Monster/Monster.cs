@@ -7,12 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour, ISubscribeable
+public class Monster : MonoBehaviour
 {
     #region º¯¼ö
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
     [SerializeField] private CinemachineVirtualCamera monsterVirtualCamera;
+    [SerializeField] private GameEvent pauseEvent;
+    [SerializeField] private GameEvent finalEvent;
     private IEnumerator escapeCo;
     private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
@@ -113,11 +115,13 @@ public class Monster : MonoBehaviour, ISubscribeable
     #endregion
     private void OnEnable()
     {
-        GameManager.Subscribe(FinalAttraction);
+        //pauseEvent.RegisterListener(() => {; });
+        //finalEvent += () => {; };
     }
     private void OnDisable()
     {
-        GameManager.UnSubscribe(FinalAttraction);
+        //pauseEvent -= () => {; };
+        //finalEvent -= () => {; };
     }
     private void FinalAttraction()
     {
@@ -269,10 +273,5 @@ public class Monster : MonoBehaviour, ISubscribeable
             }
             yield return new WaitUntil(() => escape < 5);
         }
-    }
-
-    public void OnEvent()
-    {
-        throw new System.NotImplementedException();
     }
 }

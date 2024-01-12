@@ -17,19 +17,6 @@ namespace CustomInterface
         public void SetState(string name);
         public object GetOwner();
     }
-
-    public interface ISubscribeable
-    {
-        public void OnEvent();
-
-    }
-
-    public interface IEventable
-    {
-        public void Raise();
-        public void RegisterListener(ISubscribeable listener);
-        public void UnregisterListener(ISubscribeable listener);
-    }
     public interface IStunable
     {
         public void Stun();

@@ -6,12 +6,11 @@ using CustomInterface;
 using System.Collections;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour, IEventable
+public class Player : MonoBehaviour
 {
     private static int exitItemCount;
 
     public FirstPersonController playerMove;
-    public FinalEvent finalEvent;
     private StateMachine<Player> playerSM;
     public Image escapeCircle;
 
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour, IEventable
     public Inventory quickSlot;
     public Inventory portableInven;
     private LayerMask monsterMask;
-    public List<ISubscribeable> eventObjs = new List<ISubscribeable>();
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     [SerializeField] private int tension;
@@ -178,24 +176,6 @@ public class Player : MonoBehaviour, IEventable
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
-    }
-
-    public void Raise()
-    {
-        foreach(ISubscribeable eventObj in eventObjs)
-        {
-            eventObj.OnEvent();
-        }
-    }
-
-    public void RegisterListener(ISubscribeable listener)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void UnregisterListener(ISubscribeable listener)
-    {
-        throw new System.NotImplementedException();
     }
     public IEnumerator MinusTensionCo(int damege)
     {
