@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
-    public int slotIndexNum;
+    
 
     #region 프로퍼티
     public EquipItemInventory EquipInven

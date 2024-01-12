@@ -414,15 +414,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bf85bf2bcb90240933b938df90e6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oneSlot: {fileID: 0}
   equipInven: {fileID: 1994890946}
   quickSlot: {fileID: 0}
+  oneSlot: {fileID: 0}
   portableInven: {fileID: 0}
-  escapeCircle: {fileID: 243653142}
+  aim: {fileID: 790377746}
   playerMove: {fileID: 0}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
-  aim: {fileID: 790377746}
   itemBox: {fileID: 483068598}
+  escapeCircle: {fileID: 243653142}
   hp: 0
   stamina: 0
   tension: 0
@@ -7082,6 +7082,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 18770158}
+    - target: {fileID: 8762286023885395323, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9686,7 +9690,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 500
-  field of view: 40
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     Player player;
+    private int slotIndexNum;
 
     private void Start()
     {
@@ -43,8 +44,8 @@ public class PlayerInteraction : MonoBehaviour
             if (!player.EquipInven.gameObject.activeSelf)
             {
                 player.EquipInven.gameObject.SetActive(true);
-                player.slotIndexNum = 4;
-                player.EquipInven.IndexSlot(player.slotIndexNum);
+                slotIndexNum = 3;
+                player.EquipInven.IndexSlot(slotIndexNum);
                 UIManager.Instance.UIStack.Push(player.EquipInven);
             }
             else
@@ -54,18 +55,18 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Debug.Log(player.slotIndexNum);
-                player.slotIndexNum--;
-                if (player.slotIndexNum == 0)
-                    player.slotIndexNum = player.EquipInven.EiSlots.Length - 1;
-                player.EquipInven.IndexSlot(player.slotIndexNum);
+                Debug.Log(slotIndexNum);
+                slotIndexNum--;
+                if (slotIndexNum == -1)
+                    slotIndexNum = player.EquipInven.EiSlots.Length - 1;
+                player.EquipInven.IndexSlot(slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                player.slotIndexNum++;
-                if (player.slotIndexNum == player.EquipInven.EiSlots.Length)
-                    player.slotIndexNum = 1;
-                player.EquipInven.IndexSlot(player.slotIndexNum);
+                { 
+                if (slotIndexNum == player.EquipInven.EiSlots.Length)
+                    slotIndexNum = 1;
+                player.EquipInven.IndexSlot(slotIndexNum);
+                slotIndexNum++;
             }
         }
         else
