@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     Player player;
-    [SerializeField]Pause pause;
 
     private void Start()
     {
@@ -24,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else if(UIManager.Instance.UIStack.Count <= 0)
             {
-                Debug.Log(pause.followers.Count);
+                //Debug.Log(pause.followers.Count);
                 //pause.Raise();
             }
                 

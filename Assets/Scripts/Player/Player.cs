@@ -8,22 +8,26 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private static int exitItemCount;
-
-    public FirstPersonController playerMove;
-    private StateMachine<Player> playerSM;
-    public Image escapeCircle;
-
-    public InteractionAim aim;
-    public GameObject itemBox;
+    [Header("인벤토리")]
     public Inventory oneSlot;
     public Inventory inven;
     public Inventory quickSlot;
     public Inventory portableInven;
+    [Header("이스케이프 써클")]
+    public Image escapeCircle;
+    [Header("Etc.")]
+    public FirstPersonController playerMove;
+    public GameEvent finalEvent;
+    public InteractionAim aim;
+    public GameObject itemBox;
+
+    private static int exitItemCount;
     private LayerMask monsterMask;
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     [SerializeField] private int tension;
+
+    private StateMachine<Player> playerSM;
     private int tensionDwon = 5;
     private int tensionUp = 3;
     private int maxDistance = 5;
@@ -90,11 +94,7 @@ public class Player : MonoBehaviour
         get { return exitItemCount; }
         set 
         {
-            exitItemCount = value; 
-            if(exitItemCount <= finalKey) 
-            {
-                Raise();
-            }
+            exitItemCount = value;
         }
     }
     public float Stamina
@@ -176,6 +176,7 @@ public class Player : MonoBehaviour
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
+        finalEvent.RegisterListener(() => { if (exitItemCount <= finalKey) ; });
     }
     public IEnumerator MinusTensionCo(int damege)
     {
