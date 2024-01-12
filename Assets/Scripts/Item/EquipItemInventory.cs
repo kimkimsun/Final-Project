@@ -48,7 +48,7 @@ public class EquipItemInventory : Inventory
         {
             if (i == index)
             {
-                eiSlots[i].itemImage.color = Color.yellow;
+                eiSlots[i].itemImage.color = new Color(1,1,0,1);
                 if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);

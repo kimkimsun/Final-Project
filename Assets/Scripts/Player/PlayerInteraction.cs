@@ -56,7 +56,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 Debug.Log(player.slotIndexNum);
                 player.slotIndexNum--;
-                if (player.slotIndexNum == -1)
+                if (player.slotIndexNum == 0)
                     player.slotIndexNum = player.EquipInven.EiSlots.Length - 1;
                 player.EquipInven.IndexSlot(player.slotIndexNum);
             }
