@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 {
     [Header("인벤토리")]
     public Inventory oneSlot;
-    public Inventory inven;
+    public EquipItemInventory equipInven;
     public Inventory quickSlot;
     public Inventory portableInven;
     [Header("이스케이프 써클")]
