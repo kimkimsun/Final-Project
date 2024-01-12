@@ -457,7 +457,7 @@ public class UseItem : Item
         ((UseItemStrategy)itemStrategy).PrintInfo();
         if(useItem_Type == USEITEM_TYPE.HAIRPIN)
         {
-            Inventory oneSlot = GameManager.Instance.player.oneSlot;
+            UseItemInventory oneSlot = GameManager.Instance.player.oneSlot;
             GameObject itemBox = GameManager.Instance.player.itemBox;
             oneSlot.AddItem(this);
             gameObject.SetActive(false);

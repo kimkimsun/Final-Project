@@ -7,9 +7,9 @@ using System;
 public class UseItemSlot : Slot
 {
 
-    public event Action OnCountChange;
-    public TextMeshProUGUI countText;
     public List<Item> items;
+    public TextMeshProUGUI countText;
+    private event Action OnCountChange;
 
     int curItem;
     int countItem;
