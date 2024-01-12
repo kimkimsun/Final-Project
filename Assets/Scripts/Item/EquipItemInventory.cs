@@ -42,7 +42,7 @@ public class EquipItemInventory : Inventory
             if (i == index)
             {
                 eiSlots[i].ItemImage.color = Color.yellow;
-                if (eiSlots[i].Item != null && GameManager.Instance.player.Inven.gameObject.activeSelf)
+                if (eiSlots[i].Item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
                     textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].Item.ExplanationText;

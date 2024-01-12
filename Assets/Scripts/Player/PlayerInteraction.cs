@@ -29,8 +29,8 @@ public class PlayerInteraction : MonoBehaviour
                 
         }
 
-        if (player.inven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
-            player.inven.SwitchItem();
+        if (player.EquipInven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
+            player.EquipInven.SwitchItem();
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Q´©¸§");
@@ -40,12 +40,12 @@ public class PlayerInteraction : MonoBehaviour
             player.portableInven.gameObject.SetActive(false);
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!player.inven.gameObject.activeSelf)
+            if (!player.EquipInven.gameObject.activeSelf)
             {
-                player.inven.gameObject.SetActive(true);
+                player.EquipInven.gameObject.SetActive(true);
                 player.slotIndexNum = 4;
-                player.inven.IndexSlot(player.slotIndexNum);
-                UIManager.Instance.UIStack.Push(player.inven);
+                player.EquipInven.IndexSlot(player.slotIndexNum);
+                UIManager.Instance.UIStack.Push(player.EquipInven);
             }
             else
                 return;

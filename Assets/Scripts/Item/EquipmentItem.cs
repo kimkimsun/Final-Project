@@ -80,7 +80,7 @@ public class EquipmentItem : Item
     }
     public override void Active()
     {
-        Inventory playerInven = GameManager.Instance.player.Inven;
-        playerInven.AddItem(this);
+        EquipItemInventory equipInven = GameManager.Instance.player.EquipInven;
+        equipInven.AddItem(this);
     }
 }

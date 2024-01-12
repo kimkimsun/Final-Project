@@ -42,9 +42,9 @@ public class Player : MonoBehaviour
     public int slotIndexNum;
 
     #region 프로퍼티
-    public Inventory Inven
+    public EquipItemInventory EquipInven
     {
-        get => inven;
+        get => equipInven;
     }
 
     public Inventory QuickSlot
