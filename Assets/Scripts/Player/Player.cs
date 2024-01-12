@@ -8,21 +8,22 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [Header("인벤토리")]
-    public Inventory oneSlot;
-    public EquipItemInventory equipInven;
-    public Inventory quickSlot;
-    public Inventory portableInven;
-    [Header("이스케이프 써클")]
-    public Image escapeCircle;
-    [Header("Etc.")]
-    public FirstPersonController playerMove;
-    public GameEvent finalEvent;
-    public InteractionAim aim;
-    public GameObject itemBox;
-
     private static int exitItemCount;
+
+    [Header("인벤토리")]
+    public EquipItemInventory equipInven;
+    public UseItemInventory quickSlot;
+    public UseItemInventory oneSlot;
+    public Inventory portableInven;
+
+    public InteractionAim aim;
+    public FirstPersonController playerMove;
+
     private LayerMask monsterMask;
+    public GameEvent finalEvent;
+    public GameObject itemBox;
+    public Image escapeCircle;
+
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     [SerializeField] private int tension;
