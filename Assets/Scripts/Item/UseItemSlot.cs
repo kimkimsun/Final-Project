@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using System;
 
-public class QSlot : Slot
+public class UseItemSlot : Slot
 {
 
     public event Action OnCountChange;
@@ -57,19 +57,19 @@ public class QSlot : Slot
             CurItem--;
             CountItem--;
             if (items.Count == 0)
-                SetImage(null);
+                SetItem(null);
 
         }
         else if (items.Count <= 0)
             return;
 
     }
-    public override void SetImage(Item setItem)
+    public override void SetItem(Item setItem)
     {
         if (items.Count == 0)
-            ItemImage.sprite = null;
+            itemImage.sprite = null;
         else
-            ItemImage.sprite = setItem.sprite;
+            itemImage.sprite = setItem.sprite;
     }
 
 }

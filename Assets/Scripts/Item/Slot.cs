@@ -6,56 +6,7 @@ using UnityEngine.UI;
 
 public abstract class Slot : MonoBehaviour
 {
-    //public Item item;
-   /* public event Action OnCountChange;
-    public TextMeshProUGUI countText;
-    public List <Item> items;*/
-    public Image ItemImage;
-
-    /*int curItem; 
-    int countItem;
-    public int CurItem
-    {
-        get => curItem;
-        set
-        {
-            curItem = value;
-            if(curItem <= 0) 
-            {
-                curItem = 0;
-            }
-        }
-    }
-    public int CountItem
-    {
-        get { return countItem; }
-        set
-        {
-            countItem = value;
-            OnCountChange();
-        }
-    }
-    private void Start()
-    {
-        items = new List<Item>();
-        OnCountChange += ChangeCount;
-        CountItem = 0;
-        CurItem = 0;
-    }*/
-    /* public void ChangeCount()
-     {
-         countText.text = CountItem.ToString();
-     }*/
-
-/*    {
-        item.Use();
-    }*/
-    public abstract void SlotItemUse();
-    public abstract void SetImage(Item setItem);
-/*    {
-        if (items.Count == 0)
-            ItemImage.sprite = null;
-        else
-            ItemImage.sprite = setItem.sprite;
-    }*/
+    public Image itemImage;
+    public abstract void SetItem(Item setItem);
+    public virtual void SlotItemUse() { }
 }
