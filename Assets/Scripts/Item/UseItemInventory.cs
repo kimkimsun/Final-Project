@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuickSlot : MonoBehaviour, IStorable
+public class UseItemInventory : Inventory
 {
-    [SerializeField] private QSlot[] slots = new QSlot[5];
+    [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
 
-    public void AddItem(Item item)
+    public override void AddItem(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
         {
@@ -22,7 +22,7 @@ public class QuickSlot : MonoBehaviour, IStorable
             else if (slots[i].items.Count == 0)
             {
                 slots[i].items.Add(item);
-                slots[i].SetImage(item);
+                slots[i].SetItem(item);
                 slots[i].CountItem++;
                 return;
             }
