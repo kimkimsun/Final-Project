@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5217635842823694341}
   - component: {fileID: 127265218382829188}
   - component: {fileID: 4305219008339556498}
-  - component: {fileID: 4712853763889825672}
+  - component: {fileID: 3703388698875895190}
   m_Layer: 5
   m_Name: EquipSlot
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4712853763889825672
+--- !u!114 &3703388698875895190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,11 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8298466113698948491}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57da6dcc74cee4841bb6702056b38202, type: 3}
+  m_Script: {fileID: 11500000, guid: d83fca577f84cdb41af04a984c61d8af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  countText: {fileID: 0}
-  items: []
-  ItemImage: {fileID: 0}
-  quickSlot: {fileID: 0}
+  itemImage: {fileID: 0}
