@@ -28,7 +28,6 @@ public class UseItemInventory : Inventory
             }
         }
     }
-
     public void QuickItemUse()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))

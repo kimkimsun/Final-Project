@@ -13,15 +13,21 @@ public class EquipItemInventory : Inventory
     [SerializeField] private Image textCoverImage;
     [SerializeField] private int index;
     public int Index { get => index; }
+
+    public EquipItemSlot[] EiSlots
+    { 
+        get => eiSlots; set => eiSlots = value; 
+    }
     private void Start()
     {
-        eiSlots = new EquipItemSlot[1];
+        eiSlots = new EquipItemSlot[4];
     }
     public override void AddItem(Item item)
     {
-        if (equipSlot.Item == null)
+        if (equipSlot.item == null)
         {
-            equipSlot.Item = item;
+            equipSlot.item = item;
+            equipSlot.itemImage.sprite = item.sprite;
             item.Use();
             item.gameObject.SetActive(false);
         }
@@ -29,8 +35,9 @@ public class EquipItemInventory : Inventory
         {
             for (int i = eiSlots.Length - 1; i >= 1; i--)
             {
-                if (eiSlots[i].Item == null)
+                if (eiSlots[i].item == null)
                     eiSlots[i].SetItem(item);
+                break;
             }
         }
     }
@@ -41,38 +48,38 @@ public class EquipItemInventory : Inventory
         {
             if (i == index)
             {
-                eiSlots[i].ItemImage.color = Color.yellow;
-                if (eiSlots[i].Item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
+                eiSlots[i].itemImage.color = Color.yellow;
+                if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
-                    textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].Item.ExplanationText;
+                    textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].item.ExplanationText;
                 }
             }
             else
             {
-                eiSlots[i].ItemImage.color = Color.red;
+                eiSlots[i].itemImage.color = Color.red;
                 textCoverImage.gameObject.SetActive(false);
             }
         }
     }
     public void SwitchItem()
     {
-        if (equipSlot.Item != null)
-            equipSlot.Item.Exit();
-        if (eiSlots[index].Item == null)
+        if (equipSlot.item != null)
+            equipSlot.item.Exit();
+        if (eiSlots[index].item == null)
             return;
 
-        tempSlot.Item = eiSlots[index].Item;
-        tempSlot.ItemSprite = eiSlots[index].ItemSprite;
+        tempSlot.item = eiSlots[index].item;
+        tempSlot.itemImage.sprite = eiSlots[index].itemImage.sprite;
 
-        eiSlots[index].Item = equipSlot.Item;
-        eiSlots[index].ItemSprite = equipSlot.ItemSprite;
+        eiSlots[index].item = equipSlot.item;
+        eiSlots[index].itemImage.sprite = equipSlot.itemImage.sprite;
 
-        equipSlot.Item = tempSlot.Item;
-        equipSlot.ItemSprite = tempSlot.ItemSprite;
+        equipSlot.item = tempSlot.item;
+        equipSlot.itemImage.sprite = tempSlot.itemImage.sprite;
 
-        tempSlot.Item = null;
-        tempSlot.ItemSprite = null;
-        equipSlot.Item.Use();
+        tempSlot.item = null;
+        tempSlot.itemImage.sprite = null;
+        equipSlot.item.Use();
     }
 }
