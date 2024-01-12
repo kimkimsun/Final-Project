@@ -44,11 +44,12 @@ public class EquipItemInventory : Inventory
     public void IndexSlot(int index)
     {
         this.index = index;
+        Debug.Log(index);
         for (int i = 0; i < eiSlots.Length; i++)
         {
             if (i == index)
             {
-                eiSlots[i].itemImage.color = Color.yellow;
+                eiSlots[i].itemImage.color = new Color(1,1,0,1);
                 if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
