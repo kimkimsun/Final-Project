@@ -50,24 +50,24 @@ public class PlayerInteraction : MonoBehaviour
             else
                 return;
         }
-        if (player.inven.gameObject.activeSelf)
+      /*  if (player.inven.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 Debug.Log(player.slotIndexNum);
                 player.slotIndexNum--;
                 if (player.slotIndexNum == -1)
-                    player.slotIndexNum = player.inven.EquipQuickSlot.Length - 1;
+                    player.slotIndexNum = player.inven.equipQuickSlot.Length - 1;
                 player.inven.IndexSlot(player.slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 player.slotIndexNum++;
-                if (player.slotIndexNum == player.inven.EquipQuickSlot.Length)
+                if (player.slotIndexNum == player.inven.equipQuickSlot.Length)
                     player.slotIndexNum = 1;
                 player.inven.IndexSlot(player.slotIndexNum);
             }
-        }
+        }*/
         else
             return;
     }

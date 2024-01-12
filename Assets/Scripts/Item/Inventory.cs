@@ -4,95 +4,53 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IStorable
 {
-    [SerializeField] private Slot[] slots = new Slot[5];
-    [SerializeField] private Slot[] equipQuickSlot = new Slot[4];
 
-    [SerializeField] private Slot[] portableSlot = new Slot[2];
-    [SerializeField] private Slot tempSlot;
-    [SerializeField] private Slot playerEquipSlot;
+    [SerializeField] private InvenSlot tempSlot;
+    //[SerializeField] private Slot[] portableSlot = new Slot[2];
+    [SerializeField] private InvenSlot[] equipQuickSlot = new InvenSlot[4];
+    [SerializeField] private InvenSlot playerEquipSlot;
     [SerializeField] private Image textCoverImage;
 
     private int index;
 
     public int Index { get => index;}
 
-    public Slot[] Slots
-    {
-        get { return slots; }
-        set { slots = value; }
-    }
-    public Slot[] EquipQuickSlot
+   /* public Slot[] equipQuickSlot
     {
         get { return equipQuickSlot; }
         set { equipQuickSlot = value; }
     }
-    public Slot PlayerEquipSlot
+    public Slot playerEquipSlot
     {
         get => playerEquipSlot;
-    }
+    }*/
     public void AddItem(Item item)
     {
-        if (item.TryGetComponent<EquipmentItem>(out EquipmentItem eQ))
+
+
+        if (playerEquipSlot.item == null)
         {
-            if (PlayerEquipSlot.item == null)
+            playerEquipSlot.item = item;
+            item.Use();
+            item.gameObject.SetActive(false);
+        }
+        else
+        {
+            for (int i = equipQuickSlot.Length - 1; i >= 1; i--)
             {
-                PlayerEquipSlot.item = item;
-                PlayerEquipSlot.GetComponent<Image>().sprite = item.sprite;
-                item.Use();
-                item.gameObject.SetActive(false);
-            }
-            else
-            {
-                for (int i = EquipQuickSlot.Length - 1; i >= 1; i--)
+                if (equipQuickSlot[i].item == null)
                 {
-                    if (EquipQuickSlot[i].item == null)
-                    {
-                        EquipQuickSlot[i].item = item;
-                        EquipQuickSlot[i].GetComponent<Image>().sprite = item.sprite;
-                        item.gameObject.SetActive(false);
-                        break;
-                    }
+                    equipQuickSlot[i].item = item;
+                    equipQuickSlot[i].GetComponent<Image>().sprite = item.sprite;
+                    item.gameObject.SetActive(false);
+                    break;
                 }
             }
         }
-        else if (item.TryGetComponent<UseItem>(out UseItem uI))
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                Debug.Log(slots[i] == null);
-                if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
-                {
-                    slots[i].items.Add(item);
-                    slots[i].CountItem++;
-                    slots[i].CurItem++;
-                    return;
-                }
-                else if (slots[i].items.Count == 0)
-                {
-                    slots[i].items.Add(item);
-                    slots[i].SetImage(item);
-                    slots[i].CountItem++;
-                    return;
-                }
-            }
-        }
-    }
-    public void QuickItemUse()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            slots[0].SlotItemUse();
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            slots[1].SlotItemUse();
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            slots[2].SlotItemUse();
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            slots[3].SlotItemUse();
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            slots[4].SlotItemUse();
-        else if (Input.GetKeyDown(KeyCode.F))
-            portableSlot[0].Use();
+
+
     }
     public void IndexSlot(int index)
     {
@@ -135,8 +93,5 @@ public class Inventory : MonoBehaviour
         tempSlot.GetComponent<Image>().sprite = null;
        // playerEquipSlot.item.Use();
     }
-    private void Update()
-    {
-        QuickItemUse();
-    }
+
 }
