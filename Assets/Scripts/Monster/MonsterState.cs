@@ -119,11 +119,11 @@ public class MonsterRunState : MonsterState
     ActionNode playerAction;
     private void Start()
     {
-        rootNode.Add(playerSequence = new SequenceNode());
-        rootNode.Add(firecrackerSequence = new SequenceNode());
+        //rootNode.Add(playerSequence = new SequenceNode());
+        //rootNode.Add(firecrackerSequence = new SequenceNode());
 
-        playerSequence.Add(playerAction = new Action());
-        firecrackerSequence.Add(fireCrackerAction = new Action());
+        //playerSequence.Add(playerAction = new Action());
+        //firecrackerSequence.Add(fireCrackerAction = new Action());
     }
     public override void Enter()
     { 

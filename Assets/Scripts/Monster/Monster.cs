@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
     #region º¯¼ö
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
+    [SerializeField] private GameObject target;
     [SerializeField] private CinemachineVirtualCamera monsterVirtualCamera;
     [SerializeField] private GameEvent pauseEvent;
     [SerializeField] private GameEvent finalEvent;
@@ -22,12 +23,14 @@ public class Monster : MonoBehaviour
     private Collider[] playerLookCol;
     private Collider[] playerHeardCol;
     private Collider[] playerAttackCol;
+    private Collider[] fireCrackerCol;
     private Rigidbody rb;
     private Animator animator;
     private bool isCheck;
     private bool isPlayerCheck;
     private bool isStun;
     private bool isAttack;
+    private bool isHeardCheck;
     public float escape;
     private float maxDistance;
     private float stunTime;
@@ -68,7 +71,11 @@ public class Monster : MonoBehaviour
         get => animator;
         set => animator = value;
     }
-
+    public Collider[] FireCrackerCol
+    {
+        get => fireCrackerCol;
+        set => fireCrackerCol = value;
+    }
     public Collider[] PlayerLookCol
     {
         get => playerLookCol;
@@ -84,6 +91,18 @@ public class Monster : MonoBehaviour
         get => agent;
         set { agent = value; }
     }
+    public bool IsHeardCheck
+    {
+        get => isHeardCheck;
+        set
+        {
+            isHeardCheck = value;
+            if (isHeardCheck && isStun)
+                sm.SetState("Run");
+            else if (!isHeardCheck && isStun)
+                sm.SetState("Stun");
+        }
+    }
     public bool IsPlayerCheck
     {
         get { return isPlayerCheck; }
@@ -93,7 +112,7 @@ public class Monster : MonoBehaviour
             isPlayerCheck = value;
             if (isPlayerCheck && isStun)
                 sm.SetState("Run");
-            else if (isPlayerCheck && isStun)
+            else if (!isPlayerCheck && isStun)
                 sm.SetState("Idle");
         }
 
@@ -196,6 +215,8 @@ public class Monster : MonoBehaviour
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
         playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
+        //fireCrackerCol = Physics.OverlapSphere(transform.position, 15, ÆøÁ×·¹ÀÌ¾î¸¶½ºÅ©);
+        
         IsCheck = playerLookCol.Length > 0;
         if (IsCheck)
         {
