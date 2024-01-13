@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using CustomInterface;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms;
 
 public class Player : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
     #endregion
+
 
     #region 프로퍼티
     public EquipItemInventory EquipInven

@@ -12,14 +12,69 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
     {
-		public bool isMove;
-		public bool isRun;
-		[SerializeField] 
-		private GameEvent pauseEvent;
+		[SerializeField] GameEvent pauseEvent;
+        [SerializeField] Animator playerAni;
 
 
-        #region 이동관련 변수 셋팅
-        [Header("Player")]
+
+		private bool isMove;
+		private bool isStop;
+		private bool isRun;
+
+		public bool IsMove
+		{
+			get => isMove;
+			set 
+			{ 
+				isMove = value;
+				if (isMove)
+				{
+					playerAni.SetBool("IsMove", true);
+					//애니메이션 , 발소리
+				}
+				else
+                    playerAni.SetBool("IsMove", false);
+            }
+		}
+
+        public bool IsRun
+		{
+			get => isRun;
+			set
+			{
+				isRun = value;
+				if (isRun)
+					playerAni.SetBool("IsRun", true);
+				else
+                    playerAni.SetBool("IsRun", false);
+            }
+		}
+
+        public bool IsStop
+		{
+			get => isStop;
+			set
+			{
+				isStop = value;
+				if (isStop)
+				{
+					this.enabled = false;
+                    playerAni.enabled = false;
+
+                }
+
+				else
+				{
+					this.enabled = true;
+                    playerAni.enabled = true;
+                }
+			}
+		}
+
+
+
+		#region 이동관련 변수 셋팅
+		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed;
 		[Tooltip("Sprint speed of the character in m/s")]
@@ -94,7 +149,21 @@ namespace StarterAssets
 			}
 		}
 
-		private void Awake()
+        private void OnEnable()
+        {
+            pauseEvent.RegisterListener(() => { IsStop = true; });
+            pauseEvent.UnregisterListener(() => { IsStop = false; });
+        }
+
+        private void OnDisable()
+        {
+            pauseEvent.RegisterListener(() => { IsStop = false; });
+            pauseEvent.UnregisterListener(() => { IsStop = true; });
+        }
+
+
+
+        private void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)
@@ -130,16 +199,6 @@ namespace StarterAssets
 			CameraRotation();
 		}
 
-        private void OnEnable()
-        {
-			pauseEvent.RegisterListener(() => {this.enabled = false; });
-        }
-
-        private void OnDisable()
-        {
-            pauseEvent.UnregisterListener(() => { this.enabled = true; });
-        }
-
         private void GroundedCheck()
 		{
 			// set sphere position, with offset
@@ -173,14 +232,14 @@ namespace StarterAssets
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is no input, set the target speed to 0
-			if (_input.move == Vector2.zero) 
+            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+            // if there is no input, set the target speed to 0
+            if (_input.move == Vector2.zero) 
 			{
-                isMove = false;
+                IsRun = false;
+                IsMove = false;
                 targetSpeed = 0.0f;
 				GameManager.Instance.player.Stamina += 10 * Time.deltaTime;
             }
@@ -200,17 +259,20 @@ namespace StarterAssets
 
 				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
-                isMove = true;
-                isRun = false;
 
             }
 			else
 			{
-				isMove = true;
                 _speed = targetSpeed;
-                if(targetSpeed == SprintSpeed)
+                if(targetSpeed == MoveSpeed)
 				{
-					isRun = true;
+					IsMove = true;
+					IsRun = false;
+
+                }
+                else if(targetSpeed == SprintSpeed)
+				{
+					IsRun = true;
                     GameManager.Instance.player.Stamina -= 5 * Time.deltaTime;
 				}
 
