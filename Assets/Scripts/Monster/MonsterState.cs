@@ -1,10 +1,84 @@
 using CustomInterface;
-using StarterAssets;
-using System.Buffers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public class ActionNode : INode
+{
+    public Func<INode.STATE> func;
+    public ActionNode(Func<INode.STATE> func)
+    {
+        this.func += func;
+    }
+    public INode.STATE Evaluate()
+    {
+        if (func == null)
+            return INode.STATE.FAIL;
+        else
+            return func();
+    }
+}
+public class SelectorNode : INode
+{
+    public Func<INode.STATE> func;
+    List<INode> children;
 
+    public SelectorNode(Func<INode.STATE> func)
+    {
+        children = new List<INode>();
+        this.func += func;
+    }
+    public void Add(INode node)
+    {
+        children.Add(node);
+    }
+
+    public INode.STATE Evaluate()
+    {
+        foreach (INode child in children)
+        {
+            INode.STATE iState = child.Evaluate();
+            switch (iState)
+            {
+                case INode.STATE.RUN:
+                    return INode.STATE.RUN;
+                case INode.STATE.SUCCESS:
+                    return INode.STATE.SUCCESS;
+            }
+        }
+        return INode.STATE.FAIL;
+    }
+}
+public class SequenceNode : INode
+{
+    public Func<INode.STATE> func;
+    List<INode> children;
+    public SequenceNode(Func<INode.STATE> func)
+    {
+        children = new List<INode>();
+        this.func += func;
+    }
+    public void Add(INode node)
+    {
+        children.Add(node);
+    }
+    public INode.STATE Evaluate()
+    {
+        foreach (INode child in children)
+        {
+            switch (child.Evaluate())
+            {
+                case INode.STATE.RUN:
+                    return INode.STATE.RUN;
+                case INode.STATE.SUCCESS:
+                    continue;
+                case INode.STATE.FAIL:
+                    return INode.STATE.FAIL;
+            }
+        }
+        return INode.STATE.SUCCESS;
+    }
+}
 public abstract class MonsterState : State
 {
     protected Monster monster;
@@ -38,7 +112,19 @@ public class MonsterIdleState : MonsterState
 
 public class MonsterRunState : MonsterState
 {
+    SelectorNode rootNode;
+    SequenceNode playerSequence;
+    SequenceNode firecrackerSequence;
+    ActionNode fireCrackerAction;
+    ActionNode playerAction;
+    private void Start()
+    {
+        rootNode.Add(playerSequence = new SequenceNode());
+        rootNode.Add(firecrackerSequence = new SequenceNode());
 
+        playerSequence.Add(playerAction = new Action());
+        firecrackerSequence.Add(fireCrackerAction = new Action());
+    }
     public override void Enter()
     { 
         monster.Animator.SetBool("isRun", true);
