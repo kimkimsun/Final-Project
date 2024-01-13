@@ -9,21 +9,6 @@ public class PlayerInteraction : MonoBehaviour
     Player player;
     public GameEvent pause;
     private int slotIndexNum;
-    private bool isStop;
-
-    private bool IsStop
-    {
-        get => isStop;
-        set 
-        { 
-            isStop = value; 
-            if(isStop)
-            {
-                pause.Raise();
-                isStop = false;
-            }    
-        }
-    }
     
 
     private void Start()
@@ -44,7 +29,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isStop = false;
             if (UIManager.Instance.UIStack.Count > 0)
             {
                 UIManager.Instance.UIStack.Pop().GameObject().SetActive(false);
@@ -52,10 +36,9 @@ public class PlayerInteraction : MonoBehaviour
             }
             else if (UIManager.Instance.UIStack.Count <= 0)
             {
-                IsStop = !IsStop;
-
+                pause.Raise();
+                Debug.Log("일시정지 누름");
             }
-
         }
     }
     public void SwitchItem()

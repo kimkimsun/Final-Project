@@ -40,13 +40,13 @@ public class PlayerPrevPos : MonoBehaviour
 
     IEnumerator PosSaveCo()
     {
-        while(playerPos.isMove)
+        while(playerPos.IsMove)
         {
             GameObject pos = GetQueue();
             yield return new WaitForSeconds(0.5f);
             InsertQueue(pos);
             pos.transform.position = Vector3.zero;
-            yield return new WaitUntil(() => playerPos.isMove);
+            yield return new WaitUntil(() => playerPos.IsMove);
         }
     }
 
