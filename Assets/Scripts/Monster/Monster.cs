@@ -115,13 +115,21 @@ public class Monster : MonoBehaviour
     #endregion
     private void OnEnable()
     {
-        //pauseEvent.RegisterListener(() => {; });
-        //finalEvent += () => {; };
+        pauseEvent.RegisterListener(() => 
+        {
+            agent.isStopped = true;
+            enabled = false;
+            animator.enabled = false;
+        });
     }
     private void OnDisable()
     {
-        //pauseEvent -= () => {; };
-        //finalEvent -= () => {; };
+        pauseEvent.UnregisterListener(() =>
+        {
+            agent.isStopped = false;
+            enabled = true;
+            animator.enabled = true;
+        });
     }
     private void FinalAttraction()
     {
