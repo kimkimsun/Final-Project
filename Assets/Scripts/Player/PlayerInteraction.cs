@@ -10,6 +10,20 @@ public class PlayerInteraction : MonoBehaviour
     public GameEvent pause;
     private int slotIndexNum;
     private bool isStop;
+
+    private bool IsStop
+    {
+        get => isStop;
+        set 
+        { 
+            isStop = value; 
+            if(isStop)
+            {
+                pause.Raise();
+                isStop = false;
+            }    
+        }
+    }
     
 
     private void Start()
@@ -38,8 +52,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else if (UIManager.Instance.UIStack.Count <= 0)
             {
-                isStop = true;
-                pause.Raise();
+                IsStop = !IsStop;
 
             }
 
