@@ -139,12 +139,14 @@ public class Monster : MonoBehaviour
             agent.isStopped = true;
             enabled = false;
             animator.enabled = false;
+            this.enabled = false;
         });
     }
     private void OnDisable()
     {
         pauseEvent.UnregisterListener(() =>
         {
+            this.enabled = true;
             agent.isStopped = false;
             enabled = true;
             animator.enabled = true;
