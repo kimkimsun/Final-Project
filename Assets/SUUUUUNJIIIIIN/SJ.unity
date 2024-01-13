@@ -426,7 +426,6 @@ MonoBehaviour:
   hp: 0
   stamina: 0
   tension: 0
-  slotIndexNum: 0
 --- !u!114 &76312781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6988,6 +6987,10 @@ PrefabInstance:
     - target: {fileID: 7957621072756599899, guid: 34c47ea7f87e5174fb52ed4fd99bbb68, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8368048735626210571, guid: 34c47ea7f87e5174fb52ed4fd99bbb68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7694279353552718527, guid: 34c47ea7f87e5174fb52ed4fd99bbb68, type: 3}
