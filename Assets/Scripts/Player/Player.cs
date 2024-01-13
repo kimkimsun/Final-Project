@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 {
     private static int exitItemCount;
 
+    #region 플레이어 변수
     [Header("인벤토리")]
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour
     private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
-    
+    #endregion
 
     #region 프로퍼티
     public EquipItemInventory EquipInven

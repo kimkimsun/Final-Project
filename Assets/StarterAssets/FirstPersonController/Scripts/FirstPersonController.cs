@@ -18,7 +18,7 @@ namespace StarterAssets
 		private GameEvent pauseEvent;
 
 
-
+        #region 이동관련 변수 셋팅
         [Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed;
@@ -58,9 +58,9 @@ namespace StarterAssets
 		public float TopClamp = 90.0f;
 		[Tooltip("How far in degrees can you move the camera down")]
 		public float BottomClamp = -90.0f;
-
-		// cinemachine
-		private float _cinemachineTargetPitch;
+        #endregion
+        // cinemachine
+        private float _cinemachineTargetPitch;
 
 		// player
 		private float _speed;
@@ -132,12 +132,12 @@ namespace StarterAssets
 
         private void OnEnable()
         {
-			pauseEvent.RegisterListener(() => {enabled = false; });
+			pauseEvent.RegisterListener(() => {this.enabled = false; });
         }
 
         private void OnDisable()
         {
-            pauseEvent.UnregisterListener(() => { enabled = true; });
+            pauseEvent.UnregisterListener(() => { this.enabled = true; });
         }
 
         private void GroundedCheck()
@@ -298,11 +298,6 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-
-        public void OnEvent()
-        {
-            this.enabled = false;
-        }
 
 	}
 }
