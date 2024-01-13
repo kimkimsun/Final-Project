@@ -18,6 +18,16 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
+        Stop();
+        SwitchItem();
+        OpenInven();
+        CurEauipItem();
+        HairPinCount();
+
+    }
+
+    public void Stop()
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isStop = false;
@@ -26,26 +36,23 @@ public class PlayerInteraction : MonoBehaviour
                 UIManager.Instance.UIStack.Pop().GameObject().SetActive(false);
 
             }
-            else if(UIManager.Instance.UIStack.Count <= 0)
+            else if (UIManager.Instance.UIStack.Count <= 0)
             {
                 isStop = true;
                 pause.Raise();
-               
-            }
-                
-        }
 
+            }
+
+        }
+    }
+    public void SwitchItem()
+    {
         if (player.EquipInven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
             player.EquipInven.SwitchItem();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Q´©¸§");
-            player.portableInven.gameObject.SetActive(true);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Q))
-            player.portableInven.gameObject.SetActive(false);
+    public void OpenInven()
+    {
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -59,6 +66,10 @@ public class PlayerInteraction : MonoBehaviour
             else
                 return;
         }
+    }
+
+    public void CurEauipItem()
+    {
 
         if (player.EquipInven.gameObject.activeSelf)
         {
@@ -71,7 +82,7 @@ public class PlayerInteraction : MonoBehaviour
                 player.EquipInven.IndexSlot(slotIndexNum);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
-                { 
+            {
                 if (slotIndexNum == player.EquipInven.EiSlots.Length)
                     slotIndexNum = 1;
                 player.EquipInven.IndexSlot(slotIndexNum);
