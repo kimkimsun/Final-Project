@@ -12,18 +12,20 @@ public class Monster : MonoBehaviour
     #region 변수
     [SerializeField] private GameObject map;
     [SerializeField] private LayerMask targetLayerMask;
+    [SerializeField] private LayerMask heardTargetLayerMask;
     [SerializeField] private GameObject target;
     [SerializeField] private CinemachineVirtualCamera monsterVirtualCamera;
     [SerializeField] private GameEvent pauseEvent;
     [SerializeField] private GameEvent finalEvent;
     private IEnumerator escapeCo;
+    private Transform footTrans = null;
     private List<Transform> monsterNextPositionList;
     private StateMachine<Monster> sm;
     private NavMeshAgent agent;
     private Collider[] playerLookCol;
     private Collider[] playerHeardCol;
     private Collider[] playerAttackCol;
-    private Collider[] fireCrackerCol;
+    private Collider[] heardCol;
     private Rigidbody rb;
     private Animator animator;
     private bool isCheck;
@@ -37,7 +39,7 @@ public class Monster : MonoBehaviour
     private float? distance= null;
     private float tempDistance;
     private float extraRotationSpeed = 3f;
-    private Stack<Transform> playerSoundPos;
+    private int playerFootLayerNum = 8;
     #endregion
     #region 프로퍼티
     //public Collider[] PlayerHeardCol
@@ -45,6 +47,10 @@ public class Monster : MonoBehaviour
     //    get => playerHeardCol;
     //    set => playerHeardCol = value;
     //}
+    public Transform FootTrans
+    {
+        get => footTrans; set => footTrans = value;
+    }
     public CinemachineVirtualCamera MonsterVirtualCamera
     {
         get => monsterVirtualCamera;
@@ -71,10 +77,10 @@ public class Monster : MonoBehaviour
         get => animator;
         set => animator = value;
     }
-    public Collider[] FireCrackerCol
+    public Collider[] HeardCol
     {
-        get => fireCrackerCol;
-        set => fireCrackerCol = value;
+        get => heardCol;
+        set => heardCol = value;
     }
     public Collider[] PlayerLookCol
     {
@@ -98,9 +104,11 @@ public class Monster : MonoBehaviour
         {
             isHeardCheck = value;
             if (isHeardCheck && isStun)
+            {
                 sm.SetState("Run");
-            else if (!isHeardCheck && isStun)
-                sm.SetState("Stun");
+            }
+            //else if (isHeardCheck && isStun)
+            //    sm.SetState("Idle");
         }
     }
     public bool IsPlayerCheck
@@ -111,22 +119,24 @@ public class Monster : MonoBehaviour
         {
             isPlayerCheck = value;
             if (isPlayerCheck && isStun)
+            {
                 sm.SetState("Run");
-            else if (!isPlayerCheck && isStun)
+            }
+            else if (!isPlayerCheck)
                 sm.SetState("Idle");
         }
 
     }
-    public bool IsCheck 
-    {
-        get => isCheck;
-        set 
-        { 
-            isCheck = value;  
-            if (!isCheck && isStun) 
-                sm.SetState("Idle"); 
-        } 
-    }
+    //public bool isCheck 
+    //{
+    //    get => isCheck;
+    //    set 
+    //    { 
+    //        isCheck = value;  
+    //        if (!isCheck && isStun) 
+    //            sm.SetState("Idle"); 
+    //    } 
+    //}
     public Rigidbody Rb
     { get => rb; 
       set => rb = value;
@@ -158,7 +168,6 @@ public class Monster : MonoBehaviour
     }
     private void Awake()
     {
-        playerSoundPos = new Stack<Transform>();
         monsterNextPositionList = new List<Transform>
         {
             map.transform.GetChild(0),
@@ -179,7 +188,7 @@ public class Monster : MonoBehaviour
         isAttack = true;
         sm = new StateMachine<Monster>();
         sm.owner = this;
-
+        
 
         sm.AddState("Idle", new MonsterIdleState());
         sm.AddState("Run", new MonsterRunState());
@@ -205,6 +214,16 @@ public class Monster : MonoBehaviour
     {
         StartCoroutine(escapeCo);
     }
+    public void LayerCheckMethod() 
+    {
+        if (heardCol[0].gameObject.layer == playerFootLayerNum)
+        {
+            FootTrans = heardCol[0].gameObject.transform;
+            heardCol[0] = null;
+        }
+        else
+            return;
+    }
     private void Update()
     {
         sm.curState?.Update();
@@ -217,10 +236,14 @@ public class Monster : MonoBehaviour
 
         playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
         playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
-        //fireCrackerCol = Physics.OverlapSphere(transform.position, 15, 폭죽레이어마스크);
-        
-        IsCheck = playerLookCol.Length > 0;
-        if (IsCheck)
+        heardCol = Physics.OverlapSphere(transform.position, 15, heardTargetLayerMask);
+
+        IsHeardCheck = heardCol.Length > 0;
+        isCheck = playerLookCol.Length > 0;
+        Debug.Log(IsHeardCheck);
+        if(IsHeardCheck)
+            LayerCheckMethod();
+        if (isCheck)
         {
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
@@ -243,11 +266,10 @@ public class Monster : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 5f);
+        Gizmos.DrawWireSphere(transform.position, 15f);
         
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 10f);
-        Gizmos.DrawRay(transform.position, Vector3.forward * 5f);
 
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, 1f);

@@ -113,17 +113,63 @@ public class MonsterIdleState : MonsterState
 public class MonsterRunState : MonsterState
 {
     SelectorNode rootNode;
-    SequenceNode playerSequence;
-    SequenceNode firecrackerSequence;
-    ActionNode fireCrackerAction;
-    ActionNode playerAction;
-    private void Start()
-    {
-        //rootNode.Add(playerSequence = new SequenceNode());
-        //rootNode.Add(firecrackerSequence = new SequenceNode());
+    SelectorNode heardSequence;
+    SequenceNode detectiveSequence;
+    ActionNode fireCrackerChaseAction;
+    ActionNode footChaseAction;
+    ActionNode playerChaseAction;
 
-        //playerSequence.Add(playerAction = new Action());
-        //firecrackerSequence.Add(fireCrackerAction = new Action());
+    public MonsterRunState()
+    {
+        FirstSetting();
+    }
+    public void FirstSetting()
+    {
+        rootNode = new SelectorNode(() => { Debug.Log("sdsd"); return INode.STATE.SUCCESS; });
+        rootNode.Add(detectiveSequence = new SequenceNode(() =>
+        {
+            if (monster.IsPlayerCheck)
+                return INode.STATE.SUCCESS;
+            else
+                return INode.STATE.FAIL;
+        }));
+
+        rootNode.Add(heardSequence = new SelectorNode(() =>
+        {
+            if (monster.IsHeardCheck)
+                return INode.STATE.SUCCESS;
+            else
+                return INode.STATE.FAIL;
+        }));
+
+        detectiveSequence.Add(playerChaseAction = new ActionNode(() =>
+        {
+            monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
+            return INode.STATE.RUN;
+        }));
+
+        heardSequence.Add(fireCrackerChaseAction = new ActionNode(() =>
+        {
+            if (monster.HeardCol.Length > 0)
+            {
+                monster.Agent.SetDestination(monster.HeardCol[0].transform.position);
+                return INode.STATE.RUN;
+            }
+            else
+                return INode.STATE.FAIL;
+        }));
+
+        heardSequence.Add(footChaseAction = new ActionNode(() =>
+        {
+            if (monster.FootTrans != null)
+            {
+                Debug.Log("ㄻ아널아닐ㅇㄴ");
+                monster.Agent.SetDestination(monster.FootTrans.transform.position);
+                return INode.STATE.RUN;
+            }
+            else
+                return INode.STATE.FAIL;
+        }));
     }
     public override void Enter()
     { 
@@ -137,7 +183,7 @@ public class MonsterRunState : MonsterState
     public override void Update()
     {
         Debug.Log("런스테이트임");
-        monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
+        rootNode.Evaluate();
         // 플레이어 손전등 깜빡거리거나, 밝기 낮아지거나 해야됨
     }
 }
