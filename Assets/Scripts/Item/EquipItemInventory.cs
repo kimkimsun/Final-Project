@@ -44,13 +44,12 @@ public class EquipItemInventory : Inventory
     public void IndexSlot(int index)
     {
         this.index = index;
-        Debug.Log(index);
         for (int i = 0; i < eiSlots.Length; i++)
         {
             if (i == index)
             {
-                eiSlots[i].itemImage.color = new Color(1,1,0,1);
-                if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
+                eiSlots[i].itemImage.color = Color.yellow;
+                if (/*eiSlots[i].item != null && */GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
                     textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].item.ExplanationText;
@@ -58,6 +57,9 @@ public class EquipItemInventory : Inventory
             }
             else
             {
+                Debug.Log("TEST"+i);
+                Debug.Log("TESTTEST" + eiSlots[i]);
+                Debug.Log("TESTTEST" + eiSlots[i].itemImage);
                 eiSlots[i].itemImage.color = Color.red;
                 textCoverImage.gameObject.SetActive(false);
             }

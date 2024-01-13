@@ -75,7 +75,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Debug.Log(slotIndexNum);
                 slotIndexNum--;
                 if (slotIndexNum == -1)
                     slotIndexNum = player.EquipInven.EiSlots.Length - 1;
@@ -84,7 +83,7 @@ public class PlayerInteraction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 if (slotIndexNum == player.EquipInven.EiSlots.Length)
-                    slotIndexNum = 1;
+                    slotIndexNum = 0;
                 player.EquipInven.IndexSlot(slotIndexNum);
                 slotIndexNum++;
             }

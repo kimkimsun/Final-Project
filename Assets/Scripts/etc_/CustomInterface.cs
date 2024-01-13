@@ -4,6 +4,16 @@ using UnityEngine;
 using System;
 namespace CustomInterface
 {
+    public interface INode
+    {
+        public enum STATE
+        {
+            RUN,
+            SUCCESS,
+            FAIL
+        }
+        public INode.STATE Evaluate();
+    }
     public interface IInteraction
     {
         public string InteractionText
