@@ -144,8 +144,13 @@ public class MonsterRunState : MonsterState
 
         detectiveSequence.Add(playerChaseAction = new ActionNode(() =>
         {
-            monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
-            return INode.STATE.RUN;
+            if(monster.PlayerLookCol.Length > 0)
+            {
+                monster.Agent.SetDestination(monster.PlayerLookCol[0].transform.position);
+                return INode.STATE.RUN;
+            }
+            else
+                return INode.STATE.FAIL;
         }));
 
         heardSequence.Add(fireCrackerChaseAction = new ActionNode(() =>

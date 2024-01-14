@@ -107,8 +107,8 @@ public class Monster : MonoBehaviour
             {
                 sm.SetState("Run");
             }
-            //else if (isHeardCheck && isStun)
-            //    sm.SetState("Idle");
+            else if (!isHeardCheck)
+                sm.SetState("Idle");
         }
     }
     public bool IsPlayerCheck
@@ -253,7 +253,7 @@ public class Monster : MonoBehaviour
             LayerCheckMethod();
         if (isCheck)
         {
-            RaycastHit hit;
+            RaycastHit hit; 
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
