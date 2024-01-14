@@ -21,7 +21,7 @@ public class SoundManager : SingleTon<SoundManager>
         {
             SoundComponent temp = Instantiate(SoundPrefab);
             temp.gameObject.SetActive(false);
-            pool.Enqueue(SoundPrefab);
+            pool.Enqueue(temp);
 
         }
     }
@@ -41,8 +41,8 @@ public class SoundManager : SingleTon<SoundManager>
     public void Play(AudioClip clip, Transform target = null)
     {
         SoundComponent temp = Pop();
-        temp.transform.parent = target;
-        Pop().Play(clip);
+       // temp.transform.parent = target;
+        temp.Play(clip);
     }
 
 }

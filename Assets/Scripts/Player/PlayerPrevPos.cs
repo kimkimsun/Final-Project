@@ -9,6 +9,7 @@ public class PlayerPrevPos : MonoBehaviour
     FirstPersonController playerPos;
 
     public GameObject prevPos;
+    private GameObject pos;
     public Queue<GameObject> prevPosQ = new Queue<GameObject>();
     public IEnumerator posSaveCo;
     private void Start()
@@ -35,6 +36,7 @@ public class PlayerPrevPos : MonoBehaviour
         {
 
             StopCoroutine(posSaveCo);
+            InsertQueue(pos);
         }
     }
 
@@ -42,7 +44,7 @@ public class PlayerPrevPos : MonoBehaviour
     {
         while(playerPos.IsMove)
         {
-            GameObject pos = GetQueue();
+            pos = GetQueue();
             yield return new WaitForSeconds(0.5f);
             InsertQueue(pos);
             pos.transform.position = Vector3.zero;

@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class UIManager : SingleTon<UIManager>
 {
+    public AudioClip ClickSound;
+
     public UseItemInfo useItemInfo;
-    public Stack<Object> UIStack = new Stack<Object>();
     public GameObject settingBox;
+    public Stack<Object> UIStack = new Stack<Object>();
+
+
+    public void PlayClickSound()
+    {
+        SoundManager.Instance.Play(ClickSound);
+    }
 }
