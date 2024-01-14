@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
             if (hp <= zero)
             {
                 hp = zero;
-                ScenesManager.Instance.Die();
+                ScenesManager.Instance.DieScene();
             }
         }
     }
