@@ -30,7 +30,7 @@ public class Item : MonoBehaviour, IInteraction
     }
     private void Awake()
     {
-        interactionText = "Get";
+        interactionText = "ащ╠Б";
     }
     public virtual void Use()
     {
