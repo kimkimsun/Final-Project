@@ -158,7 +158,6 @@ public class MonsterRunState : MonsterState
             {
                 while (Vector3.Distance(monster.transform.position, monster.FootTrans.position) > 1.5f)
                 {
-                    Debug.Log(Vector3.Distance(monster.transform.position, monster.FootTrans.position));
                     monster.Agent.SetDestination(monster.FootTrans.transform.position);
                     return INode.STATE.RUN;
                 }
