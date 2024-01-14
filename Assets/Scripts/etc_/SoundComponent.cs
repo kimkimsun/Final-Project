@@ -16,8 +16,10 @@ public class SoundComponent : MonoBehaviour
 
     private void Update()
     {
-        if (audioSource.isPlaying == false)
+        if (audioSource !=null || audioSource.isPlaying == false)
             SoundManager.Instance.ReturnPool(this);
+        else
+            return;
     }
 }
 

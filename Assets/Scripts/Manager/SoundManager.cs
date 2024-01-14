@@ -18,18 +18,19 @@ public class SoundManager : SingleTon<SoundManager>
     private void Init()
     {
         for (int i = 0; i < 50; i++)
-        {;
+        {
             SoundComponent temp = Instantiate(SoundPrefab);
             temp.gameObject.SetActive(false);
-            pool.Enqueue(Instantiate(SoundPrefab));
+            pool.Enqueue(SoundPrefab);
             
         }
     }
 
     private SoundComponent Pop()
     {
-        pool.Peek().gameObject.SetActive(true);
-        return pool.Dequeue().GetComponent<SoundComponent>();
+        SoundComponent sound = pool.Dequeue();
+        sound.gameObject.SetActive(true);
+        return sound.GetComponent<SoundComponent>();
     }
     public void ReturnPool(SoundComponent sound)
     {
