@@ -13,9 +13,12 @@ public class SingleTon<T> : MonoBehaviour where T : SingleTon<T>
     protected virtual void Awake()
     {
         if (instance == null)
+        {
             instance = (T)this;
+            DontDestroyOnLoad(gameObject);
+
+        }
         else
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
     }
 }
