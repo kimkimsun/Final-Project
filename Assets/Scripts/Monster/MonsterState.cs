@@ -106,14 +106,13 @@ public class MonsterIdleState : MonsterState
     }
     public override void Update()
     {
-        Debug.Log("IDLE 들어옴");
     }
 }
 
 public class MonsterRunState : MonsterState
 {
     SelectorNode rootNode;
-    SelectorNode heardSequence;
+    SequenceNode heardSequence;
     SequenceNode detectiveSequence;
     ActionNode fireCrackerChaseAction;
     ActionNode footChaseAction;
@@ -134,7 +133,7 @@ public class MonsterRunState : MonsterState
                 return INode.STATE.FAIL;
         }));
 
-        rootNode.Add(heardSequence = new SelectorNode(() =>
+        rootNode.Add(heardSequence = new SequenceNode(() =>
         {
             if (monster.IsHeardCheck)
                 return INode.STATE.SUCCESS;
@@ -157,12 +156,15 @@ public class MonsterRunState : MonsterState
         {
             if (monster.FootTrans != null)
             {
-                Debug.Log("ㄻ아널아닐ㅇㄴ");
-                monster.Agent.SetDestination(monster.FootTrans.transform.position);
-                return INode.STATE.RUN;
+                while (Vector3.Distance(monster.transform.position, monster.FootTrans.position) > 1.5f)
+                {
+                    Debug.Log(Vector3.Distance(monster.transform.position, monster.FootTrans.position));
+                    monster.Agent.SetDestination(monster.FootTrans.transform.position);
+                    return INode.STATE.RUN;
+                }
+                sm.SetState("Idle");
+                return INode.STATE.FAIL;
             }
-            else if (2 > Vector3.Distance(monster.transform.position, monster.FootTrans.transform.position))
-                return INode.STATE.SUCCESS;
             else
                 return INode.STATE.FAIL;
         }));
@@ -170,12 +172,15 @@ public class MonsterRunState : MonsterState
         {
             if (monster.HeardCol.Length > 0)
             {
-                monster.Agent.SetDestination(monster.HeardCol[0].transform.position);
-                Debug.Log("들어와아아아아았다");
-                return INode.STATE.RUN;
+                while (Vector3.Distance(monster.transform.position, monster.FootTrans.position) > 1.5f)
+                {
+                    monster.Agent.SetDestination(monster.HeardCol[0].transform.position);
+                    Debug.Log("폭죽 들어옴");
+                    return INode.STATE.RUN;
+                }
+                sm.SetState("Idle");
+                return INode.STATE.FAIL;
             }
-            else if (2 > Vector3.Distance(monster.transform.position, monster.HeardCol[0].transform.position))
-                return INode.STATE.SUCCESS;
             else
                 return INode.STATE.FAIL;
         }));
@@ -192,7 +197,6 @@ public class MonsterRunState : MonsterState
     }
     public override void Update()
     {
-        Debug.Log("런스테이트임");
         rootNode.Evaluate();
         // 플레이어 손전등 깜빡거리거나, 밝기 낮아지거나 해야됨
     }
@@ -205,6 +209,7 @@ public class MonsterStunState : MonsterState
         monster.StartCoroutine(monster.StunCo());
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isStun", true);
+        monster.MonsterVirtualCamera.Priority = 9;
         monster.Animator.bodyRotation = GameManager.Instance.transform.rotation;
     }
     public override void Exit()
@@ -222,6 +227,7 @@ public class MonsterAttackState : MonsterState
     {
         monster.Agent.enabled = false;
         monster.Animator.SetBool("isAttack",true);
+        monster.MonsterVirtualCamera.Priority = 11;
         monster.Escape = 0f;
     }
     public override void Exit()

@@ -214,7 +214,7 @@ public class Monster : MonoBehaviour
         playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
         heardCol = Physics.OverlapSphere(transform.position, 15, heardTargetLayerMask);
         isHeardCheck = heardCol.Length > 0;
-        if (heardCol.Length > 0 && sm.curState is MonsterIdleState mr && isStun && heardCol[0].gameObject.layer == 8)
+        if (heardCol.Length > 0  && isStun && heardCol[0].gameObject.layer == 8)
         {
             footTrans = heardCol[0].gameObject.transform;
             heardCol[0] = null;
@@ -235,7 +235,10 @@ public class Monster : MonoBehaviour
                 return;
         }
         else
+        {
             sm.SetState("Idle");
+            //footTrans = null;
+        }
         if (playerAttackCol.Length > 0 && isAttack)
         {
             sm.SetState("Attack");
