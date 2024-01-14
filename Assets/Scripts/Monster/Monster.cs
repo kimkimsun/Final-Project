@@ -100,43 +100,14 @@ public class Monster : MonoBehaviour
     public bool IsHeardCheck
     {
         get => isHeardCheck;
-        set
-        {
-            isHeardCheck = value;
-            if (isHeardCheck && isStun)
-            {
-                sm.SetState("Run");
-            }
-            else if (!isHeardCheck)
-                sm.SetState("Idle");
-        }
+        set => isHeardCheck = value;
     }
     public bool IsPlayerCheck
     {
         get { return isPlayerCheck; }
-
-        set
-        {
-            isPlayerCheck = value;
-            if (isPlayerCheck && isStun)
-            {
-                sm.SetState("Run");
-            }
-            else if (!isPlayerCheck)
-                sm.SetState("Idle");
-        }
-
+        set => isPlayerCheck = value;
     }
-    //public bool isCheck 
-    //{
-    //    get => isCheck;
-    //    set 
-    //    { 
-    //        isCheck = value;  
-    //        if (!isCheck && isStun) 
-    //            sm.SetState("Idle"); 
-    //    } 
-    //}
+
     public Rigidbody Rb
     { get => rb; 
       set => rb = value;
@@ -166,27 +137,7 @@ public class Monster : MonoBehaviour
             map.transform.GetChild(3)
         };
     }
-    private void Start()
-    {
-        escapeCo = EscapeCo();
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        agent = GetComponent<NavMeshAgent>();
-        maxDistance = 20f;
-        agent.speed = 5f;
-        isStun = true;
-        isAttack = true;
-        sm = new StateMachine<Monster>();
-        sm.owner = this;
-        
-
-        sm.AddState("Idle", new MonsterIdleState());
-        sm.AddState("Run", new MonsterRunState());
-        sm.AddState("Stun", new MonsterStunState());
-        sm.AddState("Attack", new MonsterAttackState());
-        sm.SetState("Idle");
-    }
-
+    
     bool CheckInLayerMask(int layerIndex)
     {
         return (targetLayerMask & (1 << layerIndex)) != 0;
@@ -212,6 +163,8 @@ public class Monster : MonoBehaviour
     private void FixedUpdate()
     {
         ResetRigidbody();
+        Vector3 lookrotation = agent.steeringTarget - transform.position;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
     }
     private void ResetRigidbody()
     {
@@ -228,37 +181,61 @@ public class Monster : MonoBehaviour
         {
             FootTrans = heardCol[0].gameObject.transform;
             heardCol[0] = null;
+            if (sm.curState is MonsterIdleState mi && isStun)
+                sm.SetState("Run");
         }
-        else
-            return;
     }
+    private void Start()
+    {
+        escapeCo = EscapeCo();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
+        maxDistance = 10f;
+        agent.speed = 5f;
+        isStun = true;
+        isAttack = true;
+        sm = new StateMachine<Monster>();
+        sm.owner = this;
+
+
+        sm.AddState("Idle", new MonsterIdleState());
+        sm.AddState("Run", new MonsterRunState());
+        sm.AddState("Stun", new MonsterStunState());
+        sm.AddState("Attack", new MonsterAttackState());
+        sm.SetState("Idle");
+    }
+
     private void Update()
     {
         sm.curState?.Update();
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            sm.SetState("Stun");
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            monsterVirtualCamera.Priority = 11;
-        Vector3 lookrotation = agent.steeringTarget - transform.position;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
 
-        playerLookCol = Physics.OverlapSphere(transform.position, 10, targetLayerMask);
+        playerLookCol = Physics.OverlapSphere(transform.position, 15, targetLayerMask);
         playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
         heardCol = Physics.OverlapSphere(transform.position, 15, heardTargetLayerMask);
-
-        IsHeardCheck = heardCol.Length > 0;
-        isCheck = playerLookCol.Length > 0;
-        Debug.Log(IsHeardCheck);
-        if(IsHeardCheck)
-            LayerCheckMethod();
-        if (isCheck)
+        isHeardCheck = heardCol.Length > 0;
+        if (heardCol.Length > 0 && sm.curState is MonsterIdleState mr && isStun && heardCol[0].gameObject.layer == 8)
         {
-            RaycastHit hit; 
+            footTrans = heardCol[0].gameObject.transform;
+            heardCol[0] = null;
+            sm.SetState("Run");
+        }
+        else if (playerLookCol.Length > 0)
+        {
+            RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-                IsPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+                isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+            if (isPlayerCheck && sm.curState is MonsterIdleState ms && isStun)
+                sm.SetState("Run");
+            else if (!isPlayerCheck)
+                sm.SetState("Idle");
+            else
+                return;
         }
+        else
+            sm.SetState("Idle");
         if (playerAttackCol.Length > 0 && isAttack)
         {
             sm.SetState("Attack");
@@ -266,6 +243,8 @@ public class Monster : MonoBehaviour
             isStun = false;
         }
     }
+
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IStunable>(out IStunable stun))

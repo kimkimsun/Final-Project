@@ -153,17 +153,6 @@ public class MonsterRunState : MonsterState
                 return INode.STATE.FAIL;
         }));
 
-        heardSequence.Add(fireCrackerChaseAction = new ActionNode(() =>
-        {
-            if (monster.HeardCol.Length > 0)
-            {
-                monster.Agent.SetDestination(monster.HeardCol[0].transform.position);
-                return INode.STATE.RUN;
-            }
-            else
-                return INode.STATE.FAIL;
-        }));
-
         heardSequence.Add(footChaseAction = new ActionNode(() =>
         {
             if (monster.FootTrans != null)
@@ -172,9 +161,25 @@ public class MonsterRunState : MonsterState
                 monster.Agent.SetDestination(monster.FootTrans.transform.position);
                 return INode.STATE.RUN;
             }
+            else if (2 > Vector3.Distance(monster.transform.position, monster.FootTrans.transform.position))
+                return INode.STATE.SUCCESS;
             else
                 return INode.STATE.FAIL;
         }));
+        heardSequence.Add(fireCrackerChaseAction = new ActionNode(() =>
+        {
+            if (monster.HeardCol.Length > 0)
+            {
+                monster.Agent.SetDestination(monster.HeardCol[0].transform.position);
+                Debug.Log("들어와아아아아았다");
+                return INode.STATE.RUN;
+            }
+            else if (2 > Vector3.Distance(monster.transform.position, monster.HeardCol[0].transform.position))
+                return INode.STATE.SUCCESS;
+            else
+                return INode.STATE.FAIL;
+        }));
+
     }
     public override void Enter()
     { 

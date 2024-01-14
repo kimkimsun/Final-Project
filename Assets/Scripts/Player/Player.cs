@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(new Vector3(transform.position.x,transform.position.y + 5, transform.position.z), 1f);
+        Gizmos.DrawSphere(transform.position, 1f);
     }
     bool CheckInLayerMask(int layerIndex)
     {
@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), 1, monsterMask);
+        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
         if(isMonsterAttackZone)
         {
