@@ -17,7 +17,7 @@ public class SoundComponent : MonoBehaviour
     private void Update()
     {
         if (audioSource.isPlaying == false)
-            Destroy(gameObject);
+            SoundManager.Instance.ReturnPool(this);
     }
 }
-}
+
