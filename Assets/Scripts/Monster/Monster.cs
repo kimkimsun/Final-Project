@@ -144,23 +144,13 @@ public class Monster : MonoBehaviour
     #endregion
     private void OnEnable()
     {
-        pauseEvent.RegisterListener(() => 
-        {
-            agent.isStopped = true;
-            enabled = false;
-            animator.enabled = false;
-            this.enabled = false;
-        });
+        pauseEvent.UnregisterListener(Play);
+        pauseEvent.RegisterListener(Stop);
     }
     private void OnDisable()
     {
-        pauseEvent.UnregisterListener(() =>
-        {
-            this.enabled = true;
-            agent.isStopped = false;
-            enabled = true;
-            animator.enabled = true;
-        });
+        pauseEvent.UnregisterListener(Stop);
+        pauseEvent.RegisterListener(Play);
     }
     private void FinalAttraction()
     {
@@ -201,6 +191,24 @@ public class Monster : MonoBehaviour
     {
         return (targetLayerMask & (1 << layerIndex)) != 0;
     }
+
+    private void Stop()
+    {
+        agent.isStopped = true;
+        enabled = false;
+        animator.enabled = false;
+        this.enabled = false;
+    }
+
+    private void Play()
+    {
+        this.enabled = true;
+        agent.isStopped = false;
+        enabled = true;
+        animator.enabled = true;
+    }
+
+
     private void FixedUpdate()
     {
         ResetRigidbody();
