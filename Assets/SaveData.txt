@@ -1,0 +1,1 @@
+{"equipInven":{"instanceID":28986},"quickSlot":{"instanceID":28820},"oneSlot":{"instanceID":28946},"portableInven":{"instanceID":0},"aim":{"instanceID":28784},"playerMove":{"instanceID":-6260},"playerPos":{"instanceID":28526},"finalEvent":{"instanceID":27528},"itemBox":{"instanceID":28664},"escapeCircle":{"instanceID":28592},"hp":100,"stamina":39.40819549560547,"tension":100}

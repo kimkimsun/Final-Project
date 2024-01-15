@@ -11,7 +11,7 @@ using System;
 [Serializable]
 public class Player : MonoBehaviour
 {
-    private static int exitItemCount;
+    [SerializeField] private static int exitItemCount;
 
     #region 플레이어 변수
     [Header("인벤토리")]
@@ -23,8 +23,8 @@ public class Player : MonoBehaviour
     public InteractionAim aim;
     public FirstPersonController playerMove;
 
+    [SerializeField]  private Transform playerPos;
     private LayerMask monsterMask;
-    private Transform playerPos;
     public GameEvent finalEvent;
     public GameObject itemBox;
     public Image escapeCircle;
@@ -169,6 +169,7 @@ public class Player : MonoBehaviour
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
+        this.gameObject.transform.position = playerPos.position;
 
         playerSM.AddState("Idle", new IdleState());
         playerSM.AddState("Exhaustion", new ExhaustionState());

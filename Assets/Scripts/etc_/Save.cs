@@ -1,15 +1,18 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Save : MonoBehaviour
+public class Save : MonoBehaviour, IInteraction
 {
     Player player;
 
     string path = "Assets/";
     string fileName = "SaveData.txt";
+
+    public string InteractionText => "Save";
 
     private void Start()
     {
@@ -43,14 +46,18 @@ public class Save : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.L)) 
-        {
-            SaveData();
-        }
         
-        if(Input.GetKeyDown(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.V))
         {
+            Debug.Log("로드");
             LoadData();
+            Debug.Log("로드");
         }
+    }
+
+    public void Active()
+    {
+        SaveData();
+        Debug.Log("저장");
     }
 }
