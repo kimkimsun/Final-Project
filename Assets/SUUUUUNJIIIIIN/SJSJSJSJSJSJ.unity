@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.19
+      value: 14.83
       objectReference: {fileID: 0}
     - target: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalPosition.y
@@ -437,6 +437,7 @@ MonoBehaviour:
   portableInven: {fileID: 0}
   aim: {fileID: 790377746}
   playerMove: {fileID: 0}
+  playerPos: {fileID: 0}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
   itemBox: {fileID: 483068598}
   escapeCircle: {fileID: 243653142}
@@ -5761,7 +5762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 76312774}
-  monster: {fileID: 1458932274}
+  monster: {fileID: 0}
 --- !u!4 &1053888786
 Transform:
   m_ObjectHideFlags: 0
@@ -7367,7 +7368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8762286023885395322, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.19
+      value: 14.83
       objectReference: {fileID: 0}
     - target: {fileID: 8762286023885395322, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7919,7 +7920,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       propertyPath: m_Name
-      value: Monster
+      value: HiRil
       objectReference: {fileID: 0}
     - target: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       propertyPath: m_Layer
@@ -7927,7 +7928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7401287433060362403, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       propertyPath: m_Layer
@@ -8250,9 +8251,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1458932274}
-    - targetCorrespondingSourceObject: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1458932273}
     - targetCorrespondingSourceObject: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       insertIndex: -1
@@ -8260,6 +8258,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1458932271}
+    - targetCorrespondingSourceObject: {fileID: 7401287433060362401, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1458932274}
   m_SourcePrefab: {fileID: 100100000, guid: 88ecb034e34915a4499e6143cb009a5c, type: 3}
 --- !u!1 &1458932269 stripped
 GameObject:
@@ -8352,21 +8353,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1458932269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b34e7eca1d150341974769fc9e239ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f4e8c5df67692646b86dcb857677613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1631004162}
+  escape: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 1024
   heardTargetLayerMask:
     serializedVersion: 2
     m_Bits: 384
-  target: {fileID: 0}
+  map: {fileID: 1631004162}
   monsterVirtualCamera: {fileID: 578700995}
   pauseEvent: {fileID: 11400000, guid: 8b5a11c78b0c3dc4388261bfcd1b93df, type: 2}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
-  escape: 0
 --- !u!1001 &1460590613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9462,7 +9462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 76312774}
-  monster: {fileID: 1458932274}
+  monster: {fileID: 0}
 --- !u!4 &1626682850
 Transform:
   m_ObjectHideFlags: 0
@@ -10307,7 +10307,7 @@ Transform:
   m_GameObject: {fileID: 1672805932}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7148632, z: 0, w: 0.6992644}
-  m_LocalPosition: {x: 24.19, y: 14.648305, z: -7.4}
+  m_LocalPosition: {x: 14.83, y: 14.648305, z: -7.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12684,19 +12684,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d63a4664aa25754b9214374eb2ffb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1390949740}
+  escape: 0
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   heardTargetLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  target: {fileID: 0}
+  map: {fileID: 1390949740}
   monsterVirtualCamera: {fileID: 0}
-  pauseEvent: {fileID: 0}
-  finalEvent: {fileID: 0}
-  escape: 0
-  mapcoordi: {fileID: 0}
+  pauseEvent: {fileID: 11400000, guid: 8b5a11c78b0c3dc4388261bfcd1b93df, type: 2}
+  finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
 --- !u!1001 &2023409474
 PrefabInstance:
   m_ObjectHideFlags: 0

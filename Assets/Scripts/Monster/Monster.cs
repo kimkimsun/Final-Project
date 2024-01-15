@@ -10,43 +10,53 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour
 {
     #region 변수
-    [SerializeField] private GameObject map;
-    [SerializeField] private LayerMask targetLayerMask;
-    [SerializeField] private LayerMask heardTargetLayerMask;
-    [SerializeField] private GameObject target;
-    [SerializeField] private CinemachineVirtualCamera monsterVirtualCamera;
-    [SerializeField] private GameEvent pauseEvent;
-    [SerializeField] private GameEvent finalEvent;
-    private IEnumerator escapeCo;
-    private Transform footTrans = null;
-    private List<Transform> monsterNextPositionList;
-    private StateMachine<Monster> sm;
-    private NavMeshAgent agent;
-    private Collider[] playerLookCol;
-    private Collider[] playerHeardCol;
-    private Collider[] playerAttackCol;
-    private Collider[] heardCol;
-    private Rigidbody rb;
-    private Animator animator;
-    private bool isCheck;
-    private bool isPlayerCheck;
-    private bool isStun;
-    private bool isAttack;
-    private bool isHeardCheck;
     public float escape;
-    private float maxDistance;
-    private float stunTime;
-    private float? distance= null;
-    private float tempDistance;
-    private float extraRotationSpeed = 3f;
-    private int playerFootLayerNum = 8;
+    [SerializeField] protected LayerMask targetLayerMask;
+    [SerializeField] protected LayerMask heardTargetLayerMask;
+    [SerializeField] protected GameObject map;
+    [SerializeField] protected CinemachineVirtualCamera monsterVirtualCamera;
+    [SerializeField] protected GameEvent pauseEvent;
+    [SerializeField] protected GameEvent finalEvent;
+    [SerializeField] protected NavMeshAgent agent;
+    protected StateMachine<Monster> sm;
+    protected Transform footTrans;
+    protected List<Transform> monsterNextPositionList;
+    protected Collider[] playerLookCol;
+    protected Collider[] soundCol;
+    protected Collider[] playerAttackCol;
+    protected Rigidbody rb;
+    protected Animator animator;
+    protected IEnumerator escapeCor;
+    protected bool isHeardCheck;
+    protected bool isCheck;
+    protected bool isPlayerCheck;
+    protected bool isStun;
+    protected bool isAttack;
+    protected float maxDistance;
+    protected float stunTime;
+    protected float? distance = null;
+    protected float tempDistance;
+    protected float extraRotationSpeed;
+    protected int playerFootLayerNum;
+    protected int lookDetectionRange;
+    protected int attackDetectionRange;
     #endregion
     #region 프로퍼티
-    //public Collider[] PlayerHeardCol
-    //{
-    //    get => playerHeardCol;
-    //    set => playerHeardCol = value;
-    //}
+    public bool IsHeardCheck
+    {
+        get => isHeardCheck;
+        set => IsHeardCheck = value;
+    }
+    public Collider[] SoundCol
+    {
+        get => soundCol;
+        set => soundCol = value;
+    }
+    public IEnumerator EscapeCor
+    {
+        get => escapeCor;
+        set => escapeCor = value;
+    }
     public Transform FootTrans
     {
         get => footTrans; set => footTrans = value;
@@ -61,26 +71,11 @@ public class Monster : MonoBehaviour
         get => escape;
         set => escape = value;
     }
-    public IEnumerator EscapeCor
-    {
-        get => escapeCo; 
-        set => escapeCo = value;
-    }
 
-    public StateMachine<Monster> Sm
-    {
-        get => sm;
-        set => sm = value;
-    }
     public Animator Animator
     {
         get => animator;
         set => animator = value;
-    }
-    public Collider[] HeardCol
-    {
-        get => heardCol;
-        set => heardCol = value;
     }
     public Collider[] PlayerLookCol
     {
@@ -97,11 +92,6 @@ public class Monster : MonoBehaviour
         get => agent;
         set { agent = value; }
     }
-    public bool IsHeardCheck
-    {
-        get => isHeardCheck;
-        set => isHeardCheck = value;
-    }
     public bool IsPlayerCheck
     {
         get { return isPlayerCheck; }
@@ -109,41 +99,36 @@ public class Monster : MonoBehaviour
     }
 
     public Rigidbody Rb
-    { get => rb; 
-      set => rb = value;
+    {
+        get => rb;
+        set => rb = value;
     }
     #endregion
-    private void OnEnable()
+    protected void OnEnable()
     {
         pauseEvent.UnregisterListener(Play);
         pauseEvent.RegisterListener(Stop);
     }
-    private void OnDisable()
+    protected void OnDisable()
     {
         pauseEvent.UnregisterListener(Stop);
         pauseEvent.RegisterListener(Play);
     }
-    private void FinalAttraction()
+    protected void Awake()
     {
-        agent.SetDestination(GameManager.Instance.player.transform.position);
-    }
-    private void Awake()
-    {
-        monsterNextPositionList = new List<Transform>
+        monsterNextPositionList = new List<Transform>();
+        for (int i = 0; i < map.transform.childCount; i++)
         {
-            map.transform.GetChild(0),
-            map.transform.GetChild(1),
-            map.transform.GetChild(2),
-            map.transform.GetChild(3)
-        };
+            monsterNextPositionList.Add(map.transform.GetChild(i));
+        }
     }
-    
-    bool CheckInLayerMask(int layerIndex)
+
+    protected bool CheckInLayerMask(int layerIndex)
     {
         return (targetLayerMask & (1 << layerIndex)) != 0;
     }
 
-    private void Stop()
+    protected void Stop()
     {
         agent.isStopped = true;
         enabled = false;
@@ -151,121 +136,66 @@ public class Monster : MonoBehaviour
         this.enabled = false;
     }
 
-    private void Play()
+    protected void Play()
     {
         this.enabled = true;
         agent.isStopped = false;
         enabled = true;
         animator.enabled = true;
     }
-
-
-    private void FixedUpdate()
+    protected void PublicUpdate()
     {
-        ResetRigidbody();
-        Vector3 lookrotation = agent.steeringTarget - transform.position.normalized;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
+        playerLookCol = Physics.OverlapSphere(transform.position, lookDetectionRange, targetLayerMask);
+        playerAttackCol = Physics.OverlapSphere(transform.position, attackDetectionRange, targetLayerMask);
     }
-    private void ResetRigidbody()
+    protected void PublicStart()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-    }
-    public void MonsterAttack()
-    {
-        StartCoroutine(escapeCo);
-    }
-    public void LayerCheckMethod() 
-    {
-        if (heardCol[0].gameObject.layer == playerFootLayerNum)
-        {
-            FootTrans = heardCol[0].gameObject.transform;
-            heardCol[0] = null;
-            if (sm.curState is MonsterIdleState mi && isStun)
-                sm.SetState("Run");
-        }
-    }
-    private void Start()
-    {
-        escapeCo = EscapeCo();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        maxDistance = 10f;
-        agent.speed = 5f;
+        escapeCor = EscapeCo();
+        playerFootLayerNum = 8;
+        extraRotationSpeed = 3f;
+        attackDetectionRange = 1;
         isStun = true;
         isAttack = true;
-        sm = new StateMachine<Monster>();
-        sm.owner = this;
-
-
-        sm.AddState("Idle", new MonsterIdleState());
-        sm.AddState("Run", new MonsterRunState());
-        sm.AddState("Stun", new MonsterStunState());
-        sm.AddState("Attack", new MonsterAttackState());
-        sm.SetState("Idle");
     }
-
-    private void Update()
+    protected void FixedUpdate()
     {
-        sm.curState?.Update();
-
-        playerLookCol = Physics.OverlapSphere(transform.position, 15, targetLayerMask);
-        playerAttackCol = Physics.OverlapSphere(transform.position, 1, targetLayerMask);
-        heardCol = Physics.OverlapSphere(transform.position, 15, heardTargetLayerMask);
-        isHeardCheck = heardCol.Length > 0;
-        if (heardCol.Length > 0  && isStun && heardCol[0].gameObject.layer == 8)
-        {
-            footTrans = heardCol[0].gameObject.transform;
-            heardCol[0] = null;
-            sm.SetState("Run");
-        }
-        else if (playerLookCol.Length > 0)
-        {
-            RaycastHit hit;
-            Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
-            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
-            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-                isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-            if (isPlayerCheck && sm.curState is MonsterIdleState ms && isStun)
-                sm.SetState("Run");
-            else if (!isPlayerCheck)
-                sm.SetState("Idle");
-            else
-                return;
-        }
-        else
-        {
-            sm.SetState("Idle");
-            //footTrans = null;
-        }
-        if (playerAttackCol.Length > 0 && isAttack)
-        {
-            sm.SetState("Attack");
-            isAttack = false;
-            isStun = false;
-        }
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        Vector3 lookrotation = agent.steeringTarget - transform.position;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
+    }
+    public void MonsterAttack()
+    {
+        StartCoroutine(StunCo());
+    }
+    protected virtual void Start()
+    {
+        PublicStart();
     }
 
-    
-    private void OnTriggerEnter(Collider other)
+    protected virtual void Update()
+    {
+        PublicUpdate();
+    }
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IStunable>(out IStunable stun))
             sm.SetState("Stun");
     }
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 15f);
-        
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 10f);
+        Gizmos.DrawWireSphere(transform.position, lookDetectionRange);
 
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, 1f);
+        Gizmos.DrawWireSphere(transform.position, attackDetectionRange);
     }
-    public IEnumerator MonsterMoveCo()
+    public virtual IEnumerator MonsterMoveCo()
     {
+        Debug.Log("몬스터무브코");
         yield return null;
         foreach (Transform targetPos in monsterNextPositionList)
         {
@@ -281,7 +211,7 @@ public class Monster : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < monsterNextPositionList.Count+1; i++)
+        for (int i = 0; i < monsterNextPositionList.Count + 1; i++)
         {
             if (i == monsterNextPositionList.Count)
                 i = 0;
@@ -296,7 +226,7 @@ public class Monster : MonoBehaviour
     {
         isStun = false;
         stunTime = 0f;
-        while(stunTime < 5.0f)
+        while (stunTime < 5.0f)
         {
             stunTime += Time.deltaTime;
             yield return null;
