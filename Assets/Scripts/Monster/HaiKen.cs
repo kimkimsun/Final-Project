@@ -5,21 +5,21 @@ using UnityEngine.AI;
 
 public class HaiKen : Monster
 {
-    private StateMachine<HaiKen> sm;
+    protected new StateMachine<HaiKen> sm;
+    
     protected override void Start()
     {
-        base.Start();
-        maxDistance = 20f;
-        agent.speed = 5f;
-        lookDetectionRange = 20;
-
         sm = new StateMachine<HaiKen>();
         sm.owner = this;
-        sm.AddState("Idle", new HaiKenIdleState()); //이
+        sm.AddState("Idle", new HaiKenIdleState());
         sm.AddState("Run", new HaiKenRunState());
         sm.AddState("Stun", new HaiKenStunState());
         sm.AddState("Attack", new HaiKenAttackState());
-        sm.SetState("Idle");
+        base.Start();
+
+        maxDistance = 20f;
+        agent.speed = 5f;
+        lookDetectionRange = 20;
     }
     protected override void Update()
     {
@@ -46,5 +46,10 @@ public class HaiKen : Monster
             isAttack = false;
             isStun = false;
         }
+    }
+    public void EndAnimation()
+    {
+        Debug.Log("들어왔니?");
+        sm.SetState("Idle");
     }
 }
