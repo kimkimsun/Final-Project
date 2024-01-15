@@ -34,6 +34,7 @@ public class StunLight : MonoBehaviour,IStunable
         lightStun.intensity = maxBright;
         while (lightStun.intensity > 0)
         {
+            stunCollider.enabled = true;
             lightStun.intensity -= 1 ;
             yield return new WaitForSeconds(0.07f);
 

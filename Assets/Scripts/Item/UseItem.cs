@@ -197,15 +197,6 @@ public class StaminaBuffItemStrategy : UseItemStrategy
         GameObject.Destroy(useItem.gameObject);
     }
 }
-public class SaveItemStrategy : UseItemStrategy
-{
-    public SaveItemStrategy(UseItem useItem) : base(useItem) { }
-
-    public override void Use()
-    {
-        throw new System.NotImplementedException();
-    }
-}
 
 public class KeyItemStrategy : UseItemStrategy
 {
@@ -236,10 +227,10 @@ public class KeyItemStrategy : UseItemStrategy
     }
 }
 
-public class AttackItemStrategy : UseItemStrategy
+public class HairPinItemStrategy : UseItemStrategy
 {
     static bool isFirstAttackItem;
-    public AttackItemStrategy(UseItem useItem) : base(useItem) { }
+    public HairPinItemStrategy(UseItem useItem) : base(useItem) { }
 
     public override void Init()
     {
@@ -376,35 +367,7 @@ public class ExitItemStrategy : UseItemStrategy
             return;
     }
 }
-public class HairPinItemStrategy : UseItemStrategy
-{
-    static bool isExitItme;
-    public HairPinItemStrategy(UseItem useItem) : base(useItem) { }
 
-    public override void Init()
-    {
-        isExitItme = true;
-    }
-    public override void PrintInfo()
-    {
-        if (isExitItme)
-        {
-            base.PrintInfo();
-        }
-        isExitItme = false;
-    }
-    public override void Use()
-    {
-        base.Use();
-        if (GameManager.Instance.player.ExitItemCount <= 5)
-        {
-            //어떤 이벤트 실행
-            useItem.transform.SetParent(null);
-        }
-        else
-            return;
-    }
-}
 
 public enum USEITEM_TYPE
 {
@@ -414,7 +377,9 @@ public enum USEITEM_TYPE
     HPBUFF,
     STAMINABUFF,
     FLASHLIGHT,
-    HAIRPIN
+    HAIRPIN,
+    KEY,
+    EXIT
 }
 
 public class UseItem : Item
@@ -446,6 +411,12 @@ public class UseItem : Item
                 break;
             case USEITEM_TYPE.HAIRPIN:
                 itemStrategy = new HairPinItemStrategy(this);
+                break;
+            case USEITEM_TYPE.KEY:
+                itemStrategy = new KeyItemStrategy(this);
+                break;
+            case USEITEM_TYPE.EXIT:
+                itemStrategy = new ExitItemStrategy(this);
                 break;
         }
 
