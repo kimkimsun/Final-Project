@@ -6,7 +6,9 @@ using CustomInterface;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
+using System;
 
+[Serializable]
 public class Player : MonoBehaviour
 {
     private static int exitItemCount;
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
     public FirstPersonController playerMove;
 
     private LayerMask monsterMask;
+    private Transform playerPos;
     public GameEvent finalEvent;
     public GameObject itemBox;
     public Image escapeCircle;
@@ -162,6 +165,7 @@ public class Player : MonoBehaviour
     #endregion
     private void Start()
     {
+        playerPos = GetComponent<Transform>();
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
@@ -204,7 +208,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 1f);
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
     bool CheckInLayerMask(int layerIndex)
     {
@@ -212,6 +216,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        playerPos.position = this.transform.position;
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
         if(isMonsterAttackZone)
