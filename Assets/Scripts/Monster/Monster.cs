@@ -163,7 +163,7 @@ public class Monster : MonoBehaviour
     private void FixedUpdate()
     {
         ResetRigidbody();
-        Vector3 lookrotation = agent.steeringTarget - transform.position;
+        Vector3 lookrotation = agent.steeringTarget - transform.position.normalized;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
     }
     private void ResetRigidbody()
