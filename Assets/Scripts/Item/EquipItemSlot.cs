@@ -9,7 +9,7 @@ public class EquipItemSlot : Slot
     public override void SetItem(Item item)
     {
         this.item = item;
-        itemImage.sprite = item.sprite;
+        this.itemImage.sprite = item.sprite;
         item.gameObject.SetActive(false);
     }
 }

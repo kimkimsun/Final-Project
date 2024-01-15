@@ -33,11 +33,15 @@ public class EquipItemInventory : Inventory
         }
         else
         {
-            for (int i = eiSlots.Length - 1; i >= 1; i--)
+            Debug.Log("슬롯 안비었니");
+            for (int i = eiSlots.Length - 1; i >= 0; i--)
             {
                 if (eiSlots[i].item == null)
+                {
+                    Debug.Log("슬롯 안비었니222");
                     eiSlots[i].SetItem(item);
-                break;
+                    break;
+                }
             }
         }
     }
@@ -49,7 +53,7 @@ public class EquipItemInventory : Inventory
             if (i == index)
             {
                 eiSlots[i].itemImage.color = Color.yellow;
-                if (/*eiSlots[i].item != null && */GameManager.Instance.player.equipInven.gameObject.activeSelf)
+                if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
                     textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].item.ExplanationText;
@@ -57,10 +61,8 @@ public class EquipItemInventory : Inventory
             }
             else
             {
-                Debug.Log("TEST"+i);
-                Debug.Log("TESTTEST" + eiSlots[i]);
-                Debug.Log("TESTTEST" + eiSlots[i].itemImage);
-                eiSlots[i].itemImage.color = Color.red;
+                Debug.Log(eiSlots[i].itemImage.name);
+                eiSlots[i].itemImage.GetComponent<Image>().color = Color.blue;
                 textCoverImage.gameObject.SetActive(false);
             }
         }

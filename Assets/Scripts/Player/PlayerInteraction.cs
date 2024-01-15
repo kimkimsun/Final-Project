@@ -78,10 +78,10 @@ public class PlayerInteraction : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                slotIndexNum++;
                 if (slotIndexNum == player.EquipInven.EiSlots.Length)
                     slotIndexNum = 0;
                 player.EquipInven.IndexSlot(slotIndexNum);
-                slotIndexNum++;
             }
         }
         else
