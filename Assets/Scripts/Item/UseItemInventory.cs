@@ -7,7 +7,6 @@ public class UseItemInventory : Inventory
 {
     [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
 
-
     private void Start()
     {
         Debug.Log(gameObject.name + "test");
@@ -45,8 +44,6 @@ public class UseItemInventory : Inventory
             slots[3].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
-/*        else if (Input.GetKeyDown(KeyCode.F))
-            portableSlot[0].Use();*/
     }
 
     private void Update()
