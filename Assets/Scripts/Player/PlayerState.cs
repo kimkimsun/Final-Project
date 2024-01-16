@@ -122,25 +122,21 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     }
     protected IEnumerator CaughtCo()
     {
-        while (player.escapeCircle.fillAmount < 1)
+        while (UIManager.Instance.escapeCircle.fillAmount < 1)
         {
             yield return null;
-            if (player.escapeCircle.fillAmount < 0.6f)
+            if (UIManager.Instance.escapeCircle.fillAmount < 0.6f)
             {
-                player.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    break;
+                UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+               
             }
-            else if (player.escapeCircle.fillAmount > 0.6f)
+            else if (UIManager.Instance.escapeCircle.fillAmount > 0.6f)
             {
-                player.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    Exit();
+                UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
             }
-            player.escapeCircle.gameObject.SetActive(true);
-            player.escapeCircle.fillAmount += (Time.deltaTime/ 2);
+            UIManager.Instance.escapeCircle.gameObject.SetActive(true);
+            UIManager.Instance.escapeCircle.fillAmount += (Time.deltaTime/ 2);
         }
-        Debug.Log("죽음");
     }
     public override void Exit()
     {

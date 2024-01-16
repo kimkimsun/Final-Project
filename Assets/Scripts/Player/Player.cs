@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     private LayerMask monsterMask;
     public GameEvent finalEvent;
     public GameObject itemBox;
-    public Image escapeCircle;
 
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
@@ -184,6 +183,8 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+
+
     private void Start()
     {
         playerPos = GetComponent<Transform>();

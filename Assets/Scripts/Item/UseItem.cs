@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
@@ -98,7 +99,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
             Vector3 nextVeDirection = nextVec.normalized;
             nextVeDirection.y = 2;
 
-            itemRB.AddForce(nextVeDirection * 3, ForceMode.Impulse ); ;
+            itemRB.AddForce(nextVeDirection * 3, ForceMode.Impulse ); 
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
             
         }
@@ -233,11 +234,17 @@ public class KeyItemStrategy : UseItemStrategy
 public class HairPinItemStrategy : UseItemStrategy
 {
     static bool isFirstAttackItem;
+    Rigidbody monsterRb;
+    Monster monster;
+    Player player;
     public HairPinItemStrategy(UseItem useItem) : base(useItem) { }
 
     public override void Init()
     {
         isFirstAttackItem = true;
+        monster = GameManager.Instance.monster;
+        player = GameManager.Instance.player;
+        monsterRb = monster.GetComponent<Rigidbody>();
     }
 
     public override void PrintInfo()
@@ -251,6 +258,33 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
+        Vector3 dropPos = monster.transform.position - player.transform.position;
+        Vector3 dropDirection = dropPos.normalized;
+        monsterRb.AddForce(dropDirection * 2, ForceMode.Impulse);
+
+    }
+
+    protected IEnumerator CaughtCo()
+    {
+        while (useItem.escapeCircle.fillAmount < 1)
+        {
+            yield return null;
+            if (useItem.escapeCircle.fillAmount < 0.6f)
+            {
+                useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+                if (Input.GetKeyDown(KeyCode.Alpha6))
+                    break;
+            }
+            else if (useItem.escapeCircle.fillAmount > 0.6f)
+            {
+                useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+                if (Input.GetKeyDown(KeyCode.Alpha6))
+                    Exit();
+            }
+            useItem.escapeCircle.gameObject.SetActive(true);
+            useItem.escapeCircle.fillAmount += (Time.deltaTime / 2);
+        }
+        Debug.Log("죽음");
     }
 }
 public class ExitItemStrategy : UseItemStrategy
@@ -303,6 +337,7 @@ public class UseItem : Item
     public UseItemStrategy UseItemstrategy;
     public USEITEM_TYPE useItem_Type;
     public GameObject SponPoint;
+    public Image escapeCircle;
     private void Start()
     {
        switch (useItem_Type)
