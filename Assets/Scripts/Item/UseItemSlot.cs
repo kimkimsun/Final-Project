@@ -49,11 +49,8 @@ public class UseItemSlot : Slot
 
     public override void SlotItemUse()
     {
-        Debug.Log(gameObject.name);
-        Debug.Log(items.Count);
         if (items.Count <= 0)
         {
-            Debug.Log("아이템 없음");
             return;
         }
         else if (items.Count != 0)
@@ -75,7 +72,7 @@ public class UseItemSlot : Slot
             itemImage.sprite = null;
         else
         {
-            itemImage.color = new Color(0, 0, 0, 1);
+            itemImage.color = new Color(1, 1, 1, 1);
             countText.color = new Color(0, 0, 0, 1);
             itemImage.sprite = setItem.sprite;
         }
