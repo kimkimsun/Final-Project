@@ -16,7 +16,7 @@ public class PlayerPrevPos : MonoBehaviour
     {
         playerPos=GetComponent<FirstPersonController>();
         posSaveCo = PosSaveCo();
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 10; i++)
         {
             GameObject copyPos = Instantiate(prevPos, Vector3.zero, Quaternion.identity);
             prevPosQ.Enqueue(copyPos);

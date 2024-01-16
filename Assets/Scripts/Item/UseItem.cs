@@ -93,11 +93,12 @@ public class FireCrackerItemStrategy : UseItemStrategy
         if (Physics.Raycast(ray, out hit, 100))
         {
             Vector3 nextVec = hit.point - useItem.transform.position;
+            Vector3 nextVeDirection = nextVec.normalized;
             nextVec.y = 5;
             itemRB.isKinematic = false;
             itemCollider.isTrigger = false;
 
-            itemRB.AddForce(nextVec.normalized, ForceMode.Impulse); ;
+            itemRB.AddForce(nextVeDirection, ForceMode.Impulse); ;
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
             
         }

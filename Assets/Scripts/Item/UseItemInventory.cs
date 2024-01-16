@@ -7,10 +7,6 @@ public class UseItemInventory : Inventory
 {
     [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
 
-    private void Start()
-    {
-        Debug.Log(gameObject.name + "test");
-    }
     public override void AddItem(Item item)
     {
         for (int i = 0; i < slots.Length; i++)

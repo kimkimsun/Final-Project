@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public InteractionAim aim;
     public FirstPersonController playerMove;
 
-    [SerializeField]  private Transform playerPos;
+    public Transform playerPos;
     private LayerMask monsterMask;
     public GameEvent finalEvent;
     public GameObject itemBox;

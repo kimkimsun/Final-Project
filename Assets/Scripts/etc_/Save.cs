@@ -1,22 +1,41 @@
 using CustomInterface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class SaveData
+{
+
+    public int hp;
+    public int tension;
+    public float stamina;
+    public void Init()
+    {
+        hp = GameManager.Instance.player.Hp;
+        tension = GameManager.Instance.player.Tension;
+        stamina = GameManager.Instance.player.Stamina;
+    }
+      
+        
+
+}
+
 public class Save : MonoBehaviour, IInteraction
 {
-    Player player;
+    public SaveData saveData;
 
     string path = "Assets/";
     string fileName = "SaveData.txt";
 
     public string InteractionText => "Save";
 
+
     private void Start()
     {
-        player = GameManager.Instance.player;
+        saveData = new SaveData();
     }
 
     public void SaveData()
@@ -30,7 +49,7 @@ public class Save : MonoBehaviour, IInteraction
         {
             sw = new StreamWriter(path+fileName);
         }
-        sw.Write(JsonUtility.ToJson(player));
+        sw.Write(JsonUtility.ToJson(saveData));
         sw.Close();
     }
 
@@ -39,7 +58,7 @@ public class Save : MonoBehaviour, IInteraction
         if(File.Exists(path+fileName))
         {
             StreamReader sr =new StreamReader(path+fileName);
-            player = JsonUtility.FromJson<Player>(sr.ReadToEnd());
+            saveData = JsonUtility.FromJson<SaveData>(sr.ReadToEnd());
             sr.Close();
         }
     }
@@ -49,7 +68,6 @@ public class Save : MonoBehaviour, IInteraction
         
         if(Input.GetKeyDown(KeyCode.V))
         {
-            Debug.Log("로드");
             LoadData();
             Debug.Log("로드");
         }
