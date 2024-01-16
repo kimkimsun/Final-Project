@@ -251,93 +251,6 @@ public class HairPinItemStrategy : UseItemStrategy
         base.Use();
     }
 }
-
-
-public class FlashlightItemStrategy : UseItemStrategy
-{
-
-    Light flashlight;
-
-    IEnumerator minusBatteryCo;
-    IEnumerator plusBatteryCo;
-
-    int minBright; 
-    int maxBright; 
-    int battery;
-    int minBattery;
-    int maxBattery; 
-
-    public int Battery
-    {
-        get { return battery; }
-        set 
-        {
-            battery = value;
-            if(battery <= minBattery)
-                battery = minBattery;
-            if( battery >= maxBattery)
-                battery = maxBattery;
-        }
-    }
-
-    public FlashlightItemStrategy(UseItem useItem) : base(useItem)
-    {
-        Init();
-    }
-    public override void Init()
-    {
-        minBright = 0;
-        maxBright = 10;
-        minBattery = 0;
-        maxBattery = 50;
-        Battery = 50;
-        minusBatteryCo = MinusBatteryCo();
-        plusBatteryCo = PlusBatteryCo();
-
-        flashlight = useItem.GetComponentInChildren<Light>();
-        flashlight.intensity = minBright;
-    }
-
-    public override void Use()
-    {
-        useItem.StopCoroutine(plusBatteryCo);
-        useItem.StartCoroutine(minusBatteryCo);
-    }
-
-    public override void Exit()
-    {
-        useItem.StopCoroutine(minusBatteryCo);
-        useItem.StartCoroutine(plusBatteryCo);
-    }
-
-    IEnumerator MinusBatteryCo()
-    {
-        while (Battery > minBattery)
-        {
-            flashlight.intensity = maxBright;
-            Battery -= 10;
-            Debug.Log("마이너스");
-            yield return new WaitForSeconds(0.5f);
-            if(Battery <= minBattery)
-            {
-                Exit();
-            }
-            yield return new WaitUntil(() => Battery > minBattery);
-        }
-    }
-
-    IEnumerator PlusBatteryCo()
-    {
-        while (Battery < maxBattery)
-        {
-            flashlight.intensity = minBright;
-            battery += 10;
-            Debug.Log("플러스");
-            yield return new WaitForSeconds(2.5f);
-            yield return new WaitUntil(() => Battery < maxBattery);
-        }
-    }
-}
 public class ExitItemStrategy : UseItemStrategy
 {
     static bool isExitItme;
@@ -407,9 +320,6 @@ public class UseItem : Item
             case USEITEM_TYPE.STAMINABUFF:
                 itemStrategy = new StaminaBuffItemStrategy(this);
                 break;
-            case USEITEM_TYPE.FLASHLIGHT:
-                itemStrategy = new FlashlightItemStrategy(this);
-                break;
             case USEITEM_TYPE.HAIRPIN:
                 itemStrategy = new HairPinItemStrategy(this);
                 break;
@@ -423,27 +333,14 @@ public class UseItem : Item
 
     }
 
-
     public override void Active()
-    {        
+    {
         ((UseItemStrategy)itemStrategy).PrintInfo();
-        if(useItem_Type == USEITEM_TYPE.HAIRPIN)
-        {
-            UseItemInventory oneSlot = GameManager.Instance.player.oneSlot;
-            GameObject itemBox = GameManager.Instance.player.itemBox;
-            oneSlot.AddItem(this);
-            gameObject.SetActive(false);
-            transform.SetParent(itemBox.transform);
-
-        }
-        else
-        {
-            Inventory quickSlot = GameManager.Instance.player.QuickSlot;
-            GameObject itemBox = GameManager.Instance.player.itemBox;
-            quickSlot.AddItem(this);
-            gameObject.SetActive(false);
-            transform.SetParent(itemBox.transform);
-        }
+        Inventory quickSlot = GameManager.Instance.player.QuickSlot;
+        GameObject itemBox = GameManager.Instance.player.itemBox;
+        quickSlot.AddItem(this);
+        gameObject.SetActive(false);
+        transform.SetParent(itemBox.transform);
     }
     private void Update()
     {

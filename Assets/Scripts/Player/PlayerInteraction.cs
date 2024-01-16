@@ -20,11 +20,18 @@ public class PlayerInteraction : MonoBehaviour
         Stop();
         SwitchItem();
         OpenInven();
-        CurEauipItem();
+        CurEquipItem();
         HairPinCount();
-
+        UseFlash();
     }
-
+    public void UseFlash()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log(player.equipInven.Pocket.item.itemStrategy);
+            player.equipInven.Pocket.item.Use();
+        }
+    }
     public void Stop()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -64,7 +71,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    public void CurEauipItem()
+    public void CurEquipItem()
     {
 
         if (player.EquipInven.gameObject.activeSelf)

@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     [Header("인벤토리")]
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
-    public UseItemInventory oneSlot;
     public Inventory portableInven;
 
     public InteractionAim aim;
