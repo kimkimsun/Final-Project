@@ -242,7 +242,7 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstAttackItem = true;
-        monster = GameManager.Instance.monster;
+        //monster = GameManager.Instance.monster;
         player = GameManager.Instance.player;
         monsterRb = monster.GetComponent<Rigidbody>();
     }

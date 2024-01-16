@@ -6,7 +6,8 @@ using System;
 public class GameManager : SingleTon<GameManager>
 {
     public Player player;
-    public Monster monster;
+    public HiRil hiril;
+    public HaiKen haiken;
     public static event Action FinalAttraction;
 
     public static void StartAttraction()

@@ -450,7 +450,6 @@ MonoBehaviour:
   playerPos: {fileID: 0}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
   itemBox: {fileID: 483068598}
-  escapeCircle: {fileID: 243653142}
   hp: 0
   stamina: 0
   tension: 0
@@ -1156,6 +1155,7 @@ MonoBehaviour:
   explanationText: 
   useItem_Type: 5
   SponPoint: {fileID: 0}
+  escapeCircle: {fileID: 0}
 --- !u!65 &213075129
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2822,6 +2822,7 @@ MonoBehaviour:
   explanationText: 
   useItem_Type: 6
   SponPoint: {fileID: 0}
+  escapeCircle: {fileID: 0}
 --- !u!65 &597262331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4717,6 +4718,7 @@ MonoBehaviour:
   - {fileID: 1483038495}
   - {fileID: 1243417125}
   - {fileID: 292649945}
+  hairPinSlot: {fileID: 0}
 --- !u!1001 &857517853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5558,7 +5560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 76312774}
-  monster: {fileID: 0}
+  hiril: {fileID: 0}
+  haiken: {fileID: 0}
 --- !u!4 &1053888786
 Transform:
   m_ObjectHideFlags: 0
@@ -9292,7 +9295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 76312774}
-  monster: {fileID: 0}
+  hiril: {fileID: 1458932274}
+  haiken: {fileID: 2018442100}
 --- !u!4 &1626682850
 Transform:
   m_ObjectHideFlags: 0
@@ -11853,8 +11857,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClickSound: {fileID: 0}
-  useItemInfo: {fileID: 892962547}
+  escapeCircle: {fileID: 0}
   settingBox: {fileID: 1050989138}
+  useItemInfo: {fileID: 892962547}
 --- !u!4 &1881693419
 Transform:
   m_ObjectHideFlags: 0
@@ -12378,8 +12383,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClickSound: {fileID: 0}
-  useItemInfo: {fileID: 892962547}
+  escapeCircle: {fileID: 0}
   settingBox: {fileID: 0}
+  useItemInfo: {fileID: 892962547}
 --- !u!4 &1981604952
 Transform:
   m_ObjectHideFlags: 0
@@ -13181,6 +13187,7 @@ MonoBehaviour:
   explanationText: 
   useItem_Type: 6
   SponPoint: {fileID: 0}
+  escapeCircle: {fileID: 0}
 --- !u!65 &2068194111
 BoxCollider:
   m_ObjectHideFlags: 0
