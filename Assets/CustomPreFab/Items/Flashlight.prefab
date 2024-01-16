@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: "\uC190\uC804\uB4F1"
-  sprite: {fileID: 21300000, guid: 314bba4f1bb5a294d9ef4722bff27f81, type: 3}
+  sprite: {fileID: 21300000, guid: 1f214e93f8062b24f8b2040b7f073091, type: 3}
   explanationText: 
   useItem_Type: 5
   SponPoint: {fileID: 0}

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 public abstract class EquipItemStrategy: ItemStrategy
 {
     protected EquipmentItem equipmentItem;
@@ -43,8 +44,8 @@ public class FlashlightItemStrategy : EquipItemStrategy
         minBright = 0;
         maxBright = 10;
         minBattery = 0;
-        maxBattery = 50;
-        Battery = 50;
+        maxBattery = 60;
+        Battery = 60;
         minusBatteryCo = MinusBatteryCo();
         plusBatteryCo = PlusBatteryCo();
 
@@ -73,9 +74,9 @@ public class FlashlightItemStrategy : EquipItemStrategy
         while (Battery > minBattery)
         {
             flashlight.intensity = maxBright;
-            Battery -= 10;
-            Debug.Log("마이너스");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
+            equipmentItem.batteryCharge.fillAmount = Battery / 60f;
+            Battery -= 1;
             if (Battery <= minBattery)
             {
                 Exit();
@@ -89,9 +90,10 @@ public class FlashlightItemStrategy : EquipItemStrategy
         while (Battery < maxBattery)
         {
             flashlight.intensity = minBright;
-            battery += 10;
+            yield return new WaitForSeconds(0.6f);
+            equipmentItem.batteryCharge.fillAmount = Battery / 60f;
+            battery += 1;
             Debug.Log("플러스");
-            yield return new WaitForSeconds(2.5f);
             yield return new WaitUntil(() => Battery < maxBattery);
         }
     }
@@ -152,6 +154,7 @@ public enum EQUIPITEM_TYPE
 public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
+    public Image batteryCharge;
     private void Start()
     {
         switch (equipItem_Type)

@@ -12,6 +12,7 @@ public class EquipItemInventory : Inventory
     [SerializeField] private EquipItemSlot pocket;
     [SerializeField] private EquipItemSlot tempSlot;
     [SerializeField] private Image textCoverImage;
+    [SerializeField] private GameObject flashLightPocket;
     [SerializeField] private int index;
     public int Index { get => index; }
 
@@ -29,15 +30,16 @@ public class EquipItemInventory : Inventory
         if (((EquipmentItem)item).equipItem_Type == EQUIPITEM_TYPE.FLASHLIGHT)
         {
             pocket.item = item;
-            Debug.Log(item.itemStrategy);
             pocket.itemImage.color = new Color(1, 1, 1, 1);
             pocket.itemImage.sprite = item.sprite;
-            item.gameObject.SetActive(false);
+            item.transform.SetParent(flashLightPocket.transform);
+            item.transform.position = flashLightPocket.transform.position;
+            item.transform.rotation = flashLightPocket.transform.rotation;
+
         }
         else if (equipSlot.item == null)
         {
             equipSlot.item = item;
-            Debug.Log(item.itemStrategy);
             equipSlot.itemImage.color = new Color(1, 1, 1, 1);
             equipSlot.itemImage.sprite = item.sprite;
             item.Use();
@@ -77,22 +79,23 @@ public class EquipItemInventory : Inventory
     }
     public void SwitchItem()
     {
-        if (equipSlot.item != null)
+        if (eiSlots[index].item != null)
+        {
             equipSlot.item.Exit();
-        if (eiSlots[index].item == null)
+            tempSlot.item = eiSlots[index].item;
+            tempSlot.itemImage.sprite = eiSlots[index].itemImage.sprite;
+
+            eiSlots[index].item = equipSlot.item;
+            eiSlots[index].itemImage.sprite = equipSlot.itemImage.sprite;
+
+            equipSlot.item = tempSlot.item;
+            equipSlot.itemImage.sprite = tempSlot.itemImage.sprite;
+
+            tempSlot.item = null;
+            tempSlot.itemImage.sprite = null;
+            equipSlot.item.Use();
+        }
+        else
             return;
-
-        tempSlot.item = eiSlots[index].item;
-        tempSlot.itemImage.sprite = eiSlots[index].itemImage.sprite;
-
-        eiSlots[index].item = equipSlot.item;
-        eiSlots[index].itemImage.sprite = equipSlot.itemImage.sprite;
-
-        equipSlot.item = tempSlot.item;
-        equipSlot.itemImage.sprite = tempSlot.itemImage.sprite;
-
-        tempSlot.item = null;
-        tempSlot.itemImage.sprite = null;
-        equipSlot.item.Use();
     }
 }
