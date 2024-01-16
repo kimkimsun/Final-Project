@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
         while (Tension > zero)
         {
             yield return new WaitForSeconds(3);
-            Hp -= damege;
+            Tension -= damege;
             Debug.Log(damege);
         }
         yield break;
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
         while (Tension < zero)
         {
             yield return new WaitForSeconds(5);
-            Hp += tensionUp;
+            Tension += tensionUp;
             yield return new WaitUntil(() => Hp < 100);
         }
     }

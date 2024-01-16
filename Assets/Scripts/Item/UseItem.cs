@@ -87,18 +87,18 @@ public class FireCrackerItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        Ray ray = Camera.main.ScreenPointToRay(screenCenter);     
-        
+        Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+        itemRB.isKinematic = false;
+        itemCollider.isTrigger = false;
+
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100))
         {
             Vector3 nextVec = hit.point - useItem.transform.position;
             Vector3 nextVeDirection = nextVec.normalized;
-            nextVec.y = 5;
-            itemRB.isKinematic = false;
-            itemCollider.isTrigger = false;
+            nextVeDirection.y = 2;
 
-            itemRB.AddForce(nextVeDirection, ForceMode.Impulse); ;
+            itemRB.AddForce(nextVeDirection * 3, ForceMode.Impulse ); ;
             itemRB.AddTorque(Vector3.left *5 , ForceMode.Impulse);
             
         }
@@ -107,6 +107,8 @@ public class FireCrackerItemStrategy : UseItemStrategy
     IEnumerator AttractionCo()
     {
         itemCollider.enabled = true;
+        itemCollider.isTrigger = true;
+        itemCollider.radius = 3;
         yield return new WaitForSeconds(time);
         GameObject.Destroy(useItem.gameObject);
 
