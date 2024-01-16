@@ -7,11 +7,16 @@ public class UseItemInventory : Inventory
 {
     [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
 
+
+    private void Start()
+    {
+        Debug.Log(gameObject.name + "test");
+    }
     public override void AddItem(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            Debug.Log(slots[i] == null);
+            
             if (slots[i].items.Count != 0 && slots[i].items[slots[i].CurItem].itemName == item.itemName)
             {
                 slots[i].items.Add(item);
@@ -31,7 +36,7 @@ public class UseItemInventory : Inventory
     public void QuickItemUse()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            slots[0].SlotItemUse();
+            slots[0].SlotItemUse();        
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             slots[1].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha3))

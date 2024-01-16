@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
         Hp = max;
         Tension = max;
         Stamina = max;
-        monsterMask = 1 << 8;
+        monsterMask = 1 << 9;
         caughtSetState = true;
 
         minusTensionCo = MinusTensionCo(tensionDwon);

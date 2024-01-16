@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class Door : MonoBehaviour, IInteraction
 {
+
+    public string InteractionText => "open";
     public Image openUI;
-    private Color darkColor;
     public Transform nextPos;
     public Transform prevPos;
     private bool isOpen;
-
+ 
     private void Start()
     {
-//        darkColor = openUI.color;
         isOpen = false;
     }
     public bool IsOpen
@@ -25,33 +25,45 @@ public class Door : MonoBehaviour, IInteraction
         {
             isOpen = value;
             if( isOpen )
-                GameManager.Instance.player.transform.position = nextPos.position;
+            {   
+                 GameManager.Instance.player.transform.position = nextPos.position;
+                 StartCoroutine(OpenCo());
+            }
             else
-                GameManager.Instance.player.transform.position = prevPos.position;
+            {
+                if (prevPos == null)
+                {
+                    //´úÄÈÀÌ´Â »ç¿îµå
+                    return;
+                }
+                else
+                {
+                    GameManager.Instance.player.transform.position = prevPos.position;
+                    StartCoroutine(OpenCo());
+                }
+            }
         }
 
 
     }
 
-    public string InteractionText => "Open";
 
     public void Active()
     {
-        //StartCoroutine(OpenCo());
         IsOpen = !IsOpen;
     }
 
-/*    IEnumerator OpenCo()
+    IEnumerator OpenCo()
     {
-        Debug.Log("ÄÚ·çÆ¾ µé¾î¿È");
-        darkColor = new Color(0, 0, 0, 1);
-        while (darkColor.a >= 0) 
+        float alpha = 1;
+        openUI.color = new Color(0,0,0,1);
+        while (alpha >= 0)
         {
-            darkColor.a -= 0.1f;            
-            yield return new WaitForSeconds(0.5f);
-
+            openUI.color = new Color(0, 0, 0, alpha);
+            yield return new WaitForSeconds(0.2f);
+            alpha -= 0.1f;
         }
 
-    }*/
+    }
 
 }

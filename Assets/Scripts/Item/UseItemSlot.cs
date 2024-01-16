@@ -49,7 +49,14 @@ public class UseItemSlot : Slot
 
     public override void SlotItemUse()
     {
-        if (items.Count != 0)
+        Debug.Log(gameObject.name);
+        Debug.Log(items.Count);
+        if (items.Count <= 0)
+        {
+            Debug.Log("아이템 없음");
+            return;
+        }
+        else if (items.Count != 0)
         {
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
@@ -60,8 +67,6 @@ public class UseItemSlot : Slot
                 SetItem(null);
 
         }
-        else if (items.Count <= 0)
-            return;
 
     }
     public override void SetItem(Item setItem)
@@ -69,7 +74,12 @@ public class UseItemSlot : Slot
         if (items.Count == 0)
             itemImage.sprite = null;
         else
+        {
+            itemImage.color = new Color(0, 0, 0, 1);
+            countText.color = new Color(0, 0, 0, 1);
             itemImage.sprite = setItem.sprite;
+        }
+
     }
 
 }
