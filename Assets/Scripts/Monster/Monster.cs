@@ -164,8 +164,19 @@ public class Monster : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        Vector3 lookrotation = (agent.steeringTarget - transform.position).normalized;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
+        //Vector3 lookrotation = (agent.steeringTarget - transform.position);
+        //Vector3 lookratationDirection = lookrotation.normalized;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookratationDirection), extraRotationSpeed * Time.deltaTime);
+        Vector3 lookrotation = (agent.steeringTarget - transform.position);
+        if (lookrotation != Vector3.zero)
+        {
+            Vector3 lookratationDirection = lookrotation.normalized;
+
+            if (lookratationDirection != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookratationDirection), extraRotationSpeed * Time.deltaTime);
+            }
+        }
     }
     public void MonsterAttack()
     {

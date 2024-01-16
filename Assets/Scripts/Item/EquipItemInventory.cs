@@ -9,36 +9,46 @@ public class EquipItemInventory : Inventory
 {
     [SerializeField] private EquipItemSlot[] eiSlots;
     [SerializeField] private EquipItemSlot equipSlot;
+    [SerializeField] private EquipItemSlot pocket;
     [SerializeField] private EquipItemSlot tempSlot;
     [SerializeField] private Image textCoverImage;
     [SerializeField] private int index;
     public int Index { get => index; }
 
+    public EquipItemSlot Pocket
+    {
+        get => pocket;
+        set => pocket = value;
+    }
     public EquipItemSlot[] EiSlots
     { 
         get => eiSlots; set => eiSlots = value; 
     }
-    private void Start()
-    {
-        eiSlots = new EquipItemSlot[4];
-    }
     public override void AddItem(Item item)
     {
-        if (equipSlot.item == null)
+        if (((EquipmentItem)item).equipItem_Type == EQUIPITEM_TYPE.FLASHLIGHT)
+        {
+            pocket.item = item;
+            Debug.Log(item.itemStrategy);
+            pocket.itemImage.color = new Color(1, 1, 1, 1);
+            pocket.itemImage.sprite = item.sprite;
+            item.gameObject.SetActive(false);
+        }
+        else if (equipSlot.item == null)
         {
             equipSlot.item = item;
+            Debug.Log(item.itemStrategy);
+            equipSlot.itemImage.color = new Color(1, 1, 1, 1);
             equipSlot.itemImage.sprite = item.sprite;
             item.Use();
             item.gameObject.SetActive(false);
         }
         else
         {
-            Debug.Log("슬롯 안비었니");
             for (int i = eiSlots.Length - 1; i >= 0; i--)
             {
                 if (eiSlots[i].item == null)
                 {
-                    Debug.Log("슬롯 안비었니222");
                     eiSlots[i].SetItem(item);
                     break;
                 }
@@ -58,13 +68,11 @@ public class EquipItemInventory : Inventory
                     textCoverImage.gameObject.SetActive(true);
                     textCoverImage.GetComponentInChildren<TextMeshProUGUI>().text = eiSlots[i].item.ExplanationText;
                 }
+                else
+                    textCoverImage.gameObject.SetActive(false);
             }
             else
-            {
-                Debug.Log(eiSlots[i].itemImage.name);
-                eiSlots[i].itemImage.GetComponent<Image>().color = Color.blue;
-                textCoverImage.gameObject.SetActive(false);
-            }
+                eiSlots[i].itemImage.color = Color.blue;
         }
     }
     public void SwitchItem()
