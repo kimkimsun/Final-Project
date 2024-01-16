@@ -190,7 +190,7 @@ public class HiRilRunState : HiRilState
     }
     public override void Enter()
     {
-
+        owner.Animator.SetBool("isRun", true);
     }
     public override void Exit()
     {

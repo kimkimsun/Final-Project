@@ -164,7 +164,7 @@ public class Monster : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        Vector3 lookrotation = agent.steeringTarget - transform.position;
+        Vector3 lookrotation = (agent.steeringTarget - transform.position).normalized;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookrotation), extraRotationSpeed * Time.deltaTime);
     }
     public void MonsterAttack()
@@ -195,7 +195,6 @@ public class Monster : MonoBehaviour
     }
     public virtual IEnumerator MonsterMoveCo()
     {
-        Debug.Log("몬스터무브코");
         yield return null;
         foreach (Transform targetPos in monsterNextPositionList)
         {
