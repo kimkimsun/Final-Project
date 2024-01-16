@@ -185,14 +185,14 @@ public class EquipmentItem : Item
     {
         switch (equipItem_Type)
         {
+            case EQUIPITEM_TYPE.FLASHLIGHT:
+                itemStrategy = new FlashlightItemStrategy(this);
+                break;
             case EQUIPITEM_TYPE.OINTMENT:
                 itemStrategy = new OintmentItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.ADRENALINE:
                 itemStrategy = new AdrenalineItemStrategy(this);
-                break;
-            case EQUIPITEM_TYPE.FLASHLIGHT:
-                itemStrategy = new FlashlightItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.MASK:
                 itemStrategy = new MaskItemStrategy(this);
