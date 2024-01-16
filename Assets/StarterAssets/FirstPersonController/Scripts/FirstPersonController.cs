@@ -15,12 +15,11 @@ namespace StarterAssets
 		[SerializeField] GameEvent pauseEvent;
         [SerializeField] Animator playerAni;
 
-
-
 		private bool isMove;
 		private bool isStop;
 		private bool isRun;
-
+		private int plusStamina;
+		private int minusStamina;
 		public bool IsMove
 		{
 			get => isMove;
@@ -36,7 +35,6 @@ namespace StarterAssets
                     playerAni.SetBool("IsMove", false);
             }
 		}
-
         public bool IsRun
 		{
 			get => isRun;
@@ -49,7 +47,6 @@ namespace StarterAssets
                     playerAni.SetBool("IsRun", false);
             }
 		}
-
         public bool IsStop
 		{
 			get => isStop;
@@ -70,7 +67,16 @@ namespace StarterAssets
                 }
 			}
 		}
-
+		public int PlusStamina
+		{
+			get => plusStamina;
+			set => plusStamina = value;
+		}
+		public int MinusStamina
+		{
+			get => minusStamina;
+			set => minusStamina = value;
+		}
 
 
 		#region 이동관련 변수 셋팅
@@ -174,6 +180,8 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			plusStamina = 10;
+			minusStamina = 5;
             _controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -231,7 +239,8 @@ namespace StarterAssets
                 IsRun = false;
                 IsMove = false;
                 targetSpeed = 0.0f;
-				GameManager.Instance.player.Stamina += 10 * Time.deltaTime;
+				GameManager.Instance.player.Stamina += plusStamina * Time.deltaTime;
+				Debug.Log("플러스 스테미나" + plusStamina);
             }
 
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -258,7 +267,8 @@ namespace StarterAssets
                 else if(targetSpeed == SprintSpeed)
 				{
 					IsRun = true;
-                    GameManager.Instance.player.Stamina -= 5 * Time.deltaTime;
+                    GameManager.Instance.player.Stamina -= minusStamina * Time.deltaTime;
+					Debug.Log("마이너스 스테미나" + minusStamina);
 				}
 
 

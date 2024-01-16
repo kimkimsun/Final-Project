@@ -33,21 +33,30 @@ public class Player : MonoBehaviour
     [SerializeField] private int tension;
 
     private StateMachine<Player> playerSM;
+    private bool isHpCoStart;
     private int tensionDwon = 5;
     private int tensionUp = 3;
-    private int maxDistance = 5;
+    private int maxDistance;
     private int max = 100;
     private int zero = 0;
     private int finalKey = 5;
+    private int monsterLookZone;
     private bool isMonsterCheck;
     private bool isMonsterAttackCheck;
     private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
+    private IEnumerator hpPlusCo;
     #endregion
 
 
     #region 프로퍼티
+
+    public int MonsterLookZone
+    {
+        get => monsterLookZone;
+        set => monsterLookZone = value;
+    }
     public EquipItemInventory EquipInven
     {
         get => equipInven;
@@ -63,7 +72,20 @@ public class Player : MonoBehaviour
         set => caughtSetState = value;
     }
 
+    public bool IsHpCoStart
+    {
+        get => isHpCoStart;
+        set
+        {
+            isHpCoStart = value;
+            if (isHpCoStart)
+                StartCoroutine(hpPlusCo);
+            else
+                StopCoroutine(hpPlusCo);
+        }
+        
 
+    }
     public bool IsMonsterCheck
     {
         get { return isMonsterCheck; }
@@ -181,10 +203,21 @@ public class Player : MonoBehaviour
         Stamina = max;
         monsterMask = 1 << 9;
         caughtSetState = true;
+        monsterLookZone = 10;
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
+        hpPlusCo = HpPlusCo();
         finalEvent.RegisterListener(() => { this.enabled = true; });
+    }
+    public IEnumerator HpPlusCo()
+    {
+        while(hp <= max)
+        {
+            yield return new WaitForSeconds(30);
+            hp += 5;
+            yield return new WaitUntil(() => hp <= max);
+        }
     }
     public IEnumerator MinusTensionCo(int damege)
     {
@@ -232,6 +265,7 @@ public class Player : MonoBehaviour
         bool isMonsterZone = monsterZoneCol.Length > 0;
         if (isMonsterZone)
         {
+            //maxDistance = 
             RaycastHit hit;
             Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);

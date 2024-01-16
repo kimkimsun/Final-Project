@@ -115,17 +115,19 @@ public class AdrenalineItemStrategy : EquipItemStrategy
 
     public override void Use()
     {
-        Debug.Log("각성해버려따");
+        GameManager.Instance.player.playerMove.PlusStamina = 12;
+        GameManager.Instance.player.playerMove.MinusStamina = 3;
     }
     public override void Exit()
     {
-        Debug.Log("아드레날린 나가요");
+        GameManager.Instance.player.playerMove.PlusStamina = 10;
+        GameManager.Instance.player.playerMove.MinusStamina = 5;
     }
 }
-public class RainBootsItemStrategy : EquipItemStrategy
+public class OintmentItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
-    public RainBootsItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
+    public OintmentItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
     {
         this.equip = equipmentItem;
         Init();
@@ -138,18 +140,42 @@ public class RainBootsItemStrategy : EquipItemStrategy
     }
     public override void Use()
     {
-        Debug.Log("터벅터벅 소리 감소");
+        GameManager.Instance.player.IsHpCoStart = true;
     }
     public override void Exit()
     {
-        Debug.Log("장화 나가요");
+        GameManager.Instance.player.IsHpCoStart = false;
+    }
+}
+public class MaskItemStrategy : EquipItemStrategy
+{
+    EquipmentItem equip;
+    public MaskItemStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
+    {
+        this.equip = equipmentItem;
+        Init();
+    }
+
+    public override void Init()
+    {
+        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps";
+        equip.ExplanationText = this.explanationText;
+    }
+    public override void Use()
+    {
+        GameManager.Instance.player.MonsterLookZone = 5;
+    }
+    public override void Exit()
+    {
+        GameManager.Instance.player.MonsterLookZone = 10;
     }
 }
 public enum EQUIPITEM_TYPE
 {
-    RAINBOOTS,
+    OINTMENT,
     ADRENALINE,
     FLASHLIGHT,
+    MASK,
 }
 public class EquipmentItem : Item
 {
@@ -159,14 +185,17 @@ public class EquipmentItem : Item
     {
         switch (equipItem_Type)
         {
-            case EQUIPITEM_TYPE.RAINBOOTS:
-                itemStrategy = new RainBootsItemStrategy(this);
+            case EQUIPITEM_TYPE.OINTMENT:
+                itemStrategy = new OintmentItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.ADRENALINE:
                 itemStrategy = new AdrenalineItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
+                break;
+            case EQUIPITEM_TYPE.MASK:
+                itemStrategy = new MaskItemStrategy(this);
                 break;
         }
     }
