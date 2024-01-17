@@ -9,7 +9,11 @@ public class UseItemInventory : Inventory
     [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
     [SerializeField] private UseItemSlot hairPinSlot;
 
-
+    public UseItemSlot HairPinSlot
+    {
+        get => hairPinSlot;
+        set => hairPinSlot = value;
+    }
     public override void AddItem(Item item)
     {
         if(((UseItem)item).useItem_Type == USEITEM_TYPE.HAIRPIN) 
@@ -51,6 +55,7 @@ public class UseItemInventory : Inventory
     }
     public void QuickItemUse()
     {
+        Debug.Log(UIManager.Instance.escapeCircle.fillAmount);
         if (Input.GetKeyDown(KeyCode.Alpha1))
             slots[0].SlotItemUse();        
         else if (Input.GetKeyDown(KeyCode.Alpha2))

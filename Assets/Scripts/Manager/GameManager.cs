@@ -2,26 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 public class GameManager : SingleTon<GameManager>
 {
     public Player player;
     public HiRil hiril;
     public HaiKen haiken;
-    public static event Action FinalAttraction;
+    public CinemachineVirtualCamera[] endingCamera = new CinemachineVirtualCamera[2];
 
-    public static void StartAttraction()
+    public void HirilEnding()
     {
-        Debug.Log("TEST" + FinalAttraction);
-        FinalAttraction();
+        endingCamera[0].Priority = 11;
     }
-    public static void Subscribe(Action action)
+    public void HaikenEnding()
     {
-        FinalAttraction += action;
-    }
-
-    public static void UnSubscribe(Action action)
-    {
-        FinalAttraction -= action;
+        endingCamera[1].Priority = 11;
     }
 }

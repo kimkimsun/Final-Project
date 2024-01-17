@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
             if (isMonsterAttackCheck && caughtSetState)
             {
                 playerSM.SetState("Caught");
-                Debug.Log("ĳġ");
                 caughtSetState = false;
             }
         }
@@ -199,7 +198,7 @@ public class Player : MonoBehaviour
         playerSM.AddState("Moribund", new MoribundState());
         playerSM.AddState("Caught", new CaughtState());
         playerSM.SetState("Idle");
-
+        
         Hp = max;
         Tension = max;
         Stamina = max;
@@ -241,43 +240,33 @@ public class Player : MonoBehaviour
             yield return new WaitUntil(() => Hp < 100);
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 1f);
-    }
     bool CheckInLayerMask(int layerIndex)
     {
         return (monsterMask & (1 << layerIndex)) != 0;
     }
     private void Update()
     {
+        playerSM.curState.Update();
         playerPos.position = this.transform.position;
-        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 4, monsterMask);
+        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
-        Debug.Log("Test" + isMonsterAttackZone);
-        if(isMonsterAttackZone)
+        if (isMonsterAttackZone)
         {
-            Debug.Log("Teeeeeeeeeeeest" + IsMonsterAttackCheck);
-            RaycastHit hit;
-            Vector3 direction = ((monsterAttackZoneCol[0].transform.position) - transform.position).normalized;
-            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
-            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-                IsMonsterAttackCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+            playerSM.SetState("Caught");
+            if (monsterAttackZoneCol[0].GetComponent<HiRil>() != null)
+                GameManager.Instance.HirilEnding();
+            else
+                GameManager.Instance.HaikenEnding();
         }
-
-        Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, 10, monsterMask);
+        Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
         if (isMonsterZone)
         {
-            //maxDistance = 
             RaycastHit hit;
             Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-            {
-                IsMonsterCheck = hit.collider.gameObject.layer == monsterMask;
-            }
+                IsMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
         }
     }
 }
