@@ -255,10 +255,8 @@ public class Player : MonoBehaviour
         playerPos.position = this.transform.position;
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 4, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
-        Debug.Log("Test" + isMonsterAttackZone);
         if(isMonsterAttackZone)
         {
-            Debug.Log("Teeeeeeeeeeeest" + IsMonsterAttackCheck);
             RaycastHit hit;
             Vector3 direction = ((monsterAttackZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
@@ -270,7 +268,6 @@ public class Player : MonoBehaviour
         bool isMonsterZone = monsterZoneCol.Length > 0;
         if (isMonsterZone)
         {
-            //maxDistance = 
             RaycastHit hit;
             Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);

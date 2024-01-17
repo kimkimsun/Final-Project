@@ -240,7 +240,6 @@ namespace StarterAssets
                 IsMove = false;
                 targetSpeed = 0.0f;
 				GameManager.Instance.player.Stamina += plusStamina * Time.deltaTime;
-				Debug.Log("플러스 스테미나" + plusStamina);
             }
 
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -268,7 +267,6 @@ namespace StarterAssets
 				{
 					IsRun = true;
                     GameManager.Instance.player.Stamina -= minusStamina * Time.deltaTime;
-					Debug.Log("마이너스 스테미나" + minusStamina);
 				}
 
 

@@ -4,19 +4,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
+[System.Serializable]
 public class SaveData
 {
+
 
     public int hp;
     public int tension;
     public float stamina;
-    public void Init()
+    public string playerPos;
+    public string hirilPos;
+    public string haikenPos;
+    public SaveData(Player player, HiRil hiril , HaiKen haiken)
     {
-        hp = GameManager.Instance.player.Hp;
-        tension = GameManager.Instance.player.Tension;
-        stamina = GameManager.Instance.player.Stamina;
+        hp = player.Hp;
+        tension = player.Tension;
+        stamina = player.Stamina;
+        playerPos = player.playerPos.position.ToString();
     }
       
         
@@ -25,8 +32,10 @@ public class SaveData
 
 public class Save : MonoBehaviour, IInteraction
 {
-    public SaveData saveData;
-
+    SaveData saveData;
+    Player player;
+    HiRil hiril;
+    HaiKen haiken;
     string path = "Assets/";
     string fileName = "SaveData.txt";
 
@@ -35,7 +44,9 @@ public class Save : MonoBehaviour, IInteraction
 
     private void Start()
     {
-        saveData = new SaveData();
+        player = GameManager.Instance.player;
+        hiril= GameManager.Instance.hiril;
+        haiken = GameManager.Instance.haiken;
     }
 
     public void SaveData()
@@ -75,6 +86,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void Active()
     {
+        saveData = new SaveData(player, hiril, haiken);
         SaveData();
         Debug.Log("¿˙¿Â");
     }
