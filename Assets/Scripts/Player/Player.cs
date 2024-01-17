@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private static int exitItemCount;
 
-    #region ÇÃ·¹ÀÌ¾î º¯¼ö
-    [Header("ÀÎº¥Åä¸®")]
+    #region ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+    [Header("ï¿½Îºï¿½ï¿½ä¸®")]
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
     public Inventory portableInven;
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     #endregion
 
 
-    #region ÇÁ·ÎÆÛÆ¼
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
 
     public int MonsterLookZone
     {
@@ -150,10 +150,10 @@ public class Player : MonoBehaviour
         set
         {
             tension = value;
-            //ÅÙ¼ÇÀº ¸ó½ºÅÍ¿Í ¸¶ÁÖÄ¥½Ã ÁÙ¾îµéÀ½
+            //ï¿½Ù¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¥ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ï¿½
             if(tension <= max)
                 tension = max;
-            if (tension <= 60) // && bool°ª true·Î ÀÖ¾î¾ßµÊ false´Â setstate¹Ø ´Ù½Ã true´Â exit¿¡¼­
+            if (tension <= 60) // && boolï¿½ï¿½ trueï¿½ï¿½ ï¿½Ö¾ï¿½ßµï¿½ falseï¿½ï¿½ setstateï¿½ï¿½ ï¿½Ù½ï¿½ trueï¿½ï¿½ exitï¿½ï¿½ï¿½ï¿½
             {
                 playerSM.SetState("Exhaustion");
             }
@@ -250,6 +250,7 @@ public class Player : MonoBehaviour
         playerPos.position = this.transform.position;
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
+
         if (isMonsterAttackZone)
         {
             playerSM.SetState("Caught");

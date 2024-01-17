@@ -1,1 +1,1 @@
-{"hp":0,"tension":0,"stamina":0.0}
+{"hp":100,"tension":100,"stamina":49.144832611083987,"playerPos":"(-83.06, 11.48, -172.16)","monsterPos":""}
