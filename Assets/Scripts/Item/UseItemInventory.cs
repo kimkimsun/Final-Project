@@ -14,7 +14,13 @@ public class UseItemInventory : Inventory
     {
         if(((UseItem)item).useItem_Type == USEITEM_TYPE.HAIRPIN) 
         {
+            hairPinSlot.items.Add(item);
             hairPinSlot.SetItem(item);
+            hairPinSlot.CountItem++;
+            return;
+        }
+        else if(((UseItem)item).useItem_Type == USEITEM_TYPE.HAIRPIN && hairPinSlot.items[hairPinSlot.CurItem].itemName == item.itemName)
+        {
             hairPinSlot.items.Add(item);
             hairPinSlot.CountItem++;
             hairPinSlot.CurItem++;
