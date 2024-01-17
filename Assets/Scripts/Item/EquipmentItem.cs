@@ -135,7 +135,7 @@ public class OintmentItemStrategy : EquipItemStrategy
 
     public override void Init()
     {
-        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps";
+        explanationText = "들고 있으면 피가 점점 찹니다";
         equip.ExplanationText = this.explanationText;
     }
     public override void Use()
@@ -158,7 +158,7 @@ public class MaskItemStrategy : EquipItemStrategy
 
     public override void Init()
     {
-        explanationText = "Wearing these boots  \n will reduce the sound  \n of your footsteps";
+        explanationText = "몬스터를 봤을 때 텐션이 줄어드는 범위가 줄어듭니다";
         equip.ExplanationText = this.explanationText;
     }
     public override void Use()
