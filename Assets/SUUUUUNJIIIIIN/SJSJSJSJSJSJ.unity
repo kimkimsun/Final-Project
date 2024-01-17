@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44644648, g: 0.49626583, b: 0.5747393, a: 1}
+  m_IndirectSpecularColor: {r: 0.44644672, g: 0.4962662, b: 0.5747396, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4200,7 +4200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316452718549200380, guid: 47801b77989922148979ea18d604a99f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316452718549627356, guid: 47801b77989922148979ea18d604a99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -12566,7 +12566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClickSound: {fileID: 0}
-  escapeCircle: {fileID: 0}
+  escapeCircle: {fileID: 243653142}
   settingBox: {fileID: 0}
   useItemInfo: {fileID: 892962547}
 --- !u!4 &1981604952

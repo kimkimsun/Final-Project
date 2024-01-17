@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
             if (isMonsterAttackCheck && caughtSetState)
             {
                 playerSM.SetState("Caught");
+                Debug.Log("ĳġ");
                 caughtSetState = false;
             }
         }
@@ -205,6 +206,7 @@ public class Player : MonoBehaviour
         monsterMask = 1 << 9;
         caughtSetState = true;
         monsterLookZone = 10;
+        maxDistance = 5;
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
@@ -251,10 +253,12 @@ public class Player : MonoBehaviour
     private void Update()
     {
         playerPos.position = this.transform.position;
-        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 1, monsterMask);
+        Collider[] monsterAttackZoneCol = Physics.OverlapSphere(transform.position, 4, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
+        Debug.Log("Test" + isMonsterAttackZone);
         if(isMonsterAttackZone)
         {
+            Debug.Log("Teeeeeeeeeeeest" + IsMonsterAttackCheck);
             RaycastHit hit;
             Vector3 direction = ((monsterAttackZoneCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
