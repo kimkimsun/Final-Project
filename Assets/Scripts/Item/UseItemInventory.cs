@@ -66,13 +66,11 @@ public class UseItemInventory : Inventory
             slots[3].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
-        else if(UIManager.Instance.escapeCircle.fillAmount > 0.6f)
-        {
+        if(UIManager.Instance.escapeCircle.gameObject.activeSelf && UIManager.Instance.escapeCircle.fillAmount > 0.6f)
             if(Input.GetKeyDown(KeyCode.Q))
-            {
                 hairPinSlot.SlotItemUse();
-            }
-        }
+        //else if(UIManager.Instance.escapeCircle.fillAmount < 0.6f)
+                
     }
 
     private void Update()
