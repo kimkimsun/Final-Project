@@ -9,8 +9,6 @@ public class PlayerInteraction : MonoBehaviour
     Player player;
     public GameEvent pause;
     private int slotIndexNum;
-    
-
     private void Start()
     {
         player = GetComponent<Player>();

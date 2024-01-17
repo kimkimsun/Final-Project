@@ -114,29 +114,22 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
         Debug.Log("한번만 제발");
         player.playerMove.enabled = false;
         player.StartCoroutine(CaughtCo());
-        /*        if (player.aim.isLookMonster && player.oneSlot.Slots[0].items.Count > 0)
-                {
-                    player.StartCoroutine(CaughtCo());
-                }
-                else
-                    Debug.Log("주금");*/
     }
     protected IEnumerator CaughtCo()
     {
-        while (UIManager.Instance.escapeCircle.fillAmount < 1)
+        while (UIManager.Instance.escapeCircle.fillAmount <= 1)
         {
+            yield return new WaitForSeconds(1);
             yield return null;
-            if (UIManager.Instance.escapeCircle.fillAmount < 0.6f)
-            {
-                UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-               
-            }
-            else if (UIManager.Instance.escapeCircle.fillAmount > 0.6f)
-            {
-                UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
-            }
-            UIManager.Instance.escapeCircle.gameObject.SetActive(true);
             UIManager.Instance.escapeCircle.fillAmount += (Time.deltaTime/ 2);
+            if(GameManager.Instance.player.quickSlot.HairPinSlot.items.Count > 0)
+            {
+                UIManager.Instance.escapeCircle.gameObject.SetActive(true);
+                if (UIManager.Instance.escapeCircle.fillAmount <= 0.6f)
+                    UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+                else if (UIManager.Instance.escapeCircle.fillAmount > 0.6f)
+                    UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+            }
         }
     }
     public override void Exit()
