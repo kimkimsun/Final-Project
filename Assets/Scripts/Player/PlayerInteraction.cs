@@ -21,7 +21,6 @@ public class PlayerInteraction : MonoBehaviour
         SwitchItem();
         OpenInven();
         CurEquipItem();
-        HairPinCount();
         UseFlash();
     }
     public void UseFlash()
@@ -93,17 +92,5 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
             return;
-    }
-
-    public void HairPinCount()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Q´©¸§");
-            player.portableInven.gameObject.SetActive(true);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Q))
-            player.portableInven.gameObject.SetActive(false);
     }
 }

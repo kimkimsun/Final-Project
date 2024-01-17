@@ -113,12 +113,13 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     {
         Debug.Log("한번만 제발");
         player.playerMove.enabled = false;
-/*        if (player.aim.isLookMonster && player.oneSlot.Slots[0].items.Count > 0)
-        {
-            player.StartCoroutine(CaughtCo());
-        }
-        else
-            Debug.Log("주금");*/
+        player.StartCoroutine(CaughtCo());
+        /*        if (player.aim.isLookMonster && player.oneSlot.Slots[0].items.Count > 0)
+                {
+                    player.StartCoroutine(CaughtCo());
+                }
+                else
+                    Debug.Log("주금");*/
     }
     protected IEnumerator CaughtCo()
     {
