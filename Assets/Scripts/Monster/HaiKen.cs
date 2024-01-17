@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ public class HaiKen : Monster
         sm.AddState("Attack", new HaiKenAttackState());
         base.Start();
 
+        agent.isStopped = true;
         maxDistance = 20f;
         agent.speed = 5f;
         lookDetectionRange = 20;
@@ -29,7 +31,7 @@ public class HaiKen : Monster
         {
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position + (transform.forward * maxDistance), Color.blue);
-            if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance))
+            if (Physics.Raycast(transform.position, new Vector3(transform.position.x,transform.position.y * 3), out hit, maxDistance))
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
             if (isPlayerCheck && sm.curState is HaiKenIdleState hi && isStun)
                 sm.SetState("Run");
@@ -49,7 +51,6 @@ public class HaiKen : Monster
     }
     public void EndAnimation()
     {
-        Debug.Log("들어왔니?");
-        sm.SetState("Idle");
+        agent.isStopped = false;
     }
 }
