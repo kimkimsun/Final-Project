@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IGetStunable
 {
     #region º¯¼ö
     public float escape;
@@ -248,11 +248,12 @@ public class Monster : MonoBehaviour
         while (escape < 5)
         {
             escape += Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                sm.SetState("Stun");
-            }
             yield return new WaitUntil(() => escape < 5);
         }
+    }
+
+    public void GetStun()
+    {
+        sm.SetState("Stun");
     }
 }

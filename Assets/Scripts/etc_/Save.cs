@@ -84,11 +84,12 @@ public class Save : MonoBehaviour, IInteraction
         haiken = GameManager.Instance.haiken;
 
         path = "Assets/";
-        fileName = "SaveData" + index + ".txt";
+        fileName = "SaveData.txt";
     }
 
     public void SaveData()
     {
+        Debug.Log("세이브");
         StreamWriter sw;
         if(File.Exists(path+fileName) == false )
         {
@@ -105,6 +106,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void LoadData()
     {
+        Debug.Log("로드");
         if(File.Exists(path+fileName))
         {
             StreamReader sr =new StreamReader(path+fileName);
@@ -114,9 +116,8 @@ public class Save : MonoBehaviour, IInteraction
         }
     }
 
-    private void FixedUpdate()//재영공신
+    private void FixedUpdate()
     {
-        
         if(Input.GetKeyDown(KeyCode.V))
         {
             LoadData();

@@ -71,14 +71,6 @@ public class HiRil : Monster
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, soundDetectionRange);
     }
-    protected override void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<IStunable>(out IStunable stun))
-        {
-            Debug.Log("´ê¾Òµû");
-            sm.SetState("Stun");
-        }
-    }
     public override IEnumerator StunCo()
     {
         gameObject.layer = 0;
