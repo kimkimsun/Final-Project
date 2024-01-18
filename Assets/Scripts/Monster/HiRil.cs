@@ -73,7 +73,6 @@ public class HiRil : Monster
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        Debug.Log("´ê¾Òµû11111");
         if (other.TryGetComponent<IStunable>(out IStunable stun))
         {
             Debug.Log("´ê¾Òµû");

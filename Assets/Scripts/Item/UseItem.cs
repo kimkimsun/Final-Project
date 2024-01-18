@@ -231,7 +231,7 @@ public class KeyItemStrategy : UseItemStrategy
     }
 }
 
-public class HairPinItemStrategy : UseItemStrategy,IStunable
+public class HairPinItemStrategy : UseItemStrategy
 {
     static bool isFirstAttackItem;
     Rigidbody monsterRb;
@@ -253,17 +253,13 @@ public class HairPinItemStrategy : UseItemStrategy,IStunable
         isFirstAttackItem = false;
     }
 
-    public void Stun()
-    {
-        player.playerMove.PlayerAni.SetTrigger("isAttack");
-    }
-
     public override void Use()
     {
         useItem.transform.SetParent(player.hairPinSlot.transform);
         useItem.transform.position = 
         new Vector3(player.hairPinSlot.transform.position.x, player.hairPinSlot.transform.position.y-0.2f, player.hairPinSlot.transform.position.z);
-        Stun();
+        player.playerMove.PlayerAni.SetTrigger("isAttack");
+
     }
 
     protected IEnumerator CaughtCo()

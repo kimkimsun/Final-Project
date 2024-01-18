@@ -31,4 +31,8 @@ namespace CustomInterface
     {
         public void Stun();
     }
+    public interface IGetStunable
+    {
+        public void GetStun();
+    }
 }
