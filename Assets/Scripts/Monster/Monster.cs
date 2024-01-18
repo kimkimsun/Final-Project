@@ -187,7 +187,6 @@ public class Monster : MonoBehaviour
 
     protected virtual void Update()
     {
-        monsterPos.position = transform.position;
         PublicUpdate();
     }
     protected virtual void OnTriggerEnter(Collider other)
@@ -231,7 +230,7 @@ public class Monster : MonoBehaviour
             }
         }
     }
-    public IEnumerator StunCo()
+    public virtual IEnumerator StunCo()
     {
         isStun = false;
         stunTime = 0f;

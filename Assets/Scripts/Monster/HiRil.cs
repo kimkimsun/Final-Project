@@ -1,3 +1,4 @@
+using CustomInterface;
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ public class HiRil : Monster
     {
         sm.curState?.Update();
         base.Update();
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+            sm.SetState("Stun");
+
         soundCol = Physics.OverlapSphere(transform.position, soundDetectionRange, heardTargetLayerMask); // 둘 다 base.Update()하고 여기부터는 따로 정의 해야할 듯?
         if (soundCol.Length > 0 && isStun) // 히리르만 사용
         {
@@ -44,7 +48,7 @@ public class HiRil : Monster
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-            if (isPlayerCheck && sm.curState is HiRilIdleState hd && isStun)
+            if (isPlayerCheck && sm.curState is not HiRilRunState && isStun)
                 sm.SetState("Run");
             else if (!isPlayerCheck)
                 sm.SetState("Idle");
@@ -60,10 +64,32 @@ public class HiRil : Monster
             isStun = false;
         }
     }
+
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, soundDetectionRange);
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IStunable>(out IStunable stun))
+            sm.SetState("Stun");
+    }
+    public override IEnumerator StunCo()
+    {
+        gameObject.layer = 0;
+        isStun = false;
+        isAttack = false;
+        stunTime = 0f;
+        while (stunTime < 5.0f)
+        {
+            stunTime += Time.deltaTime;
+            yield return null;
+        }
+        sm.SetState("Idle");
+        isStun = true;
+        isAttack = true;
+        gameObject.layer = 9;
     }
 }

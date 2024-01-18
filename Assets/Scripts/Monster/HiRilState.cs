@@ -208,6 +208,7 @@ public class HiRilStunState : HiRilState
     {
         // ++) 귀신 비명 소리 추가
         owner.gameObject.layer = 0;
+        owner.Agent.Move(owner.transform.forward * -30 * Time.deltaTime);
         owner.StartCoroutine(owner.StunCo());
         owner.Agent.enabled = false;
         owner.Animator.SetBool("isStun", true);

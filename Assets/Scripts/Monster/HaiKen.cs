@@ -1,3 +1,4 @@
+using CustomInterface;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -52,5 +53,26 @@ public class HaiKen : Monster
     public void EndAnimation()
     {
         agent.isStopped = false;
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IStunable>(out IStunable stun))
+            sm.SetState("Stun");
+    }
+    public override IEnumerator StunCo()
+    {
+        gameObject.layer = 0;
+        isStun = false;
+        isAttack = false;
+        stunTime = 0f;
+        while (stunTime < 5.0f)
+        {
+            stunTime += Time.deltaTime;
+            yield return null;
+        }
+        sm.SetState("Idle");
+        isStun = true;
+        isAttack = true;
+        gameObject.layer = 9;
     }
 }

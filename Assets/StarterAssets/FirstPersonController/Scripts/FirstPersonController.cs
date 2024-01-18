@@ -274,7 +274,6 @@ namespace StarterAssets
                     GameManager.Instance.player.Stamina -= MinusStamina *Time.deltaTime;
 				}
 
-
             }
 
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
