@@ -24,6 +24,8 @@ public class SaveData
         tension = player.Tension;
         stamina = player.Stamina;
         playerPos = player.playerPos.position.ToString();
+        hirilPos = hiril.monsterPos.position.ToString();
+        haikenPos = haiken.monsterPos.position.ToString();
     }
       
         
