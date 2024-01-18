@@ -134,6 +134,7 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
             else
                 GameManager.Instance.BadEnding();
         }
+        GameManager.Instance.BadEnding();
     }
     public override void Exit()
     {

@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private static int exitItemCount;
 
-    #region �÷��̾� ����
+    #region 변수
     [Header("�κ��丮")]
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
@@ -47,10 +47,12 @@ public class Player : MonoBehaviour
     private IEnumerator plusTensionCo;
     private IEnumerator hpPlusCo;
     #endregion
-
-
-    #region ������Ƽ
-
+    #region 프로퍼티
+    public StateMachine<Player> PlayerSM
+    {
+        get => playerSM; 
+        set => playerSM = value;
+    }
     public int MonsterLookZone
     {
         get => monsterLookZone;
@@ -249,15 +251,8 @@ public class Player : MonoBehaviour
         playerPos.position = this.transform.position;
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
-
         if (isMonsterAttackZone)
-        {
             playerSM.SetState("Caught");
-            if (monsterAttackZoneCol[0].GetComponent<HiRil>() != null)
-                GameManager.Instance.HirilEnding();
-            else
-                GameManager.Instance.HaikenEnding();
-        }
         Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
         if (isMonsterZone)
