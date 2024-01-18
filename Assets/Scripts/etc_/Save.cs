@@ -22,8 +22,8 @@ public class SaveData
     public Vector3 hirilRot;
     public Vector3 haikenPos;
     public Vector3 haikenRot;
-    public UseItemInventory saveUseItemInventory; 
-    public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemInventory useItemInventory)
+    public UseItemSlot[] saveUseItemSlot;
+    public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
         hp = player.Hp;
         tension = player.Tension;
@@ -34,9 +34,17 @@ public class SaveData
         hirilRot = hiril.transform.rotation.eulerAngles;
         haikenPos = haiken.transform.position;
         haikenRot = haiken.transform.root.eulerAngles;
-        useItemInventory = saveUseItemInventory;
+        saveUseItemSlot = useItemSlot;
+
+        for(int i = 0; i < useItemSlot.Length; i++)
+        {
+            for(int j = 0; j < useItemSlot[i].items.Count; i ++)
+            {
+                saveUseItemSlot[i].items[j] = useItemSlot[i].items[j];
+            }
+        }
     }
-    public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemInventory useItemInventory)
+    public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
         player.Hp = hp;
         player.Tension = tension;
@@ -47,7 +55,15 @@ public class SaveData
         hiril.transform.eulerAngles = hirilRot;
         haiken.transform.position = haikenPos;
         haiken.transform.root.eulerAngles = haikenRot;
-        useItemInventory = saveUseItemInventory;
+
+        for (int i = 0; i < saveUseItemSlot.Length; i++)
+        {
+            for (int j = 0; j < saveUseItemSlot[i].items.Count; i++)
+            {
+                useItemSlot[i].items[j] = saveUseItemSlot[i].items[j];
+            }
+        }
+
     }
       
         
@@ -57,7 +73,7 @@ public class SaveData
 public class Save : MonoBehaviour, IInteraction
 {
     SaveData saveData;
-    UseItemInventory useItemInventory;
+    UseItemSlot[]useItemSlot;
     Player player;
     HiRil hiril;
     HaiKen haiken;
@@ -86,7 +102,7 @@ public class Save : MonoBehaviour, IInteraction
         player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
         haiken = GameManager.Instance.haiken;
-        useItemInventory = GameManager.Instance.player.quickSlot;
+        useItemSlot = GameManager.Instance.player.quickSlot.slots; 
 
         path = "Assets/";
         fileName = "SaveData.txt";
@@ -117,7 +133,7 @@ public class Save : MonoBehaviour, IInteraction
             StreamReader sr =new StreamReader(path+fileName);
             saveData = JsonUtility.FromJson<SaveData>(sr.ReadToEnd());
             sr.Close();
-            saveData.Load(player, hiril, haiken, useItemInventory);
+            saveData.Load(player, hiril, haiken, useItemSlot);
         }
     }
 
@@ -131,7 +147,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void Active()
     {
-        saveData = new SaveData(player, hiril, haiken, useItemInventory);
+        saveData = new SaveData(player, hiril, haiken, useItemSlot);
         SaveData();
     }
 }

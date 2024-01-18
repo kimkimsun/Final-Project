@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class UseItemInventory : Inventory
 {
-    [SerializeField] private UseItemSlot[] slots = new UseItemSlot[5];
-    [SerializeField] private UseItemSlot hairPinSlot;
+    public UseItemSlot[] slots = new UseItemSlot[5];
+    public UseItemSlot hairPinSlot;
 
     public UseItemSlot HairPinSlot
     {
