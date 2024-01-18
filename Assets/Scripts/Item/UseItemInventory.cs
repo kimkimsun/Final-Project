@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UseItemInventory : Inventory
 {
@@ -55,7 +56,7 @@ public class UseItemInventory : Inventory
     }
     public void QuickItemUse()
     {
-        Debug.Log(UIManager.Instance.escapeCircle.fillAmount);
+        Image dieCount = UIManager.Instance.escapeCircle;
         if (Input.GetKeyDown(KeyCode.Alpha1))
             slots[0].SlotItemUse();        
         else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -66,12 +67,14 @@ public class UseItemInventory : Inventory
             slots[3].SlotItemUse();
         else if (Input.GetKeyDown(KeyCode.Alpha5))
             slots[4].SlotItemUse();
-        if (UIManager.Instance.escapeCircle.gameObject.activeSelf && UIManager.Instance.escapeCircle.fillAmount > 0.6f)
-            if (Input.GetKeyDown(KeyCode.Q))
+        else if (dieCount.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Q))
+        {
+            if (dieCount.fillAmount > 0.6f)
                 hairPinSlot.SlotItemUse();
-            else if (UIManager.Instance.escapeCircle.gameObject.activeSelf && UIManager.Instance.escapeCircle.fillAmount > 0.6f)
-                if (Input.GetKeyDown(KeyCode.Q))
-                    GameManager.Instance.BadEnding();
+            else
+                ScenesManager.Instance.DieScene();
+        }
+
     }
 
     private void Update()
