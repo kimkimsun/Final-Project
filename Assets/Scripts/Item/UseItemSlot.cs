@@ -9,6 +9,7 @@ public class UseItemSlot : Slot
 
     public List<Item> items;
     public TextMeshProUGUI countText;
+    public event Action OnUse;
     private event Action OnCountChange;
 
     int curItem;
@@ -62,6 +63,7 @@ public class UseItemSlot : Slot
             CountItem--;
             if (items.Count == 0)
                 SetItem(null);
+            OnUse?.Invoke();
         }
 
     }

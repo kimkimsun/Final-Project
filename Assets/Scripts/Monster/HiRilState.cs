@@ -229,7 +229,6 @@ public class HiRilAttackState : HiRilState
     {
         owner.Agent.enabled = false;
         owner.Animator.SetBool("isAttack", true);
-        owner.MonsterVirtualCamera.Priority = 11;
         owner.Escape = 0f;
     }
     public override void Exit()
