@@ -20,6 +20,11 @@ namespace StarterAssets
 		private bool isRun;
 		private int plusStamina;
 		private int minusStamina;
+		public Animator PlayerAni
+		{
+			get => playerAni;
+			set => playerAni = value;
+		}
 		public bool IsMove
 		{
 			get => isMove;

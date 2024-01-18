@@ -62,7 +62,6 @@ public class UseItemSlot : Slot
             CountItem--;
             if (items.Count == 0)
                 SetItem(null);
-
         }
 
     }

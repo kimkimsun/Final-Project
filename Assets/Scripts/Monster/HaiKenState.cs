@@ -52,6 +52,7 @@ public class HaiKenStunState : HaiKenState
         owner.StartCoroutine(owner.StunCo());
         owner.Agent.enabled = false;
         owner.Animator.SetBool("isStun", true);
+        owner.gameObject.layer = 0;
         owner.MonsterVirtualCamera.Priority = 9;
         owner.Animator.bodyRotation = GameManager.Instance.transform.rotation;
     }

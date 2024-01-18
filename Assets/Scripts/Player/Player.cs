@@ -184,7 +184,6 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
     private void Start()
     {
         playerPos = GetComponent<Transform>();

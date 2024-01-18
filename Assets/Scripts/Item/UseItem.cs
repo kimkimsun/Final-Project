@@ -242,9 +242,7 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Init()
     {
         isFirstAttackItem = true;
-        //monster = GameManager.Instance.monster;
         player = GameManager.Instance.player;
-        monsterRb = monster.GetComponent<Rigidbody>();
     }
 
     public override void PrintInfo()
@@ -258,10 +256,7 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        Vector3 dropPos = monster.transform.position - player.transform.position;
-        Vector3 dropDirection = dropPos.normalized;
-        monsterRb.AddForce(dropDirection * 2, ForceMode.Impulse);
-
+        //player.playerMove.PlayerAni.SetTrigger();
     }
 
     protected IEnumerator CaughtCo()

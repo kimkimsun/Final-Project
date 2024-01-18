@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : SingleTon<UIManager>
 {
+    public Image openUI;
     public AudioClip ClickSound;
     public Image escapeCircle;
     public GameObject settingBox;

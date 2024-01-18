@@ -8,7 +8,6 @@ public class Door : MonoBehaviour, IInteraction
 {
 
     public string InteractionText => "open";
-    public Image openUI;
     public Transform nextPos;
     public Transform prevPos;
     private bool isOpen;
@@ -56,10 +55,10 @@ public class Door : MonoBehaviour, IInteraction
     IEnumerator OpenCo()
     {
         float alpha = 1;
-        openUI.color = new Color(0,0,0,1);
+        UIManager.Instance.openUI.color = new Color(0,0,0,0.8f);
         while (alpha >= 0)
         {
-            openUI.color = new Color(0, 0, 0, alpha);
+            UIManager.Instance.openUI.color = new Color(0, 0, 0, alpha);
             yield return new WaitForSeconds(0.2f);
             alpha -= 0.1f;
         }

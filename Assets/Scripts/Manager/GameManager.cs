@@ -19,4 +19,8 @@ public class GameManager : SingleTon<GameManager>
     {
         haikenCamera.Priority = 11;
     }
+    public void BadEnding()
+    {
+        Debug.Log("배드엔딩");
+    }
 }

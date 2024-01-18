@@ -111,7 +111,6 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     private float a;
     public override void Enter()
     {
-        Debug.Log("한번만 제발");
         player.playerMove.enabled = false;
         player.StartCoroutine(CaughtCo());
     }
@@ -119,10 +118,12 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     {
         while (UIManager.Instance.escapeCircle.fillAmount <= 1)
         {
+            UIManager.Instance.openUI.color = new Color(0, 0, 0, 1);
             yield return new WaitForSeconds(1);
+
             yield return null;
             UIManager.Instance.escapeCircle.fillAmount += (Time.deltaTime/ 2);
-            if(GameManager.Instance.player.quickSlot.HairPinSlot.items.Count > 0)
+            if (GameManager.Instance.player.quickSlot.HairPinSlot.items.Count > 0)
             {
                 UIManager.Instance.escapeCircle.gameObject.SetActive(true);
                 if (UIManager.Instance.escapeCircle.fillAmount <= 0.6f)
@@ -130,6 +131,8 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
                 else if (UIManager.Instance.escapeCircle.fillAmount > 0.6f)
                     UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
             }
+            else
+                GameManager.Instance.BadEnding();
         }
     }
     public override void Exit()
