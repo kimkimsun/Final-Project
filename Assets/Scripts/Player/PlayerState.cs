@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class PlayerState : State
@@ -111,57 +112,56 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     Image diecount;
     int item;
     int itemcount;
+    bool isUse;
     public override void Enter()
     {
+        Debug.Log("몬스터한테 잡힘");
         Init();
+        player.quickSlot.HairPinSlot.OnUse -= () => isUse = true;
+        player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         player.playerMove.enabled = false;
-        player.StartCoroutine(caughtCo);
+        if (item > 0)
+            player.StartCoroutine(caughtCo);
+        else
+            ScenesManager.Instance.DieScene();
     }
 
     public void Init()
     {
         caughtCo = CaughtCo();
         diecount = UIManager.Instance.escapeCircle;
-        item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
         itemcount = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count - 1;
+        item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
     }
     protected IEnumerator CaughtCo()
     {
-        diecount.fillMethod = 0;
-        while (diecount.fillAmount <= 1)
+        diecount.fillAmount= 0;
+        diecount.gameObject.SetActive(true);
+        while (diecount.fillAmount < 1)
         {
             yield return null;
-            diecount.fillAmount += (Time.deltaTime/ 2);
-            if (item > 0)
+            diecount.fillAmount += (Time.deltaTime / 2);
+            if (diecount.fillAmount <= 0.6f)
+                diecount.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+            else if (diecount.fillAmount > 0.6f)
             {
-                diecount.gameObject.SetActive(true);
-                if (diecount.fillAmount <= 0.6f)
-                    diecount.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-                else if (diecount.fillAmount > 0.6f)
-                {
-                    diecount.GetComponent<Image>().color = new Color(0, 1, 0, 1);
-                    yield return new WaitForSeconds(3);
-                    if (item == itemcount)
-                        Exit();
-                }
-
+                diecount.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+                if (isUse)
+                    Exit();
             }
-            else
-                ScenesManager.Instance.DieScene();
         }
         ScenesManager.Instance.DieScene();
-
     }
     public override void Exit()
     {
         player.StopCoroutine(caughtCo);
         player.playerMove.enabled = true;
         player.Tension = 50;
+        diecount.gameObject.SetActive(false);
         Debug.Log("탈출 성공");
     }
 
     public override void Update()
     {
-
     }
 }

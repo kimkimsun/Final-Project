@@ -225,7 +225,6 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(3);
             Tension -= damege;
-            Debug.Log(damege);
         }
         yield break;
     }
@@ -242,12 +241,17 @@ public class Player : MonoBehaviour
     {
         return (monsterMask & (1 << layerIndex)) != 0;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), 1);
+    }
     private void Update()
     {
         playerSM.curState.Update();
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
-        if (isMonsterAttackZone)
+        if (isMonsterAttackZone && PlayerSM.curState is not CaughtState)
             playerSM.SetState("Caught");
         Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
