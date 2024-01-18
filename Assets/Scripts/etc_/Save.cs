@@ -84,7 +84,7 @@ public class Save : MonoBehaviour, IInteraction
         haiken = GameManager.Instance.haiken;
 
         path = "Assets/";
-        fileName = "SaveData.txt" + index;
+        fileName = "SaveData" + index + ".txt";
     }
 
     public void SaveData()
