@@ -22,7 +22,8 @@ public class SaveData
     public Vector3 hirilRot;
     public Vector3 haikenPos;
     public Vector3 haikenRot;
-    public SaveData(Player player, HiRil hiril, HaiKen haiken)
+    public UseItemInventory saveUseItemInventory; 
+    public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemInventory useItemInventory)
     {
         hp = player.Hp;
         tension = player.Tension;
@@ -33,8 +34,9 @@ public class SaveData
         hirilRot = hiril.transform.rotation.eulerAngles;
         haikenPos = haiken.transform.position;
         haikenRot = haiken.transform.root.eulerAngles;
+        useItemInventory = saveUseItemInventory;
     }
-    public void Load(Player player, HiRil hiril, HaiKen haiken)
+    public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemInventory useItemInventory)
     {
         player.Hp = hp;
         player.Tension = tension;
@@ -45,6 +47,7 @@ public class SaveData
         hiril.transform.eulerAngles = hirilRot;
         haiken.transform.position = haikenPos;
         haiken.transform.root.eulerAngles = haikenRot;
+        useItemInventory = saveUseItemInventory;
     }
       
         
@@ -54,6 +57,7 @@ public class SaveData
 public class Save : MonoBehaviour, IInteraction
 {
     SaveData saveData;
+    UseItemInventory useItemInventory;
     Player player;
     HiRil hiril;
     HaiKen haiken;
@@ -82,6 +86,7 @@ public class Save : MonoBehaviour, IInteraction
         player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
         haiken = GameManager.Instance.haiken;
+        useItemInventory = GameManager.Instance.player.quickSlot;
 
         path = "Assets/";
         fileName = "SaveData" + index + ".txt";
@@ -110,7 +115,7 @@ public class Save : MonoBehaviour, IInteraction
             StreamReader sr =new StreamReader(path+fileName);
             saveData = JsonUtility.FromJson<SaveData>(sr.ReadToEnd());
             sr.Close();
-            saveData.Load(player, hiril, haiken);
+            saveData.Load(player, hiril, haiken, useItemInventory);
         }
     }
 
@@ -125,7 +130,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void Active()
     {
-        saveData = new SaveData(player, hiril, haiken);
+        saveData = new SaveData(player, hiril, haiken, useItemInventory);
         SaveData();
     }
 }
