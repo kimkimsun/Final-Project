@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour, IGetStunable
+public abstract class Monster : MonoBehaviour, IGetStunable
 {
     #region º¯¼ö
     public float escape;
@@ -189,11 +189,6 @@ public class Monster : MonoBehaviour, IGetStunable
     {
         PublicUpdate();
     }
-    protected virtual void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<IStunable>(out IStunable stun))
-            sm.SetState("Stun");
-    }
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -252,8 +247,5 @@ public class Monster : MonoBehaviour, IGetStunable
         }
     }
 
-    public void GetStun()
-    {
-        sm.SetState("Stun");
-    }
+    public abstract void GetStun();
 }

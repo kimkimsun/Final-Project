@@ -54,11 +54,6 @@ public class HaiKen : Monster
     {
         agent.isStopped = false;
     }
-    protected override void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<IStunable>(out IStunable stun))
-            sm.SetState("Stun");
-    }
     public override IEnumerator StunCo()
     {
         gameObject.layer = 0;
@@ -74,5 +69,9 @@ public class HaiKen : Monster
         isStun = true;
         isAttack = true;
         gameObject.layer = 9;
+    }
+    public override void GetStun()
+    {
+        sm.SetState("Stun");
     }
 }

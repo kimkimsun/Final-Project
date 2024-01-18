@@ -41,7 +41,7 @@ public class HiRil : Monster
             soundCol[0] = null;
             sm.SetState("Run");
         } // 히리르만 사용
-        else if (playerLookCol.Length > 0)
+        else if (playerLookCol.Length > 0 && isStun)
         {
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
@@ -86,5 +86,10 @@ public class HiRil : Monster
         isStun = true;
         isAttack = true;
         gameObject.layer = 9;
+    }
+    public override void GetStun()
+    {
+        Debug.Log("스턴스턴");
+        sm.SetState("Stun");
     }
 }
