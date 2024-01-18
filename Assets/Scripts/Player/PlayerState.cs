@@ -108,36 +108,53 @@ public class MoribundState : PlayerState // 빈사 상태
 public class CaughtState: PlayerState //몬스터한테 잡혔을때
 {
     IEnumerator caughtCo;
-    private float a;
+    Image diecount;
+    int item;
+    int itemcount;
     public override void Enter()
     {
+        Init();
         player.playerMove.enabled = false;
-        player.StartCoroutine(CaughtCo());
+        player.StartCoroutine(caughtCo);
+    }
+
+    public void Init()
+    {
+        caughtCo = CaughtCo();
+        diecount = UIManager.Instance.escapeCircle;
+        item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
+        itemcount = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count - 1;
     }
     protected IEnumerator CaughtCo()
     {
-        while (UIManager.Instance.escapeCircle.fillAmount <= 1)
+        diecount.fillMethod = 0;
+        while (diecount.fillAmount <= 1)
         {
-            UIManager.Instance.openUI.color = new Color(0, 0, 0, 1);
-            yield return new WaitForSeconds(1);
-
             yield return null;
-            UIManager.Instance.escapeCircle.fillAmount += (Time.deltaTime/ 2);
-            if (GameManager.Instance.player.quickSlot.HairPinSlot.items.Count > 0)
+            diecount.fillAmount += (Time.deltaTime/ 2);
+            if (item > 0)
             {
-                UIManager.Instance.escapeCircle.gameObject.SetActive(true);
-                if (UIManager.Instance.escapeCircle.fillAmount <= 0.6f)
-                    UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-                else if (UIManager.Instance.escapeCircle.fillAmount > 0.6f)
-                    UIManager.Instance.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+                diecount.gameObject.SetActive(true);
+                if (diecount.fillAmount <= 0.6f)
+                    diecount.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+                else if (diecount.fillAmount > 0.6f)
+                {
+                    diecount.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+                    yield return new WaitForSeconds(3);
+                    if (item == itemcount)
+                        Exit();
+                }
+
             }
             else
-                GameManager.Instance.BadEnding();
+                ScenesManager.Instance.DieScene();
         }
-        GameManager.Instance.BadEnding();
+        ScenesManager.Instance.DieScene();
+
     }
     public override void Exit()
     {
+        player.StopCoroutine(caughtCo);
         player.playerMove.enabled = true;
         player.Tension = 50;
         Debug.Log("탈출 성공");
