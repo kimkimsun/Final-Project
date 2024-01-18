@@ -18,6 +18,7 @@ public class Monster : MonoBehaviour
     [SerializeField] protected GameEvent pauseEvent;
     [SerializeField] protected GameEvent finalEvent;
     [SerializeField] protected NavMeshAgent agent;
+    public Transform monsterPos;
     protected StateMachine<Monster> sm;
     protected Transform footTrans;
     protected List<Transform> monsterNextPositionList;
@@ -186,6 +187,7 @@ public class Monster : MonoBehaviour
 
     protected virtual void Update()
     {
+        monsterPos.position = transform.position;
         PublicUpdate();
     }
     protected virtual void OnTriggerEnter(Collider other)
