@@ -204,21 +204,22 @@ public class HiRilRunState : HiRilState
 }
 public class HiRilStunState : HiRilState
 {
+    IEnumerator stunCo;
     public override void Enter()
     {
-        // ++) 귀신 비명 소리 추가
+        stunCo = owner.StunCo();
         owner.gameObject.layer = 0;
         owner.Agent.Move(owner.transform.forward * -30 * Time.deltaTime);
-        owner.StartCoroutine(owner.StunCo());
+        owner.StartCoroutine(stunCo);
         owner.Agent.enabled = false;
-        owner.Animator.SetBool("isStun", true);
-        owner.MonsterVirtualCamera.Priority = 9;
+        ((HiRil)owner).Animator.SetBool("isStun", true);
         owner.Animator.bodyRotation = GameManager.Instance.transform.rotation;
     }
     public override void Exit()
     {
         owner.Animator.SetBool("isStun", false);
         owner.Agent.enabled = true;
+        owner.MonsterVirtualCamera.Priority = 9;
     }
     public override void Update()
     {

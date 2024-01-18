@@ -75,7 +75,7 @@ public class UseItemInventory : Inventory
                 ScenesManager.Instance.DieScene();
         }
     }
-
+    UseItemStrategy
     private void Update()
     {
         QuickItemUse();

@@ -29,7 +29,7 @@ namespace CustomInterface
     }
     public interface IStunable
     {
-        public void Stun();
+        public void Stun(IGetStunable target);
     }
     public interface IGetStunable
     {

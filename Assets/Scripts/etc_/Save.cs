@@ -58,8 +58,10 @@ public class SaveData
 
         for (int i = 0; i < saveUseItemSlot.Length; i++)
         {
+            Debug.Log("µé¾î¿È");
             for (int j = 0; j < saveUseItemSlot[i].items.Count; i++)
             {
+                Debug.Log("TEST");
                 useItemSlot[i].items[j] = saveUseItemSlot[i].items[j];
             }
         }

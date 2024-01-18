@@ -152,17 +152,12 @@ public class Player : MonoBehaviour
         set
         {
             tension = value;
-            //�ټ��� ���Ϳ� ����ĥ�� �پ����
-            if(tension <= max)
+            if(tension >= max)
                 tension = max;
-            if (tension <= 60) // && bool�� true�� �־�ߵ� false�� setstate�� �ٽ� true�� exit����
-            {
+            if (tension <= 60) 
                 playerSM.SetState("Exhaustion");
-            }
             if (tension > 60)
-            {
                 playerSM.SetState("IdleState");
-            }
         }
     }
     public int Hp
@@ -174,9 +169,7 @@ public class Player : MonoBehaviour
             if (hp >= max)
                 hp = max;
             if (hp <= 30)
-            {
                 playerSM.SetState("Moribund");
-            }
             if (hp <= zero)
             {
                 hp = zero;

@@ -29,9 +29,6 @@ public class HiRil : Monster
     {
         sm.curState?.Update();
         base.Update();
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-            sm.SetState("Stun");
-
         soundCol = Physics.OverlapSphere(transform.position, soundDetectionRange, heardTargetLayerMask); // 둘 다 base.Update()하고 여기부터는 따로 정의 해야할 듯?
         if (soundCol.Length > 0 && isStun) // 히리르만 사용
         {
@@ -89,7 +86,10 @@ public class HiRil : Monster
     }
     public override void GetStun()
     {
-        Debug.Log("스턴스턴");
-        sm.SetState("Stun");
+        if(sm.curState is not HiRilStunState sd)
+        {
+            Debug.Log("제발 되주세요");
+            sm.SetState("Stun");
+        }
     }
 }

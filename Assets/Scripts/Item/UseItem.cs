@@ -268,17 +268,9 @@ public class HairPinItemStrategy : UseItemStrategy
         {
             yield return null;
             if (useItem.escapeCircle.fillAmount < 0.6f)
-            {
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    break;
-            }
             else if (useItem.escapeCircle.fillAmount > 0.6f)
-            {
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    Exit();
-            }
             useItem.escapeCircle.gameObject.SetActive(true);
             useItem.escapeCircle.fillAmount += (Time.deltaTime / 2);
         }
@@ -376,16 +368,5 @@ public class UseItem : Item
         quickSlot.AddItem(this);
         gameObject.SetActive(false);
         transform.SetParent(itemBox.transform);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            itemStrategy.Use();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            itemStrategy.Exit();
-        }
     }
 }
