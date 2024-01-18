@@ -117,11 +117,10 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     {
         Debug.Log("몬스터한테 잡힘");
         Init();
-        player.quickSlot.HairPinSlot.OnUse -= () => isUse = true;
         player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         player.playerMove.enabled = false;
         if (item > 0)
-            player.StartCoroutine(caughtCo);
+            player.StartCoroutine(CaughtCo());
         else
             ScenesManager.Instance.DieScene();
     }
@@ -135,7 +134,6 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     }
     protected IEnumerator CaughtCo()
     {
-        diecount.fillAmount= 0;
         diecount.gameObject.SetActive(true);
         while (diecount.fillAmount < 1)
         {
@@ -154,14 +152,15 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     }
     public override void Exit()
     {
-        player.StopCoroutine(caughtCo);
         player.playerMove.enabled = true;
         player.Tension = 50;
         diecount.gameObject.SetActive(false);
+        diecount.fillAmount = 0;
         Debug.Log("탈출 성공");
     }
 
     public override void Update()
     {
+        Debug.Log("TEST" + isUse);
     }
 }

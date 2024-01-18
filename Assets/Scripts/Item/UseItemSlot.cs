@@ -65,7 +65,6 @@ public class UseItemSlot : Slot
                 SetItem(null);
             OnUse?.Invoke();
         }
-
     }
     public override void SetItem(Item setItem)
     {

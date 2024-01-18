@@ -74,7 +74,6 @@ public class UseItemInventory : Inventory
             else
                 ScenesManager.Instance.DieScene();
         }
-
     }
 
     private void Update()

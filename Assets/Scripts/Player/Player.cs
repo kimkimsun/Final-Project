@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     public InteractionAim aim;
     public FirstPersonController playerMove;
+    public GameObject hairPinSlot;
 
     private LayerMask monsterMask;
     public GameEvent finalEvent;
