@@ -185,8 +185,8 @@ namespace StarterAssets
 
 		private void Start()
 		{
-			plusStamina = 10;
-			minusStamina = 5;
+			PlusStamina = 1;
+			MinusStamina = 5;
             _controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -244,7 +244,7 @@ namespace StarterAssets
                 IsRun = false;
                 IsMove = false;
                 targetSpeed = 0.0f;
-				GameManager.Instance.player.Stamina += plusStamina * Time.deltaTime;
+				GameManager.Instance.player.Stamina += PlusStamina * Time.deltaTime;
             }
 
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -271,7 +271,7 @@ namespace StarterAssets
                 else if(targetSpeed == SprintSpeed)
 				{
 					IsRun = true;
-                    GameManager.Instance.player.Stamina -= minusStamina * Time.deltaTime;
+                    GameManager.Instance.player.Stamina -= MinusStamina *Time.deltaTime;
 				}
 
 

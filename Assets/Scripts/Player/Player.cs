@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     public InteractionAim aim;
     public FirstPersonController playerMove;
 
-    public Transform playerPos;
     private LayerMask monsterMask;
     public GameEvent finalEvent;
     public GameObject itemBox;
@@ -188,11 +187,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        playerPos = GetComponent<Transform>();
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
-        this.gameObject.transform.position = playerPos.position;
 
         playerSM.AddState("Idle", new IdleState());
         playerSM.AddState("Exhaustion", new ExhaustionState());
@@ -248,7 +245,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         playerSM.curState.Update();
-        playerPos.position = this.transform.position;
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
         if (isMonsterAttackZone)

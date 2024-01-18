@@ -15,17 +15,29 @@ public class SaveData
     public int hp;
     public int tension;
     public float stamina;
-    public string playerPos;
-    public string hirilPos;
-    public string haikenPos;
-    public SaveData(Player player, HiRil hiril , HaiKen haiken)
+    public Vector3 playerPos;
+    public Vector3 playerRot;
+/*    public string hirilPos;
+    public string haikenPos;*/
+    public SaveData(Player player/*, HiRil hiril , HaiKen haiken*/)
     {
         hp = player.Hp;
         tension = player.Tension;
         stamina = player.Stamina;
-        playerPos = player.playerPos.position.ToString();
-        hirilPos = hiril.monsterPos.position.ToString();
-        haikenPos = haiken.monsterPos.position.ToString();
+        playerPos = player.transform.position;
+        playerRot = player.transform.rotation.eulerAngles;
+/*        hirilPos = hiril.monsterPos.position.ToString();
+        haikenPos = haiken.monsterPos.position.ToString();*/
+    }
+    public void Load(Player player/*, HiRil hiril, HaiKen haiken*/)
+    {
+        player.Hp = hp;
+        player.Tension = tension;
+        player.Stamina = stamina;
+        player.transform.position = playerPos;
+        player.transform.eulerAngles = playerRot;
+/*        hirilPos = hiril.monsterPos.position.ToString();
+        haikenPos = haiken.monsterPos.position.ToString();*/
     }
       
         
@@ -47,8 +59,8 @@ public class Save : MonoBehaviour, IInteraction
     private void Start()
     {
         player = GameManager.Instance.player;
-        hiril= GameManager.Instance.hiril;
-        haiken = GameManager.Instance.haiken;
+/*        hiril= GameManager.Instance.hiril;
+        haiken = GameManager.Instance.haiken;*/
     }
 
     public void SaveData()
@@ -73,23 +85,22 @@ public class Save : MonoBehaviour, IInteraction
             StreamReader sr =new StreamReader(path+fileName);
             saveData = JsonUtility.FromJson<SaveData>(sr.ReadToEnd());
             sr.Close();
+            saveData.Load(player/*,  hiril,haiken*/);
         }
     }
 
-    private void Update()
+    private void FixedUpdate()//재영공신
     {
         
         if(Input.GetKeyDown(KeyCode.V))
         {
             LoadData();
-            Debug.Log("로드");
         }
     }
 
     public void Active()
     {
-        saveData = new SaveData(player, hiril, haiken);
+        saveData = new SaveData(player/*, hiril, haiken*/);
         SaveData();
-        Debug.Log("저장");
     }
 }
