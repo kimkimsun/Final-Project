@@ -67,11 +67,6 @@ public class Player : MonoBehaviour
     {
         get => quickSlot;
     }
-    public bool CaughtSetState
-    {
-        get => caughtSetState;
-        set => caughtSetState = value;
-    }
 
     public bool IsHpCoStart
     {
@@ -154,9 +149,9 @@ public class Player : MonoBehaviour
             tension = value;
             if(tension >= max)
                 tension = max;
-            if (tension <= 60) 
+            if (tension <= 60 && playerSM.curState is not MoribundState) 
                 playerSM.SetState("Exhaustion");
-            if (tension > 60)
+            else if (tension > 60 && playerSM.curState is not MoribundState)
                 playerSM.SetState("IdleState");
         }
     }
@@ -256,6 +251,21 @@ public class Player : MonoBehaviour
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
                 IsMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+        }
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Tension = 60;
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Tension -= 1 ;
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Hp = 30;
         }
     }
 }

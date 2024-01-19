@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using System;
 
+[Serializable]
 public class UseItemSlot : Slot
 {
 

@@ -1,4 +1,5 @@
 using CustomInterface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -321,7 +322,7 @@ public enum USEITEM_TYPE
     KEY,
     EXIT
 }
-
+[Serializable]
 public class UseItem : Item
 {
     public UseItemStrategy UseItemstrategy;

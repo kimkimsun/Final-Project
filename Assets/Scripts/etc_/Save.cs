@@ -8,6 +8,15 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+
+public class ItemSave
+{ 
+    
+
+
+}
+
+
 [System.Serializable]
 public class SaveData
 {
@@ -22,7 +31,8 @@ public class SaveData
     public Vector3 hirilRot;
     public Vector3 haikenPos;
     public Vector3 haikenRot;
-    public UseItemSlot[] saveUseItemSlot;
+    
+    
     public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
         hp = player.Hp;
@@ -34,15 +44,9 @@ public class SaveData
         hirilRot = hiril.transform.rotation.eulerAngles;
         haikenPos = haiken.transform.position;
         haikenRot = haiken.transform.root.eulerAngles;
-        saveUseItemSlot = useItemSlot;
+        
+        
 
-        for(int i = 0; i < useItemSlot.Length; i++)
-        {
-            for(int j = 0; j < useItemSlot[i].items.Count; i ++)
-            {
-                saveUseItemSlot[i].items[j] = useItemSlot[i].items[j];
-            }
-        }
     }
     public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
@@ -55,16 +59,15 @@ public class SaveData
         hiril.transform.eulerAngles = hirilRot;
         haiken.transform.position = haikenPos;
         haiken.transform.root.eulerAngles = haikenRot;
-
-        for (int i = 0; i < saveUseItemSlot.Length; i++)
+        
+/*        for (int i = 0; i < saveUseItemSlot.Length; i++)
         {
-            Debug.Log("µé¾î¿È");
             for (int j = 0; j < saveUseItemSlot[i].items.Count; i++)
             {
                 Debug.Log("TEST");
                 useItemSlot[i].items[j] = saveUseItemSlot[i].items[j];
             }
-        }
+        }*/
 
     }
       
@@ -107,7 +110,7 @@ public class Save : MonoBehaviour, IInteraction
         useItemSlot = GameManager.Instance.player.quickSlot.slots; 
 
         path = "Assets/";
-        fileName = "SaveData.txt";
+        fileName = "SaveData" + index+".txt";
     }
 
     public void SaveData()
