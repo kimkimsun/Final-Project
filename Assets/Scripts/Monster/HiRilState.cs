@@ -207,18 +207,17 @@ public class HiRilStunState : HiRilState
     IEnumerator stunCo;
     public override void Enter()
     {
-        stunCo = owner.StunCo();
+        stunCo = ((HiRil)owner).StunCo();
         owner.gameObject.layer = 0;
-        owner.Agent.Move(owner.transform.forward * -30 * Time.deltaTime);
+        owner.Agent.Move(owner.transform.forward * -35 * Time.deltaTime);
+        owner.Agent.isStopped = true;
         owner.StartCoroutine(stunCo);
-        owner.Agent.enabled = false;
-        ((HiRil)owner).Animator.SetBool("isStun", true);
-        owner.Animator.bodyRotation = GameManager.Instance.transform.rotation;
+        owner.Animator.SetBool("isStun", true);
     }
     public override void Exit()
     {
         owner.Animator.SetBool("isStun", false);
-        owner.Agent.enabled = true;
+        owner.Agent.isStopped = false;
         owner.MonsterVirtualCamera.Priority = 9;
     }
     public override void Update()

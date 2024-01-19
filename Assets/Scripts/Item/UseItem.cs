@@ -256,10 +256,8 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Use()
     {
         useItem.transform.SetParent(player.hairPinSlot.transform);
-        useItem.transform.position = 
-        new Vector3(player.hairPinSlot.transform.position.x, player.hairPinSlot.transform.position.y-0.2f, player.hairPinSlot.transform.position.z);
+        useItem.transform.position = player.hairPinSlot.transform.position;
         player.playerMove.PlayerAni.SetTrigger("isAttack");
-
     }
 
     protected IEnumerator CaughtCo()

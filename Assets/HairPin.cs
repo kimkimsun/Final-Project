@@ -13,6 +13,6 @@ public class HairPin : MonoBehaviour, IStunable
     public void Stun(IGetStunable target)
     {
         target.GetStun();
-        Destroy(transform.root.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }
