@@ -336,7 +336,7 @@ public class UseItem : Item
                break;
            case USEITEM_TYPE.FIRECRACKER:
                 itemStrategy = new FireCrackerItemStrategy(this);
-               break;
+                break;
             case USEITEM_TYPE.MIRROR:
                 itemStrategy = new MirrorItemStrategy(this);
                 break;

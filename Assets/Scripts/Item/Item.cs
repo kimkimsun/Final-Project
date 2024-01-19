@@ -17,9 +17,9 @@ public class Item : MonoBehaviour, IInteraction
     public ItemStrategy itemStrategy = null;
     public string itemName;
     public Sprite sprite;
+    public int itemID;
     private string interactionText;
     public string explanationText;
-
 
     public string ExplanationText
     {

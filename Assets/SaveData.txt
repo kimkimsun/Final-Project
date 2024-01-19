@@ -1,15 +1,15 @@
 {
     "hp": 100,
-    "tension": 0,
-    "stamina": 3.6017086505889894,
+    "tension": 100,
+    "stamina": 100.0,
     "playerPos": {
-        "x": 19.434459686279298,
+        "x": 22.247941970825197,
         "y": 11.539965629577637,
-        "z": -20.168872833251954
+        "z": -20.130001068115236
     },
     "playerRot": {
         "x": 0.0,
-        "y": 47.21397399902344,
+        "y": 314.4638977050781,
         "z": 0.0
     },
     "hirilPos": {
@@ -34,19 +34,41 @@
     },
     "save": [
         {
-            "instanceID": 730356
+            "instanceID": 26578
         },
         {
-            "instanceID": 730392
+            "instanceID": 26614
         },
         {
-            "instanceID": 730666
+            "instanceID": 26906
         },
         {
-            "instanceID": 730554
+            "instanceID": 26788
         },
         {
-            "instanceID": 730214
+            "instanceID": 26436
         }
-    ]
+    ],
+    "equipIndexArray": [
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "useItemCount": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "useItemIndexArray": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "equipInvenIdIndex": 3,
+    "hairPinCount": 2
 }

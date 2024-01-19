@@ -34,7 +34,6 @@ public class HiRil : Monster
         sm.curState?.Update();
         base.Update();
         soundCol = Physics.OverlapSphere(transform.position, soundDetectionRange, heardTargetLayerMask);
-        Debug.Log(playerAttackCol.Length);
         if (soundCol.Length > 0 && !isStun)
         {
             if (soundCol[0].gameObject.layer == 8)

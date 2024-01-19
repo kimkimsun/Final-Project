@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
     public Inventory portableInven;
-
+    
     public InteractionAim aim;
     public FirstPersonController playerMove;    
 
@@ -131,23 +131,23 @@ public class Player : MonoBehaviour
         set
         {
             tension = value;
-            if(tension >= max)
-            {
-                tension = max;
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
-            }
-            if (tension <= 60 && playerSM.curState is not MoribundState)
-            {
-                playerSM.SetState("Exhaustion");
-                UIManager.Instance.tensionAni.SetBool("VeryDownTension", false);
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", true);
-            }
-            else if (tension > 60 && playerSM.curState is not MoribundState)
-            {
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
-                UIManager.Instance.tensionAni.SetBool("VeryDownTension", true);
-                playerSM.SetState("IdleState");
-            }
+            //if(tension >= max)
+            //{
+            //    tension = max;
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+            //}
+            //if (tension <= 60 && playerSM.curState is not MoribundState)
+            //{
+            //    playerSM.SetState("Exhaustion");
+            //    UIManager.Instance.tensionAni.SetBool("VeryDownTension", false);
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", true);
+            //}
+            //else if (tension > 60 && playerSM.curState is not MoribundState)
+            //{
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+            //    UIManager.Instance.tensionAni.SetBool("VeryDownTension", true);
+            //    playerSM.SetState("IdleState");
+            //}
         }
     }
     public int Hp
@@ -236,6 +236,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+
         playerSM.curState.Update();
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
