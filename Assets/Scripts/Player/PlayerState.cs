@@ -23,7 +23,7 @@ public abstract class PlayerState : State
     {
         while (player.Hp > 0)
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             player.Hp -= damage;
             Debug.Log(damage);
         }

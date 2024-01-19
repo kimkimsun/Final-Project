@@ -1,6 +1,7 @@
 using UnityEngine;
 using CustomInterface;
 using UnityEngine.UI;
+using System;
 public abstract class ItemStrategy
 {
     protected Item item;
@@ -10,7 +11,7 @@ public abstract class ItemStrategy
     public virtual void Init() { }
     public virtual void Exit() { }
 }
-
+[Serializable]
 public class Item : MonoBehaviour, IInteraction
 {
     public ItemStrategy itemStrategy = null;
