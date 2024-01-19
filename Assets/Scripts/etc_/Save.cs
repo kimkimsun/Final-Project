@@ -40,10 +40,10 @@ public class SaveData
         stamina = player.Stamina;
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
-        hirilPos = hiril.transform.position;
-        hirilRot = hiril.transform.rotation.eulerAngles;
-        haikenPos = haiken.transform.position;
-        haikenRot = haiken.transform.root.eulerAngles;
+        //hirilPos = hiril.transform.position;
+        //hirilRot = hiril.transform.rotation.eulerAngles;
+        //haikenPos = haiken.transform.position;
+        //haikenRot = haiken.transform.root.eulerAngles;
         
         
 
@@ -55,10 +55,10 @@ public class SaveData
         player.Stamina = stamina;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
-        hiril.transform.position = hirilPos;
-        hiril.transform.eulerAngles = hirilRot;
-        haiken.transform.position = haikenPos;
-        haiken.transform.root.eulerAngles = haikenRot;
+        //hiril.transform.position = hirilPos;
+        //hiril.transform.eulerAngles = hirilRot;
+        //haiken.transform.position = haikenPos;
+        //haiken.transform.root.eulerAngles = haikenRot;
         
 /*        for (int i = 0; i < saveUseItemSlot.Length; i++)
         {
@@ -110,7 +110,7 @@ public class Save : MonoBehaviour, IInteraction
         useItemSlot = GameManager.Instance.player.quickSlot.slots; 
 
         path = "Assets/";
-        fileName = "SaveData" + index+".txt";
+        fileName = "SaveData.txt";
     }
 
     public void SaveData()
