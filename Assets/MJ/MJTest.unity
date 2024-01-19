@@ -405,7 +405,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99402785
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalRotation.x
@@ -413,7 +413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.10912705
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalRotation.z
@@ -421,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -12.53
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135013735270702863, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Layer
@@ -1033,9 +1033,9 @@ MonoBehaviour:
   portableInven: {fileID: 0}
   aim: {fileID: 790377746}
   playerMove: {fileID: 0}
-  hairPinSlot: {fileID: 0}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
   itemBox: {fileID: 483068598}
+  hairPinSlot: {fileID: 0}
   hp: 0
   stamina: 0
   tension: 0
@@ -13090,19 +13090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b34e7eca1d150341974769fc9e239ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escape: 0
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  heardTargetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  map: {fileID: 0}
-  monsterVirtualCamera: {fileID: 578700995}
-  pauseEvent: {fileID: 11400000, guid: 8b5a11c78b0c3dc4388261bfcd1b93df, type: 2}
-  finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
-  agent: {fileID: 0}
-  monsterPos: {fileID: 0}
 --- !u!1001 &1466127827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15354,7 +15341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672805932}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.10912705, z: 0, w: 0.99402785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -83.75647, y: 12.785, z: -174.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17331,9 +17318,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openUI: {fileID: 1022413831}
-  ClickSound: {fileID: 0}
   escapeCircle: {fileID: 243653142}
+  tensionAni: {fileID: 542601628}
+  hpAni: {fileID: 444470806}
   settingBox: {fileID: 1050989138}
+  ClickSound: {fileID: 0}
   useItemInfo: {fileID: 892962547}
 --- !u!4 &1881693419
 Transform:
@@ -18539,9 +18528,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openUI: {fileID: 0}
-  ClickSound: {fileID: 0}
   escapeCircle: {fileID: 0}
+  tensionAni: {fileID: 0}
+  hpAni: {fileID: 0}
   settingBox: {fileID: 0}
+  ClickSound: {fileID: 0}
   useItemInfo: {fileID: 892962547}
 --- !u!4 &1981604952
 Transform:

@@ -124,7 +124,7 @@ public class AdrenalineItemStrategy : EquipItemStrategy
         GameManager.Instance.player.playerMove.MinusStamina = 5;
     }
 }
-public class OintmentItemStrategy : EquipItemStrategy
+/*public class OintmentItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
     public OintmentItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
@@ -146,7 +146,7 @@ public class OintmentItemStrategy : EquipItemStrategy
     {
         GameManager.Instance.player.IsHpCoStart = false;
     }
-}
+}*/
 public class MaskItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
@@ -188,9 +188,9 @@ public class EquipmentItem : Item
             case EQUIPITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
-            case EQUIPITEM_TYPE.OINTMENT:
+/*            case EQUIPITEM_TYPE.OINTMENT:
                 itemStrategy = new OintmentItemStrategy(this);
-                break;
+                break;*/
             case EQUIPITEM_TYPE.ADRENALINE:
                 itemStrategy = new AdrenalineItemStrategy(this);
                 break;
