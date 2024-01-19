@@ -53,7 +53,7 @@ public class SaveData
         player.Stamina = stamina;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
-        useItemSlot = save;
+        //useItemSlot = JsonUtility.FromJson<UseItemSlot>(save);
         //hiril.transform.position = hirilPos;
         //hiril.transform.eulerAngles = hirilRot;
         //haiken.transform.position = haikenPos;
