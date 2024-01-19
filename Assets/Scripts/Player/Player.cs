@@ -207,15 +207,6 @@ public class Player : MonoBehaviour
         plusTensionCo = PlusTensionCo(tensionUp);
         finalEvent.RegisterListener(() => { this.enabled = true; });
     }
-    public IEnumerator HpPlusCo()
-    {
-        while(hp <= max)
-        {
-            yield return new WaitForSeconds(30);
-            hp += 5;
-            yield return new WaitUntil(() => hp <= max);
-        }
-    }
     public IEnumerator MinusTensionCo(int damege)
     {
         while (Tension > zero)
