@@ -7,7 +7,7 @@ using System;
 [Serializable]
 public class UseItemSlot : Slot
 {
-
+    
     public List<Item> items;
     public TextMeshProUGUI countText;
     public event Action OnUse;

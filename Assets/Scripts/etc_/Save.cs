@@ -31,6 +31,7 @@ public class SaveData
     public Vector3 hirilRot;
     public Vector3 haikenPos;
     public Vector3 haikenRot;
+    public UseItemSlot[] save;
     
     
     public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
@@ -40,12 +41,9 @@ public class SaveData
         stamina = player.Stamina;
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
-        //hirilPos = hiril.transform.position;
-        //hirilRot = hiril.transform.rotation.eulerAngles;
-        //haikenPos = haiken.transform.position;
-        //haikenRot = haiken.transform.root.eulerAngles;
-        
-        
+        save = useItemSlot;
+
+
 
     }
     public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
@@ -55,19 +53,20 @@ public class SaveData
         player.Stamina = stamina;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
+        //useItemSlot = JsonUtility.FromJson<UseItemSlot>(save);
         //hiril.transform.position = hirilPos;
         //hiril.transform.eulerAngles = hirilRot;
         //haiken.transform.position = haikenPos;
         //haiken.transform.root.eulerAngles = haikenRot;
-        
-/*        for (int i = 0; i < saveUseItemSlot.Length; i++)
-        {
-            for (int j = 0; j < saveUseItemSlot[i].items.Count; i++)
-            {
-                Debug.Log("TEST");
-                useItemSlot[i].items[j] = saveUseItemSlot[i].items[j];
-            }
-        }*/
+
+        /*        for (int i = 0; i < saveUseItemSlot.Length; i++)
+                {
+                    for (int j = 0; j < saveUseItemSlot[i].items.Count; i++)
+                    {
+                        Debug.Log("TEST");
+                        useItemSlot[i].items[j] = saveUseItemSlot[i].items[j];
+                    }
+                }*/
 
     }
       
@@ -126,7 +125,7 @@ public class Save : MonoBehaviour, IInteraction
         {
             sw = new StreamWriter(path+fileName);
         }
-        sw.Write(JsonUtility.ToJson(saveData));
+        sw.Write(JsonUtility.ToJson(saveData,true));
         sw.Close();
     }
 
