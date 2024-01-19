@@ -475,9 +475,9 @@ MonoBehaviour:
   portableInven: {fileID: 0}
   aim: {fileID: 790377746}
   playerMove: {fileID: 0}
-  hairPinSlot: {fileID: 1770642590274933069}
   finalEvent: {fileID: 11400000, guid: caca9a617e823fd498174a93a300147e, type: 2}
   itemBox: {fileID: 483068598}
+  hairPinSlot: {fileID: 1770642590274933069}
   hp: 0
   stamina: 0
   tension: 0
@@ -11878,9 +11878,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openUI: {fileID: 0}
-  ClickSound: {fileID: 0}
   escapeCircle: {fileID: 243653142}
+  tensionAni: {fileID: 0}
+  hpAni: {fileID: 0}
   settingBox: {fileID: 1050989138}
+  ClickSound: {fileID: 0}
   useItemInfo: {fileID: 892962547}
 --- !u!4 &1981604952
 Transform:
@@ -11914,7 +11916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!4 &1988957457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7485813389958782458, guid: bdd56d59dd9a69249884a61d3bf5095a, type: 3}

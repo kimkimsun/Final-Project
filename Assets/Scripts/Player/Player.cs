@@ -156,29 +156,29 @@ public class Player : MonoBehaviour
         set
         {
             hp = value;
-            if (hp <= zero)
-            {
-                hp = zero;
-                ScenesManager.Instance.DieScene();
-            }
-            else if (hp <= 30)
-            {
-                Debug.Log(hp);
-                playerSM.SetState("Moribund");
-                UIManager.Instance.hpAni.SetBool("IsDownHp", false);
-                UIManager.Instance.hpAni.SetBool("IsVeryDown", true);
-            }
-            else if (hp <= 50)
-            {
-                UIManager.Instance.hpAni.SetBool("IsVeryDown", false);
-                UIManager.Instance.hpAni.SetBool("IsDownHp", true);
-                Debug.Log(hp);
-            }
-            else if (hp >= max)
-            {
-                hp = max;
-                UIManager.Instance.hpAni.SetBool("IsDownHp", false);
-            }
+            //if (hp <= zero)
+            //{
+            //    hp = zero;
+            //    ScenesManager.Instance.DieScene();
+            //}
+            //else if (hp <= 30)
+            //{
+            //    Debug.Log(hp);
+            //    playerSM.SetState("Moribund");
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+            //    UIManager.Instance.hpAni.SetBool("IsVeryDown", true);
+            //}
+            //else if (hp <= 50)
+            //{
+            //    UIManager.Instance.hpAni.SetBool("IsVeryDown", false);
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", true);
+            //    Debug.Log(hp);
+            //}
+            //else if (hp >= max)
+            //{
+            //    hp = max;
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+            //}
         }
     }
     #endregion
