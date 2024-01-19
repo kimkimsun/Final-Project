@@ -34,6 +34,7 @@ public class HiRil : Monster
         sm.curState?.Update();
         base.Update();
         soundCol = Physics.OverlapSphere(transform.position, soundDetectionRange, heardTargetLayerMask);
+        Debug.Log(playerAttackCol.Length);
         if (soundCol.Length > 0 && !isStun)
         {
             if (soundCol[0].gameObject.layer == 8)
@@ -43,6 +44,7 @@ public class HiRil : Monster
         }
         else if (playerLookCol.Length > 0 && !isStun)
         {
+            Debug.Log("¸¸³µ´Ù");
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
@@ -53,14 +55,15 @@ public class HiRil : Monster
             else if (!isPlayerCheck)
                 sm.SetState("Idle");
         }
-        else if (playerAttackCol.Length > 0 && !isAttack)
+        else if (sm.curState is not HiRilStunState && sm.curState is not HiRilAttackState)
+            sm.SetState("Idle");
+        if (playerAttackCol.Length > 0 && !isAttack)
         {
+            Debug.Log("°ø°Ý");
             sm.SetState("Attack");
             isAttack = true;
             isStun = true;
         }
-        else if (sm.curState is not HiRilStunState && sm.curState is not HiRilAttackState)
-            sm.SetState("Idle");
     }
 
     protected override void OnDrawGizmos()
