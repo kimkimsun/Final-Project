@@ -12,7 +12,7 @@ public abstract class ItemStrategy
     public virtual void Exit() { }
 }
 [Serializable]
-public class Item : MonoBehaviour, IInteraction
+public abstract class Item : MonoBehaviour, IInteraction
 {
     public ItemStrategy itemStrategy = null;
     public string itemName;
@@ -40,4 +40,5 @@ public class Item : MonoBehaviour, IInteraction
     }
     public virtual void Exit() { }
     public virtual void Active() { }
+    public abstract void Init();
 }

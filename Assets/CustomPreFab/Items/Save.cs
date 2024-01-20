@@ -1,7 +1,9 @@
 using CustomInterface;
 using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -18,24 +20,33 @@ public class SaveData
     public Vector3 haikenPos;
     public Vector3 haikenRot;
     public UseItemSlot[] save;
-    public int[] equipIndexArray = new int[Save.Instance.player.equipInven.EiSlots.Length];
-    public int[] useItemCount = new int[Save.Instance.player.quickSlot.slots.Length];
-    public int[] useItemIndexArray = new int[Save.Instance.player.quickSlot.slots.Length];
+    public int[] equipIndexArray;
+    public int[] useItemCount;
+    public int[] useItemIndexArray;
     public int equipInvenIdIndex;
     public int hairPinCount;
-
+    public string typeName;
+    public USEITEM_TYPE useType;
     public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
+        equipIndexArray = new int[player.equipInven.EiSlots.Length];
+        useItemCount = new int[player.quickSlot.slots.Length];
+        useItemIndexArray = new int[player.quickSlot.slots.Length];
+
         hp = player.Hp;
         tension = player.Tension;
         stamina = player.Stamina;
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
-        save = useItemSlot;
+
         if (player.equipInven.EquipSlot.item != null)
             equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
+
+
         if (player.quickSlot.hairPinSlot.items.Count > 0)
             hairPinCount = player.quickSlot.hairPinSlot.items.Count;
+
+
         for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
         {
             equipIndexArray[i] = -1;
@@ -51,7 +62,6 @@ public class SaveData
             if (player.quickSlot.slots[j].items.Count > 0)
             {
                 useItemCount[j] = player.quickSlot.slots[j].items.Count;
-                Debug.Log("Ä«¿îÆ® " + player.quickSlot.slots[j].items.Count);
                 useItemIndexArray[j] = player.quickSlot.slots[j].items[0].itemID;
             }
         }
@@ -75,6 +85,7 @@ public class SaveData
                 }
             }
         }
+
         for (int i = 0; i < player.quickSlot.slots.Length; i++)
         {
             player.quickSlot.slots[i].items.Clear();
@@ -87,7 +98,11 @@ public class SaveData
                         for (int k = 0; k < useItemCount[i]; k++)
                         {
                             player.quickSlot.slots[i].items.Add(ItemManager.Instance.itemList[j]);
+                            player.quickSlot.slots[i].items[k].Init();
+                            //ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
+                            //player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(GameObject.Find("ItemBox").transform);
                         }
+                        //player.quickSlot.slots[i].items[0].transform.position = new Vector3(20.86f, 11.85f, -22.85f);
                     }
                 }
             }
@@ -97,9 +112,10 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-                player.equipInven.EquipSlot.item.Use();
+                //player.equipInven.EquipSlot.item.Use();
             }
         }
+
         if (hairPinCount > 0)
         {
             player.quickSlot.hairPinSlot.items.Clear();
@@ -116,8 +132,6 @@ public class SaveData
 
 public class Save : MonoBehaviour, IInteraction
 {
-    public static Save Instance;
-
     SaveData saveData;
     UseItemSlot[] useItemSlot;
     public Player player;
@@ -141,10 +155,6 @@ public class Save : MonoBehaviour, IInteraction
     //}
     public string InteractionText => "Save";
 
-    private void Awake()
-    {
-        Instance = this;
-    }
     private void Start()
     {
         index = 0;

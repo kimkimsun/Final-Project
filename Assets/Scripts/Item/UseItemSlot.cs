@@ -59,6 +59,7 @@ public class UseItemSlot : Slot
         {
             Debug.Log(CurItem);
             items[CurItem].gameObject.SetActive(true);
+            Debug.Log("TTTTTTTTTTTTTTTTT" + items[CurItem].itemStrategy);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);
             CurItem--;

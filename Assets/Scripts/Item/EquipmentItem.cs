@@ -181,7 +181,7 @@ public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
     public Image batteryCharge;
-    private void Start()
+    private void OnEnable()
     {
         switch (equipItem_Type)
         {
@@ -207,5 +207,10 @@ public class EquipmentItem : Item
     {
         EquipItemInventory equipInven = GameManager.Instance.player.EquipInven;
         equipInven.AddItem(this);
+    }
+
+    public override void Init()
+    {
+        throw new System.NotImplementedException();
     }
 }
