@@ -57,6 +57,7 @@ public class UseItemSlot : Slot
         }
         else if (items.Count != 0)
         {
+            Debug.Log(CurItem);
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);

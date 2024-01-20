@@ -32,7 +32,7 @@ public class SaveData
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
         save = useItemSlot;
-        if (player.equipInven.EquipSlot != null)
+        if (player.equipInven.EquipSlot.item != null)
             equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
         if (player.quickSlot.hairPinSlot.items.Count > 0)
             hairPinCount = player.quickSlot.hairPinSlot.items.Count;
@@ -95,10 +95,14 @@ public class SaveData
         for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
         {
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
+            {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
+                player.equipInven.EquipSlot.item.Use();
+            }
         }
         if (hairPinCount > 0)
         {
+            player.quickSlot.hairPinSlot.items.Clear();
             for (int i = 0; i < hairPinCount; i++)
                 player.quickSlot.hairPinSlot.items.Add(ItemManager.Instance.itemList[4/*헤어핀이 배열 몇번째에 위치하는지를 적는게 연산적으로 괜춘 json은 기획이라고 하셨으니 이렇게 해도 됨*/]);
         }
