@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Firecracker1 : MonoBehaviour {
 
-    public Rigidbody rig;
-    public ConstantForce cf;
     public Transform IsKinematic;
 
     IEnumerator Start()
@@ -17,8 +15,6 @@ public class Firecracker1 : MonoBehaviour {
         //Game object will turn off
         GameObject.Find("MeshRenderer1").SetActive(false);
 
-       // rig.isKinematic = true;
-       // cf.enabled = false;
 
 
     }

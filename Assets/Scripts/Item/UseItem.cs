@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
@@ -60,7 +61,9 @@ public class FireCrackerItemStrategy : UseItemStrategy
 {
     Vector3 screenCenter;
     Rigidbody itemRB;
-    SphereCollider itemCollider;
+    CapsuleCollider itemCollider;
+    SphereCollider sphereCollider;
+    ParticleSystem particle;
 
     static bool isFirstFireCracker;
     int time = 5;
@@ -71,10 +74,12 @@ public class FireCrackerItemStrategy : UseItemStrategy
 
     public override void Init()
     {
+        sphereCollider = useItem.GetComponentInChildren<SphereCollider>();
+        particle = useItem.GetComponentInChildren<ParticleSystem>();
         isFirstFireCracker = true;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
         itemRB = useItem.GetComponentInChildren<Rigidbody>();
-        itemCollider = useItem.GetComponentInChildren<SphereCollider>();
+        itemCollider = useItem.GetComponentInChildren<CapsuleCollider>();
     }
 
     public override void PrintInfo()
@@ -89,6 +94,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
+        particle.Play();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);
         itemRB.isKinematic = false;
         itemCollider.isTrigger = false;
@@ -108,9 +114,8 @@ public class FireCrackerItemStrategy : UseItemStrategy
     }
     IEnumerator AttractionCo()
     {
-        itemCollider.enabled = true;
-        itemCollider.isTrigger = true;
-        itemCollider.radius = 3;
+        sphereCollider.enabled = true;
+        sphereCollider.radius = 3;
         yield return new WaitForSeconds(time);
         GameObject.Destroy(useItem.gameObject);
 
@@ -270,6 +275,7 @@ public class HairPinItemStrategy : UseItemStrategy
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
             else if (useItem.escapeCircle.fillAmount > 0.6f)
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+
             useItem.escapeCircle.gameObject.SetActive(true);
             useItem.escapeCircle.fillAmount += (Time.deltaTime / 2);
         }

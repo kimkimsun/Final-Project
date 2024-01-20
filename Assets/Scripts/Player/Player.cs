@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     [Header("�κ��丮")]
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
-    public Inventory portableInven;
     
     public InteractionAim aim;
     public FirstPersonController playerMove;    

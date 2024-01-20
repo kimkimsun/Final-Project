@@ -6,12 +6,15 @@ public class SoundComponent : MonoBehaviour
 {
     public AudioSource audioSource;
 
-    public void Play(AudioClip clip)
+    public void Play(AudioClip clip , bool isloop)
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = clip;
+        audioSource.loop = isloop;
         audioSource.Play();
 
+        if (isloop)
+            audioSource.volume = 0.1f;
     }
 
     private void Update()
