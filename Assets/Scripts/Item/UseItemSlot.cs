@@ -57,9 +57,8 @@ public class UseItemSlot : Slot
         }
         else if (items.Count != 0)
         {
-            Debug.Log(CurItem);
+
             items[CurItem].gameObject.SetActive(true);
-            Debug.Log("TTTTTTTTTTTTTTTTT" + items[CurItem].itemStrategy);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);
             CurItem--;
@@ -72,11 +71,15 @@ public class UseItemSlot : Slot
     public override void SetItem(Item setItem)
     {
         if (items.Count == 0)
+        {
             itemImage.sprite = null;
+            itemImage.color = new Color(1, 1, 1, 0);
+            countText.color = new Color(0, 0, 0, 0);
+        }
         else
         {
             itemImage.color = new Color(1, 1, 1, 1);
-            countText.color = new Color(0, 0, 0, 1);
+            countText.color = new Color(1, 1, 1, 1);
             itemImage.sprite = setItem.sprite;
         }
 

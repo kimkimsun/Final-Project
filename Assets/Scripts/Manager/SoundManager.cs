@@ -17,7 +17,7 @@ public class SoundManager : SingleTon<SoundManager>
 
     private void Init()
     {
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 10; i++)
         {
             SoundComponent temp = Instantiate(SoundPrefab);
             temp.gameObject.SetActive(false);
@@ -38,11 +38,10 @@ public class SoundManager : SingleTon<SoundManager>
         pool.Enqueue(sound);
     }
 
-    public void Play(AudioClip clip, Transform target = null)
+    public void Play(AudioClip clip,bool isLoop, Transform target = null)
     {
         SoundComponent temp = Pop();
-       // temp.transform.parent = target;
-        temp.Play(clip);
+        temp.Play(clip,isLoop);
     }
 
 }
