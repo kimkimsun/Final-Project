@@ -22,8 +22,6 @@ public abstract class UseItemStrategy: ItemStrategy
 
     public override void Use()
     {
-        Debug.Log("111111111111111111111" + useItem);
-        Debug.Log("222222222222222222222" + useItem.transform);
         useItem.transform.SetParent(null);
     }
 }
@@ -272,6 +270,7 @@ public class HairPinItemStrategy : UseItemStrategy
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
             else if (useItem.escapeCircle.fillAmount > 0.6f)
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+
             useItem.escapeCircle.gameObject.SetActive(true);
             useItem.escapeCircle.fillAmount += (Time.deltaTime / 2);
         }
