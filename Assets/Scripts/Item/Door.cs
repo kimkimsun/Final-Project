@@ -25,8 +25,6 @@ public class Door : MonoBehaviour, IInteraction
             isOpen = value;
             if( isOpen )
             {
-                Debug.Log("플레이어" + GameManager.Instance.player.transform.position);
-                Debug.Log("다음위치" + nextPos.position);
                 GameManager.Instance.player.transform.position = nextPos.position;
                  StartCoroutine(OpenCo());
             }
@@ -39,8 +37,6 @@ public class Door : MonoBehaviour, IInteraction
                 }
                 else
                 {
-                    Debug.Log("플레이어" + GameManager.Instance.player.transform.position);
-                    Debug.Log("이전위치" + prevPos.position);
                     GameManager.Instance.player.transform.position = prevPos.position;
                     StartCoroutine(OpenCo());
                 }
