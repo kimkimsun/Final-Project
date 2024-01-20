@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public abstract class UseItemStrategy: ItemStrategy
 {
-    protected UseItem useItem;   
+    public UseItem useItem;   
     public UseItemStrategy(UseItem useItem)
     {
         this.useItem = useItem;
@@ -22,6 +22,8 @@ public abstract class UseItemStrategy: ItemStrategy
 
     public override void Use()
     {
+        Debug.Log("111111111111111111111" + useItem);
+        Debug.Log("222222222222222222222" + useItem.transform);
         useItem.transform.SetParent(null);
     }
 }
@@ -329,12 +331,16 @@ public class UseItem : Item
     public Image escapeCircle;
     private void Start()
     {
-       switch (useItem_Type)
-       {
-           case USEITEM_TYPE.CAMERA:
+        Init();
+    }
+    public override void Init()
+    {
+        switch (useItem_Type)
+        {
+            case USEITEM_TYPE.CAMERA:
                 itemStrategy = new CameraItemStrategy(this);
-               break;
-           case USEITEM_TYPE.FIRECRACKER:
+                break;
+            case USEITEM_TYPE.FIRECRACKER:
                 itemStrategy = new FireCrackerItemStrategy(this);
                 break;
             case USEITEM_TYPE.MIRROR:
@@ -356,7 +362,6 @@ public class UseItem : Item
                 itemStrategy = new ExitItemStrategy(this);
                 break;
         }
-
     }
 
     public override void Active()
