@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 [System.Serializable]
@@ -26,7 +27,6 @@ public class SaveData
     public int equipInvenIdIndex;
     public int hairPinCount;
     public string typeName;
-    public USEITEM_TYPE useType;
     public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
     {
         equipIndexArray = new int[player.equipInven.EiSlots.Length];
@@ -86,6 +86,11 @@ public class SaveData
             }
         }
 
+        for(int i = 0; i < player.itemBox.transform.childCount; i++)
+        {
+            UnityEngine.Object.Destroy(player.itemBox.transform.GetChild(i));
+        }
+
         for (int i = 0; i < player.quickSlot.slots.Length; i++)
         {
             player.quickSlot.slots[i].items.Clear();
@@ -97,12 +102,14 @@ public class SaveData
                     {
                         for (int k = 0; k < useItemCount[i]; k++)
                         {
-                            player.quickSlot.slots[i].items.Add(ItemManager.Instance.itemList[j]);
+                            Item copyItem = ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
+                            Debug.Log(ItemManager.Instance.CreatePrefab(useItemIndexArray[i]).name);
+                            player.quickSlot.slots[i].items.Add(copyItem);
                             player.quickSlot.slots[i].items[k].Init();
-                            //ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
-                            //player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(GameObject.Find("ItemBox").transform);
+                            player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(player.itemBox.transform);
+                            player.quickSlot.slots[i].items[k].gameObject.transform.position = player.itemBox.transform.position;
+                            player.quickSlot.slots[i].items[k].gameObject.SetActive(false);
                         }
-                        //player.quickSlot.slots[i].items[0].transform.position = new Vector3(20.86f, 11.85f, -22.85f);
                     }
                 }
             }
@@ -130,7 +137,7 @@ public class SaveData
     }
 }
 
-public class Save : MonoBehaviour, IInteraction
+public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
 {
     SaveData saveData;
     UseItemSlot[] useItemSlot;
@@ -208,5 +215,14 @@ public class Save : MonoBehaviour, IInteraction
     {
         saveData = new SaveData(player, hiril, haiken, useItemSlot);
         SaveData();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        LoadData();
+    }
+    public static void Destroyobj(GameObject obj)
+    {
+        Destroy(obj);
     }
 }
