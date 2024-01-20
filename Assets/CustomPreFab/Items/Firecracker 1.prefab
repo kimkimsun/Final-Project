@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4500272831240984}
-  - component: {fileID: 114767220025469394}
   - component: {fileID: 5063152448436179104}
   - component: {fileID: 6424032942368958857}
   - component: {fileID: 3668628116380172516}
@@ -38,19 +37,6 @@ Transform:
   - {fileID: 4780345738333444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
---- !u!114 &114767220025469394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307619146351330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff8297579d6b7342b80b317a515ca9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsKinematic: {fileID: 0}
 --- !u!114 &5063152448436179104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: "\uD3ED\uC8FD"
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 808c28794bcee2141a26cb0b163d64e0, type: 3}
   itemID: 0
   explanationText: "\uBD88\uC744 \uBD99\uC774\uBA74 \uC18C\uB9AC\uAC00 \uC694\uB780\uD558\uB2E4"
   useItem_Type: 1
