@@ -43,4 +43,8 @@ public class StunLight : MonoBehaviour,IStunable
         yield break;
     }
 
+    public void Stun(IGetStunable target)
+    {
+        throw new System.NotImplementedException();
+    }
 }

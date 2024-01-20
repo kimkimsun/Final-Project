@@ -23,7 +23,7 @@ public abstract class PlayerState : State
     {
         while (player.Hp > 0)
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
             player.Hp -= damage;
             Debug.Log(damage);
         }
@@ -72,10 +72,7 @@ public class ExhaustionState : PlayerState //탈진상태
 
     }
 
-    public override void Update()
-    {
-       
-    }
+    public override void Update() { }
 }
 
 
@@ -100,11 +97,7 @@ public class MoribundState : PlayerState // 빈사 상태
         player.StopCoroutine(minusHpCo);
     }
 
-    public override void Update()
-    {
-       
-    }
-
+    public override void Update() { }
 }
 public class CaughtState: PlayerState //몬스터한테 잡혔을때
 {
@@ -129,7 +122,6 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     {
         caughtCo = CaughtCo();
         diecount = UIManager.Instance.escapeCircle;
-        itemcount = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count - 1;
         item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
     }
     protected IEnumerator CaughtCo()
@@ -152,15 +144,12 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     }
     public override void Exit()
     {
-        player.playerMove.enabled = true;
+        //player.playerMove.enabled = true;
         player.Tension = 50;
         diecount.gameObject.SetActive(false);
         diecount.fillAmount = 0;
         Debug.Log("탈출 성공");
     }
 
-    public override void Update()
-    {
-        Debug.Log("TEST" + isUse);
-    }
+    public override void Update() { }
 }

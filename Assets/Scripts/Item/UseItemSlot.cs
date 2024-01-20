@@ -4,9 +4,10 @@ using TMPro;
 using UnityEngine;
 using System;
 
+[Serializable]
 public class UseItemSlot : Slot
 {
-
+    
     public List<Item> items;
     public TextMeshProUGUI countText;
     public event Action OnUse;
@@ -56,6 +57,7 @@ public class UseItemSlot : Slot
         }
         else if (items.Count != 0)
         {
+            Debug.Log(CurItem);
             items[CurItem].gameObject.SetActive(true);
             items[CurItem].itemStrategy.Use();
             items.RemoveAt(CurItem);

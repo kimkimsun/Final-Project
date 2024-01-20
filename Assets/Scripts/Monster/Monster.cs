@@ -158,8 +158,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
         playerFootLayerNum = 8;
         extraRotationSpeed = 3f;
         attackDetectionRange = 1;
-        isStun = true;
-        isAttack = true;
     }
     protected void FixedUpdate()
     {

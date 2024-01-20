@@ -21,6 +21,11 @@ public class EquipItemInventory : Inventory
         get => pocket;
         set => pocket = value;
     }
+    public EquipItemSlot EquipSlot
+    {
+        get => equipSlot;
+        set => equipSlot = value;
+    }
     public EquipItemSlot[] EiSlots
     { 
         get => eiSlots; set => eiSlots = value; 

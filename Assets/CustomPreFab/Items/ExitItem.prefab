@@ -121,6 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uCC9C\uB9AC\uC548"
   sprite: {fileID: 21300000, guid: d104d364ad9ecfd46878c1dd62bb2bf2, type: 3}
+  itemID: 6
   explanationText: 
   useItem_Type: 8
   SponPoint: {fileID: 0}
+  escapeCircle: {fileID: 0}

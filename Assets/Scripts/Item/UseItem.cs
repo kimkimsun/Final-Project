@@ -1,4 +1,5 @@
 using CustomInterface;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -256,10 +257,8 @@ public class HairPinItemStrategy : UseItemStrategy
     public override void Use()
     {
         useItem.transform.SetParent(player.hairPinSlot.transform);
-        useItem.transform.position = 
-        new Vector3(player.hairPinSlot.transform.position.x, player.hairPinSlot.transform.position.y-0.2f, player.hairPinSlot.transform.position.z);
+        useItem.transform.position = player.hairPinSlot.transform.position;
         player.playerMove.PlayerAni.SetTrigger("isAttack");
-
     }
 
     protected IEnumerator CaughtCo()
@@ -268,17 +267,9 @@ public class HairPinItemStrategy : UseItemStrategy
         {
             yield return null;
             if (useItem.escapeCircle.fillAmount < 0.6f)
-            {
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    break;
-            }
             else if (useItem.escapeCircle.fillAmount > 0.6f)
-            {
                 useItem.escapeCircle.GetComponent<Image>().color = new Color(0, 1, 0, 1);
-                if (Input.GetKeyDown(KeyCode.Alpha6))
-                    Exit();
-            }
             useItem.escapeCircle.gameObject.SetActive(true);
             useItem.escapeCircle.fillAmount += (Time.deltaTime / 2);
         }
@@ -329,7 +320,7 @@ public enum USEITEM_TYPE
     KEY,
     EXIT
 }
-
+[Serializable]
 public class UseItem : Item
 {
     public UseItemStrategy UseItemstrategy;
@@ -345,7 +336,7 @@ public class UseItem : Item
                break;
            case USEITEM_TYPE.FIRECRACKER:
                 itemStrategy = new FireCrackerItemStrategy(this);
-               break;
+                break;
             case USEITEM_TYPE.MIRROR:
                 itemStrategy = new MirrorItemStrategy(this);
                 break;
@@ -376,16 +367,5 @@ public class UseItem : Item
         quickSlot.AddItem(this);
         gameObject.SetActive(false);
         transform.SetParent(itemBox.transform);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            itemStrategy.Use();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            itemStrategy.Exit();
-        }
     }
 }

@@ -18,21 +18,20 @@ public class Player : MonoBehaviour
     public EquipItemInventory equipInven;
     public UseItemInventory quickSlot;
     public Inventory portableInven;
-
+    
     public InteractionAim aim;
-    public FirstPersonController playerMove;
-    public GameObject hairPinSlot;
+    public FirstPersonController playerMove;    
 
     private LayerMask monsterMask;
     public GameEvent finalEvent;
     public GameObject itemBox;
+    public GameObject hairPinSlot;
 
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     [SerializeField] private int tension;
 
     private StateMachine<Player> playerSM;
-    private bool isHpCoStart;
     private int tensionDwon = 5;
     private int tensionUp = 3;
     private int maxDistance;
@@ -45,7 +44,6 @@ public class Player : MonoBehaviour
     private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
-    private IEnumerator hpPlusCo;
     #endregion
     #region 프로퍼티
     public StateMachine<Player> PlayerSM
@@ -67,26 +65,7 @@ public class Player : MonoBehaviour
     {
         get => quickSlot;
     }
-    public bool CaughtSetState
-    {
-        get => caughtSetState;
-        set => caughtSetState = value;
-    }
 
-    public bool IsHpCoStart
-    {
-        get => isHpCoStart;
-        set
-        {
-            isHpCoStart = value;
-            if (isHpCoStart)
-                StartCoroutine(hpPlusCo);
-            else
-                StopCoroutine(hpPlusCo);
-        }
-        
-
-    }
     public bool IsMonsterCheck
     {
         get { return isMonsterCheck; }
@@ -152,17 +131,23 @@ public class Player : MonoBehaviour
         set
         {
             tension = value;
-            //�ټ��� ���Ϳ� ����ĥ�� �پ����
-            if(tension <= max)
-                tension = max;
-            if (tension <= 60) // && bool�� true�� �־�ߵ� false�� setstate�� �ٽ� true�� exit����
-            {
-                playerSM.SetState("Exhaustion");
-            }
-            if (tension > 60)
-            {
-                playerSM.SetState("IdleState");
-            }
+            //if(tension >= max)
+            //{
+            //    tension = max;
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+            //}
+            //if (tension <= 60 && playerSM.curState is not MoribundState)
+            //{
+            //    playerSM.SetState("Exhaustion");
+            //    UIManager.Instance.tensionAni.SetBool("VeryDownTension", false);
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", true);
+            //}
+            //else if (tension > 60 && playerSM.curState is not MoribundState)
+            //{
+            //    UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+            //    UIManager.Instance.tensionAni.SetBool("VeryDownTension", true);
+            //    playerSM.SetState("IdleState");
+            //}
         }
     }
     public int Hp
@@ -171,17 +156,29 @@ public class Player : MonoBehaviour
         set
         {
             hp = value;
-            if (hp >= max)
-                hp = max;
-            if (hp <= 30)
-            {
-                playerSM.SetState("Moribund");
-            }
-            if (hp <= zero)
-            {
-                hp = zero;
-                ScenesManager.Instance.DieScene();
-            }
+            //if (hp <= zero)
+            //{
+            //    hp = zero;
+            //    ScenesManager.Instance.DieScene();
+            //}
+            //else if (hp <= 30)
+            //{
+            //    Debug.Log(hp);
+            //    playerSM.SetState("Moribund");
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+            //    UIManager.Instance.hpAni.SetBool("IsVeryDown", true);
+            //}
+            //else if (hp <= 50)
+            //{
+            //    UIManager.Instance.hpAni.SetBool("IsVeryDown", false);
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", true);
+            //    Debug.Log(hp);
+            //}
+            //else if (hp >= max)
+            //{
+            //    hp = max;
+            //    UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+            //}
         }
     }
     #endregion
@@ -208,17 +205,7 @@ public class Player : MonoBehaviour
 
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
-        hpPlusCo = HpPlusCo();
         finalEvent.RegisterListener(() => { this.enabled = true; });
-    }
-    public IEnumerator HpPlusCo()
-    {
-        while(hp <= max)
-        {
-            yield return new WaitForSeconds(30);
-            hp += 5;
-            yield return new WaitUntil(() => hp <= max);
-        }
     }
     public IEnumerator MinusTensionCo(int damege)
     {
@@ -249,6 +236,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+
         playerSM.curState.Update();
         Collider[] monsterAttackZoneCol = Physics.OverlapSphere(new Vector3(transform.position.x,transform.position.y + 1, transform.position.z), 1, monsterMask);
         bool isMonsterAttackZone = monsterAttackZoneCol.Length > 0;
@@ -264,5 +252,6 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
                 IsMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
         }
+
     }
 }
