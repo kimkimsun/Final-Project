@@ -137,29 +137,17 @@ public class SaveData
     }
 }
 
-public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
+public class Save : MonoBehaviour, IInteraction
 {
     SaveData saveData;
     UseItemSlot[] useItemSlot;
     public Player player;
     HiRil hiril;
     HaiKen haiken;
-    int index;
+    public int fileIndex;
     string path;
     string fileName;
     public static Save Instance;
-
-    //public int Index
-    //{
-    //     get => Index;
-    //     set
-    //    {
-    //        index = value;
-    //        if (index < 2)
-    //            Index = 0;
-    //    }
-
-    //}
     public string InteractionText => "Save";
     public void Awake()
     {
@@ -167,7 +155,6 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
     }
     private void Start()
     {
-        index = 0;
         player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
         haiken = GameManager.Instance.haiken;
@@ -177,14 +164,14 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
         fileName = "SaveData.txt";
     }
 
-    public void SaveData()
+    public void SaveData(int fileIndex)
     {
+        fileName = fileName.Insert(8,fileIndex.ToString());
         Debug.Log("세이브");
         StreamWriter sw;
         if (File.Exists(path + fileName) == false)
         {
             sw = File.CreateText(path + fileName);
-            //Index++;
         }
         else
         {
@@ -194,8 +181,9 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
         sw.Close();
     }
 
-    public void LoadData()
+    public void LoadData(int fileIndex)
     {
+        fileName = fileName.Insert(8, fileIndex.ToString());
         Debug.Log("로드");
         if (File.Exists(path + fileName))
         {
@@ -208,20 +196,28 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            LoadData();
-        }
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    LoadData();
+        //}
     }
 
     public void Active()
     {
-        saveData = new SaveData(player, hiril, haiken, useItemSlot);
-        SaveData();
+        UIManager.Instance.saveUI.gameObject.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        //saveData = new SaveData(player, hiril, haiken, useItemSlot);
+        //SaveData();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void SaveButton()
     {
-        LoadData();
+        saveData = new SaveData(player, hiril, haiken, useItemSlot);
+        SaveData(fileIndex);
+    }
+    public void LoadButton()
+    {
+        LoadData(fileIndex);
     }
 }

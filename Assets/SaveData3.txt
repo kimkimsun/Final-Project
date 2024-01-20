@@ -1,0 +1,59 @@
+{
+    "hp": 100,
+    "tension": 100,
+    "stamina": 100.0,
+    "playerPos": {
+        "x": 22.157306671142579,
+        "y": 11.539965629577637,
+        "z": -17.94711685180664
+    },
+    "playerRot": {
+        "x": 0.0,
+        "y": 125.81387329101563,
+        "z": 0.0
+    },
+    "hirilPos": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "hirilRot": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "haikenPos": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "haikenRot": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "save": [],
+    "equipIndexArray": [
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "useItemCount": [
+        1,
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "useItemIndexArray": [
+        4,
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "equipInvenIdIndex": 0,
+    "hairPinCount": 0,
+    "typeName": ""
+}

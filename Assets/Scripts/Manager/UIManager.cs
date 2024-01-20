@@ -7,6 +7,7 @@ public class UIManager : SingleTon<UIManager>
 {
     public Image openUI;
     public Image escapeCircle;
+    public Image saveUI;
     public Animator tensionAni;
     public Animator hpAni;
     public GameObject settingBox;

@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 6223346102837513985}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 21.805769, y: 12.687122, z: -17.52194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uBE44\uB140"
   sprite: {fileID: 21300000, guid: 10e136b7523f47445b0d511f8f32d023, type: 3}
+  itemID: 0
   explanationText: "\uB179\uC2AC\uC5C8\uC9C0\uB9CC \uB05D\uC774 \uBFB0\uC871\uD574
     \uBB34\uC5B8\uAC00\uB97C \uCC0C\uB97C \uC218 \uC788\uC744 \uAC83 \uAC19\uB2E4"
   useItem_Type: 6
