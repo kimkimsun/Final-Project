@@ -137,14 +137,18 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
             {
                 diecount.GetComponent<Image>().color = new Color(0, 1, 0, 1);
                 if (isUse)
+                {
+                    yield return new WaitForSeconds(1);
                     Exit();
+                }
+                    
             }
         }
         ScenesManager.Instance.DieScene();
     }
     public override void Exit()
     {
-        //player.playerMove.enabled = true;
+        player.playerMove.enabled = true;
         player.Tension = 50;
         diecount.gameObject.SetActive(false);
         diecount.fillAmount = 0;

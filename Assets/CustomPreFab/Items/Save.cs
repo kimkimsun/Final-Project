@@ -1,13 +1,10 @@
 using CustomInterface;
-using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 
 [System.Serializable]
 public class SaveData
@@ -28,7 +25,9 @@ public class SaveData
     public int equipInvenIdIndex;
     public int hairPinCount;
     public string typeName;
-    public SaveData(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
+
+
+    public SaveData(Player player, HiRil hiril, HaiKen haiken)
     {
         equipIndexArray = new int[player.equipInven.EiSlots.Length];
         useItemCount = new int[player.quickSlot.slots.Length];
@@ -68,7 +67,7 @@ public class SaveData
         }
 
     }
-    public void Load(Player player, HiRil hiril, HaiKen haiken, UseItemSlot[] useItemSlot)
+    public void Load(Player player, HiRil hiril, HaiKen haiken)
     {
         player.Hp = hp;
         player.Tension = tension;
@@ -149,7 +148,7 @@ public class Save : MonoBehaviour, IInteraction
     string path;
     string fileName;
     public static Save Instance;
-    public TextMeshProUGUI textMeshProUGUI;
+    public TextMeshProUGUI[] settingUI = new TextMeshProUGUI[3];
     public string InteractionText => "Save";
     public void Awake()
     {
@@ -192,7 +191,7 @@ public class Save : MonoBehaviour, IInteraction
             StreamReader sr = new StreamReader(path + fileName);
             saveData = JsonUtility.FromJson<SaveData>(sr.ReadToEnd());
             sr.Close();
-            saveData.Load(player, hiril, haiken, useItemSlot);
+            saveData.Load(player, hiril, haiken);
         }
     }
 
@@ -215,9 +214,11 @@ public class Save : MonoBehaviour, IInteraction
 
     public void SaveButton()
     {
-        saveData = new SaveData(player, hiril, haiken, useItemSlot);
+        saveData = new SaveData(player, hiril, haiken);
         SaveData(fileIndex);
-        textMeshProUGUI.text = "aaaaaaaaaa";
+        settingUI[0].text = saveData.hp.ToString();
+        settingUI[1].text = saveData.tension.ToString();
+        settingUI[2].text = saveData.stamina.ToString();
     }
     public void LoadButton()
     {

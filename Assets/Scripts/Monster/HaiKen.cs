@@ -8,7 +8,17 @@ using UnityEngine.AI;
 public class HaiKen : Monster
 {
     protected new StateMachine<HaiKen> sm;
-    
+
+    public bool IsStun
+    {
+        get => isStun;
+        set
+        {
+            isStun = value;
+            if (isStun)
+                sm.SetState("Stun");
+        }
+    }
     protected override void Start()
     {
         sm = new StateMachine<HaiKen>();
