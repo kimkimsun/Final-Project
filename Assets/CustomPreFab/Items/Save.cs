@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -148,6 +149,7 @@ public class Save : MonoBehaviour, IInteraction
     string path;
     string fileName;
     public static Save Instance;
+    public TextMeshProUGUI textMeshProUGUI;
     public string InteractionText => "Save";
     public void Awake()
     {
@@ -215,6 +217,7 @@ public class Save : MonoBehaviour, IInteraction
     {
         saveData = new SaveData(player, hiril, haiken, useItemSlot);
         SaveData(fileIndex);
+        textMeshProUGUI.text = "aaaaaaaaaa";
     }
     public void LoadButton()
     {
