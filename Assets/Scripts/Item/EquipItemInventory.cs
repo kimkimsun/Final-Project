@@ -40,7 +40,6 @@ public class EquipItemInventory : Inventory
             item.transform.SetParent(flashLightPocket.transform);
             item.transform.position = flashLightPocket.transform.position;
             item.transform.rotation = flashLightPocket.transform.rotation;
-
         }
         else if (equipSlot.item == null)
         {

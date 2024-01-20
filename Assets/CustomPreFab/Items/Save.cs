@@ -88,28 +88,21 @@ public class SaveData
 
         for(int i = 0; i < player.itemBox.transform.childCount; i++)
         {
-            UnityEngine.Object.Destroy(player.itemBox.transform.GetChild(i));
+            GameObject.Destroy(player.itemBox.transform.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < player.quickSlot.slots.Length; i++)
         {
-            Debug.Log("½½·Ô ·À¾²" + player.quickSlot.slots.Length);
             player.quickSlot.slots[i].items.Clear();
             if (useItemIndexArray[i] != -1)
             {
-                Debug.Log("i¹¹³Ä?  " + i);
-                Debug.Log("µåÀ¸À¸À¸À¸À»¾î¿È222222222");
                 for (int j = 0; j < ItemManager.Instance.itemList.Count; j++)
                 {
                     if (useItemIndexArray[i] == ItemManager.Instance.itemList[j].itemID)
                     {
-                        Debug.Log("µåÀ¸À¸À¸À¸À»¾î¿È");
                         for (int k = 0; k < useItemCount[i]; k++)
                         {
                             Item copyItem = ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
-                            Debug.Log(ItemManager.Instance.CreatePrefab(useItemIndexArray[i]).name);
-                            Debug.Log("AAAAAAAAAAAAAAAA" + useItemCount[i]);
-                            Debug.Log("¸î¹ø È£Ãâ?");
                             player.quickSlot.slots[i].items.Add(copyItem);
                             player.quickSlot.slots[i].items[k].Init();
                             player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(player.itemBox.transform);
@@ -125,7 +118,8 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-                //player.equipInven.EquipSlot.item.Use();
+                player.equipInven.EquipSlot.item.Init();
+                player.equipInven.EquipSlot.item.Use();
             }
         }
 
@@ -153,7 +147,7 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
     int index;
     string path;
     string fileName;
-
+    public static Save Instance;
 
     //public int Index
     //{
@@ -167,7 +161,10 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
 
     //}
     public string InteractionText => "Save";
-
+    public void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         index = 0;
@@ -226,9 +223,5 @@ public class Save : MonoBehaviour, IInteraction, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         LoadData();
-    }
-    public static void Destroyobj(GameObject obj)
-    {
-        Destroy(obj);
     }
 }

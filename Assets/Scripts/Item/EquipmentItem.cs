@@ -181,16 +181,20 @@ public class EquipmentItem : Item
 {
     public EQUIPITEM_TYPE equipItem_Type;
     public Image batteryCharge;
-    private void OnEnable()
+    private void Start()
+    {
+        Init();
+    }
+    public override void Init()
     {
         switch (equipItem_Type)
         {
             case EQUIPITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
-/*            case EQUIPITEM_TYPE.OINTMENT:
-                itemStrategy = new OintmentItemStrategy(this);
-                break;*/
+            /*            case EQUIPITEM_TYPE.OINTMENT:
+                            itemStrategy = new OintmentItemStrategy(this);
+                            break;*/
             case EQUIPITEM_TYPE.ADRENALINE:
                 itemStrategy = new AdrenalineItemStrategy(this);
                 break;
@@ -199,6 +203,7 @@ public class EquipmentItem : Item
                 break;
         }
     }
+
     public override void Exit()
     {
         itemStrategy.Exit();
@@ -207,10 +212,5 @@ public class EquipmentItem : Item
     {
         EquipItemInventory equipInven = GameManager.Instance.player.EquipInven;
         equipInven.AddItem(this);
-    }
-
-    public override void Init()
-    {
-        throw new System.NotImplementedException();
     }
 }
