@@ -22,8 +22,6 @@ public abstract class UseItemStrategy: ItemStrategy
 
     public override void Use()
     {
-        Debug.Log("111111111111111111111" + useItem);
-        Debug.Log("222222222222222222222" + useItem.transform);
         useItem.transform.SetParent(null);
     }
 }
