@@ -46,10 +46,15 @@ public class Door : MonoBehaviour, IInteraction
                 }
             }
         }
-
-
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Monster>() != null)
+            GetComponent<BoxCollider>().enabled = true;
+        else if(collision.gameObject.GetComponent<Monster>() != null)
+            GetComponent<BoxCollider>().enabled = false;
+    }
 
     public void Active()
     {

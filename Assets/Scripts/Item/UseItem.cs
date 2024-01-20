@@ -263,6 +263,7 @@ public class HairPinItemStrategy : UseItemStrategy
     {
         useItem.transform.SetParent(player.hairPinSlot.transform);
         useItem.transform.position = player.hairPinSlot.transform.position;
+        useItem.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
         player.playerMove.PlayerAni.SetTrigger("isAttack");
     }
 

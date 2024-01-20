@@ -204,14 +204,12 @@ public class HiRilRunState : HiRilState
 }
 public class HiRilStunState : HiRilState
 {
-    IEnumerator stunCo;
     public override void Enter()
     {
-        stunCo = ((HiRil)owner).StunCo();
         owner.gameObject.layer = 0;
         owner.Agent.Move(owner.transform.forward * -35 * Time.deltaTime);
         owner.Agent.isStopped = true;
-        owner.StartCoroutine(stunCo);
+        owner.StartCoroutine(((HiRil)owner).StunCo());
         owner.Animator.SetBool("isStun", true);
     }
     public override void Exit()

@@ -8,6 +8,17 @@ public class HiRil : Monster
 {
     private int soundDetectionRange;
     protected new StateMachine<HiRil> sm;
+
+    public bool IsStun
+    {
+        get => isStun;
+        set
+        {
+            isStun = value;
+            if (isStun)
+                sm.SetState("Stun");
+        }
+    }
     protected override void Start()
     {
         sm = new StateMachine<HiRil>();
@@ -27,10 +38,6 @@ public class HiRil : Monster
 
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-            sm.SetState("Stun");
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-            Debug.Log("Test" + sm.curState);
         sm.curState?.Update();
         base.Update();
         soundCol = Physics.OverlapSphere(transform.position, soundDetectionRange, heardTargetLayerMask);
@@ -51,7 +58,7 @@ public class HiRil : Monster
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
             if (isPlayerCheck && sm.curState is not HiRilRunState && !isStun)
                 sm.SetState("Run");
-            else if (!isPlayerCheck)
+            else if (!isPlayerCheck && !isStun)
                 sm.SetState("Idle");
         }
         else if (sm.curState is not HiRilStunState && sm.curState is not HiRilAttackState)
@@ -77,16 +84,15 @@ public class HiRil : Monster
         gameObject.layer = 0;
         isStun = true;
         isAttack = true;
-        stunTime = 0f;
-        while (stunTime < 5.0f)
+        while (true)
         {
-            stunTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForSeconds(7);
+            sm.SetState("Idle");
+            isStun = false;
+            isAttack = false;
+            gameObject.layer = 9;
+            yield break;
         }
-        sm.SetState("Idle");
-        isStun = false;
-        isAttack = false;
-        gameObject.layer = 9;
     }
     public override void GetStun()
     {
