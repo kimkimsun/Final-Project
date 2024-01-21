@@ -12,7 +12,7 @@ public class EquipItemInventory : Inventory
     [SerializeField] private EquipItemSlot pocket;
     [SerializeField] private EquipItemSlot tempSlot;
     [SerializeField] private Image textCoverImage;
-    [SerializeField] private GameObject flashLightPocket;
+    [SerializeField] private EquipItemSlot flashLightPocket;
     [SerializeField] private int index;
     public int Index { get => index; }
 

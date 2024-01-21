@@ -21,6 +21,7 @@ public abstract class PlayerState : State
 
     protected IEnumerator MinusHpCo(int damage)
     {
+        Debug.Log("몇번들어옴?");
         while (player.Hp > 0)
         {
             yield return new WaitForSeconds(1);
@@ -62,7 +63,6 @@ public class ExhaustionState : PlayerState //탈진상태
         player.playerMove.MoveSpeed = 3.0f;
         player.playerMove.SprintSpeed = 4.5f;
         player.StartCoroutine(minusHpCo);
-
     }
 
     public override void Exit()
@@ -107,6 +107,7 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     bool isUse;
     public override void Enter()
     {
+        Debug.Log("잡힌상태");
         Init();
         player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         player.playerMove.enabled = false;

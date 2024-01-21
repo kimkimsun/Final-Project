@@ -19,7 +19,8 @@ public class GameManager : SingleTon<GameManager>
         gameStartCo = GameStartCo();
         GameStart();
         pauseEvent.RegisterListener(() => { GameStop(); });
-        pauseEvent.UnregisterListener(() => { GameStart(); });
+        pauseEvent.UnregisterListener(() => { GameStop(); });
+        pauseEvent.RegisterListener(() => { GameStart(); });
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

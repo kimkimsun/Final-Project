@@ -124,10 +124,11 @@ public class AdrenalineItemStrategy : EquipItemStrategy
         GameManager.Instance.player.playerMove.MinusStamina = 5;
     }
 }
-/*public class OintmentItemStrategy : EquipItemStrategy
+public class OintmentItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
-    public OintmentItemStrategy(EquipmentItem equipmentItem):base(equipmentItem)
+    IEnumerator hpPlusCo;
+    public OintmentItemStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
     {
         this.equip = equipmentItem;
         Init();
@@ -137,16 +138,17 @@ public class AdrenalineItemStrategy : EquipItemStrategy
     {
         explanationText = "들고 있으면 피가 점점 찹니다";
         equip.ExplanationText = this.explanationText;
+        hpPlusCo = equipmentItem.HpPlusCo();
     }
     public override void Use()
     {
-        GameManager.Instance.player.IsHpCoStart = true;
+        equipmentItem.StartCoroutine(hpPlusCo);
     }
     public override void Exit()
     {
-        GameManager.Instance.player.IsHpCoStart = false;
+        equipmentItem.StopCoroutine(hpPlusCo);
     }
-}*/
+}
 public class MaskItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
@@ -170,12 +172,36 @@ public class MaskItemStrategy : EquipItemStrategy
         GameManager.Instance.player.MonsterLookZone = 10;
     }
 }
+public class NightVisionStrategy : EquipItemStrategy
+{
+    EquipmentItem equip;
+    public NightVisionStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
+    {
+        this.equip = equipmentItem;
+        Init();
+    }
+
+    public override void Init()
+    {
+        explanationText = "이름 : 야간투시경 볼 수 있는 시야범위가 넓어집니다.";
+        equip.ExplanationText = this.explanationText;
+    }
+    public override void Use()
+    {
+        GameManager.Instance.player.MonsterLookZone = 5;
+    }
+    public override void Exit()
+    {
+        GameManager.Instance.player.MonsterLookZone = 10;
+    }
+}
 public enum EQUIPITEM_TYPE
 {
     OINTMENT,
     ADRENALINE,
     FLASHLIGHT,
     MASK,
+    NIGHTVISION,
 }
 public class EquipmentItem : Item
 {
@@ -192,13 +218,16 @@ public class EquipmentItem : Item
             case EQUIPITEM_TYPE.FLASHLIGHT:
                 itemStrategy = new FlashlightItemStrategy(this);
                 break;
-            /*            case EQUIPITEM_TYPE.OINTMENT:
-                            itemStrategy = new OintmentItemStrategy(this);
-                            break;*/
+            case EQUIPITEM_TYPE.OINTMENT:
+                itemStrategy = new OintmentItemStrategy(this);
+                break;
             case EQUIPITEM_TYPE.ADRENALINE:
                 itemStrategy = new AdrenalineItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.MASK:
+                itemStrategy = new MaskItemStrategy(this);
+                break;
+            case EQUIPITEM_TYPE.NIGHTVISION:
                 itemStrategy = new MaskItemStrategy(this);
                 break;
         }
@@ -212,5 +241,14 @@ public class EquipmentItem : Item
     {
         EquipItemInventory equipInven = GameManager.Instance.player.EquipInven;
         equipInven.AddItem(this);
+    }
+    public IEnumerator HpPlusCo()
+    {
+        while(GameManager.Instance.player.Hp <= 100)
+        {
+            yield return new WaitForSeconds(30);
+            GameManager.Instance.player.Hp += 5;
+            yield return new WaitUntil(() => GameManager.Instance.player.Hp <= 100f);
+        }
     }
 }

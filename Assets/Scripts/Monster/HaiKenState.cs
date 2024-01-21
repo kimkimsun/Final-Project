@@ -42,14 +42,12 @@ public class HaiKenRunState : HaiKenState
     public override void Update()
     {
         owner.Agent.SetDestination(owner.PlayerLookCol[0].transform.position);
-        // 플레이어 손전등 깜빡거리거나, 밝기 낮아지거나 해야됨
     }
 }
 public class HaiKenStunState : HaiKenState
 {
     public override void Enter()
     {
-        // ++) 귀신 비명 소리 추가
         owner.StartCoroutine(owner.StunCo());
         owner.Agent.enabled = false;
         owner.Animator.SetBool("isStun", true);

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ScenesManager : SingleTon<ScenesManager> 
 {
+    public GameObject UICanvas;
     public CinemachineVirtualCamera EndVC;
     public Light EndLight;
 
     private float time;
     public void DieScene()
     {
-        Debug.Log("аж╠щ");
+        UICanvas.gameObject.SetActive(false);
         EndVC.Priority = 11;
         StartCoroutine(CameraMove());
     }
@@ -26,7 +27,6 @@ public class ScenesManager : SingleTon<ScenesManager>
         }
         StartCoroutine(EndProduce());
     }
-
     IEnumerator EndProduce()
     {
         float alpha = 1f;
