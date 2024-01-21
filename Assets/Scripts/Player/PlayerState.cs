@@ -29,7 +29,6 @@ public abstract class PlayerState : State
         }
         yield break;
     }
-    
 }
 
 public class IdleState : PlayerState
@@ -108,7 +107,6 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     bool isUse;
     public override void Enter()
     {
-        Debug.Log("몬스터한테 잡힘");
         Init();
         player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         player.playerMove.enabled = false;

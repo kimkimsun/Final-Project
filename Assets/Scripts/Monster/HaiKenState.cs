@@ -31,6 +31,7 @@ public class HaiKenRunState : HaiKenState
 {
     public override void Enter()
     {
+        Debug.Log("RUNRUN");
         owner.Animator.SetBool("isRun", true);
         owner.Agent.speed = 7;
     }
@@ -52,8 +53,6 @@ public class HaiKenStunState : HaiKenState
         owner.StartCoroutine(owner.StunCo());
         owner.Agent.enabled = false;
         owner.Animator.SetBool("isStun", true);
-        owner.gameObject.layer = 0;
-        owner.MonsterVirtualCamera.Priority = 9;
         owner.Animator.bodyRotation = GameManager.Instance.transform.rotation;
     }
     public override void Exit()
@@ -67,16 +66,13 @@ public class HaiKenAttackState : HaiKenState
 {
     public override void Enter()
     {
-        owner.Agent.enabled = false;
+        owner.Agent.isStopped = true;
         owner.Animator.SetBool("isAttack", true);
-        owner.MonsterVirtualCamera.Priority = 11;
-        owner.Escape = 0f;
     }
     public override void Exit()
     {
-        owner.Agent.enabled = true;
+        owner.Agent.isStopped = false;
         owner.Animator.SetBool("isAttack", false);
-        owner.StopCoroutine(owner.EscapeCor);
     }
     public override void Update() { }
 }

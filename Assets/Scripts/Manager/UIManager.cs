@@ -11,7 +11,7 @@ public class UIManager : SingleTon<UIManager>
     public Image openUI;
     public Image escapeCircle;
     public Image saveUI;
-    public TextMeshProUGUI[] uiSettingText = new TextMeshProUGUI[3];
+    public TextMeshProUGUI uiSettingText;
     public Animator tensionAni;
     public Animator hpAni;
     public GameObject settingBox;

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 388f7265d3a935b4ab69b3aa2c031d0a, type: 3}
-  m_Name: TestEvent
+  m_Name: ItemSpawnList
   m_EditorClassIdentifier: 
   spawnList:
   - {fileID: 5350933117340624716, guid: 5f3515b718798b9448fb09ff919774b1, type: 3}

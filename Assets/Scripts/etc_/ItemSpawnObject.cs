@@ -13,7 +13,5 @@ public class ItemSpawnObject : MonoBehaviour
             Item spawnPrefab = itemSpawnList[Random.Range(0, itemSpawnList.Count)];
             Instantiate(spawnPrefab, transform.GetChild(0).position, Quaternion.identity);
         }
-        else
-            return;
     }
 }

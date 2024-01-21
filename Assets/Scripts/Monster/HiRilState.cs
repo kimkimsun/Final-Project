@@ -128,7 +128,7 @@ public class HiRilRunState : HiRilState
     }
     public void FirstSetting()
     {
-        rootNode = new SelectorNode(() => { Debug.Log("sdsd"); return INode.STATE.SUCCESS; });
+        rootNode = new SelectorNode(() => { return INode.STATE.SUCCESS; });
         rootNode.Add(detectiveSequence = new SequenceNode(() =>
         {
             if (owner.IsPlayerCheck)
@@ -226,15 +226,14 @@ public class HiRilAttackState : HiRilState
 {
     public override void Enter()
     {
-        owner.Agent.enabled = false;
+        owner.Agent.isStopped = true;
         owner.Animator.SetBool("isAttack", true);
         owner.Escape = 0f;
     }
     public override void Exit()
     {
-        owner.Agent.enabled = true;
+        owner.Agent.isStopped = false;
         owner.Animator.SetBool("isAttack", false);
-        //monster.StopCoroutine(monster.EscapeCor);
     }
     public override void Update() { }
 }

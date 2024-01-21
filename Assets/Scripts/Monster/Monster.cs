@@ -26,7 +26,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     protected List<Transform> monsterNextPositionList;
     protected Collider[] playerLookCol;
     protected Collider[] soundCol;
-    protected Collider[] playerAttackCol;
     protected Rigidbody rb;
     protected Animator animator;
     protected IEnumerator escapeCor;
@@ -34,7 +33,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     protected bool isCheck;
     protected bool isPlayerCheck;
     protected bool isStun;
-    protected bool isAttack;
     protected float maxDistance;
     protected float stunTime;
     protected float? distance = null;
@@ -83,11 +81,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     public Collider[] PlayerLookCol
     {
         get => playerLookCol;
-        set => playerLookCol = value;
-    }
-    public Collider[] PlayerAttackCol
-    {
-        get => playerAttackCol;
         set => playerLookCol = value;
     }
     public NavMeshAgent Agent
@@ -149,7 +142,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     protected void PublicUpdate()
     {
         playerLookCol = Physics.OverlapSphere(transform.position, lookDetectionRange, targetLayerMask);
-        playerAttackCol = Physics.OverlapSphere(transform.position, attackDetectionRange, targetLayerMask);
     }
     protected void PublicStart()
     {
@@ -225,19 +217,7 @@ public abstract class Monster : MonoBehaviour, IGetStunable
             }
         }
     }
-    public virtual IEnumerator StunCo()
-    {
-        isStun = false;
-        stunTime = 0f;
-        while (stunTime < 5.0f)
-        {
-            stunTime += Time.deltaTime;
-            yield return null;
-        }
-        sm.SetState("Idle");
-        isStun = true;
-        isAttack = true;
-    }
+    public abstract IEnumerator StunCo();
     public IEnumerator EscapeCo()
     {
         while (escape < 5)

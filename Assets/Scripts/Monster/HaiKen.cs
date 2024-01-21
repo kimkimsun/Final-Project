@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class HaiKen : Monster
 {
@@ -28,6 +29,7 @@ public class HaiKen : Monster
         sm.AddState("Stun", new HaiKenStunState());
         sm.AddState("Attack", new HaiKenAttackState());
         base.Start();
+        animator.SetBool("isStart", true);
 
         agent.isStopped = true;
         maxDistance = 20f;
@@ -42,46 +44,46 @@ public class HaiKen : Monster
         {
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position + (transform.forward * maxDistance), Color.blue);
-            if (Physics.Raycast(transform.position, new Vector3(transform.position.x,transform.position.y * 3), out hit, maxDistance))
+            if(Physics.BoxCast(transform.position,transform.lossyScale,transform.forward,out hit, transform.rotation,maxDistance))
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-            if (isPlayerCheck && sm.curState is HaiKenIdleState hi && isStun)
+            if (isPlayerCheck && sm.curState is not HaiKenRunState && !isStun)
                 sm.SetState("Run");
-            else if (!isPlayerCheck)
+            else if (!isPlayerCheck && !isStun)
                 sm.SetState("Idle");
-            else
-                return;
         }
-        else
+        else if(playerLookCol.Length == 0 && !isStun)
             sm.SetState("Idle");
-        if (playerAttackCol.Length > 0 && isAttack)
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Player>() != null)
         {
-            sm.SetState("Attack");
-            isAttack = false;
-            isStun = false;
+            if (sm.curState is not HaiKenAttackState)
+            {
+                isStun = true;
+                sm.SetState("Attack");
+            }
         }
     }
     public void EndAnimation()
     {
+        Animator.SetBool("isStart", false);
         agent.isStopped = false;
     }
     public override IEnumerator StunCo()
     {
-        gameObject.layer = 0;
-        isStun = false;
-        isAttack = false;
-        stunTime = 0f;
-        while (stunTime < 5.0f)
-        {
-            stunTime += Time.deltaTime;
-            yield return null;
-        }
-        sm.SetState("Idle");
+        //trigger충돌나게 해야됨
         isStun = true;
-        isAttack = true;
-        gameObject.layer = 9;
+        while (true)
+        {
+            yield return new WaitForSeconds(7);
+            sm.SetState("Idle");
+            isStun = false;
+        }
     }
     public override void GetStun()
     {
-        sm.SetState("Stun");
+        if (sm.curState is not HaiKenStunState)
+            IsStun = true;
     }
 }

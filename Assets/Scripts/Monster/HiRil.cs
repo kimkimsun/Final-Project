@@ -63,13 +63,6 @@ public class HiRil : Monster
         }
         else if (sm.curState is not HiRilStunState && sm.curState is not HiRilAttackState)
             sm.SetState("Idle");
-        if (playerAttackCol.Length > 0 && !isAttack)
-        {
-            Debug.Log("공격");
-            sm.SetState("Attack");
-            isAttack = true;
-            isStun = true;
-        }
     }
 
     protected override void OnDrawGizmos()
@@ -78,28 +71,33 @@ public class HiRil : Monster
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, soundDetectionRange);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+            if(sm.curState is not HiRilAttackState)
+            {
+                isStun = true;
+                sm.SetState("Attack");
+            }
+        }
+    }
     public override IEnumerator StunCo()
     {
-        Debug.Log("스턴 들어옴");
         gameObject.layer = 0;
         isStun = true;
-        isAttack = true;
         while (true)
         {
             yield return new WaitForSeconds(7);
             sm.SetState("Idle");
             isStun = false;
-            isAttack = false;
             gameObject.layer = 9;
             yield break;
         }
     }
     public override void GetStun()
     {
-        if(sm.curState is not HiRilStunState sd)
-        {
-            Debug.Log("한번만 호출");
-            sm.SetState("Stun");
-        }
+        if (sm.curState is not HiRilStunState)
+            IsStun = true;
     }
 }

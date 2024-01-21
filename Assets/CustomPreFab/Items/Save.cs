@@ -12,6 +12,7 @@ public class SaveData
     public int hp;
     public int tension;
     public float stamina;
+    public float time;
     public Vector3 playerPos;
     public Vector3 playerRot;
     public Vector3 hirilPos;
@@ -38,13 +39,13 @@ public class SaveData
         stamina = player.Stamina;
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
-
+        time = GameManager.Instance.time;
         if (player.equipInven.EquipSlot.item != null)
             equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
 
 
-        if (player.quickSlot.hairPinSlot.items.Count > 0)
-            hairPinCount = player.quickSlot.hairPinSlot.items.Count;
+        //if (player.quickSlot.hairPinSlot.items.Count > 0 && player.quickSlot.hairPinSlot != null)
+        //    hairPinCount = player.quickSlot.hairPinSlot.items.Count;
 
 
         for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
@@ -74,6 +75,7 @@ public class SaveData
         player.Stamina = stamina;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
+        GameManager.Instance.time = time;
         for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
         {
             if (equipIndexArray[i] != -1)
@@ -148,7 +150,7 @@ public class Save : MonoBehaviour, IInteraction
     string path;
     string fileName;
     public static Save Instance;
-    public TextMeshProUGUI[] settingUI = new TextMeshProUGUI[3];
+    public TextMeshProUGUI settingUI;
     public string InteractionText => "Save";
     public void Awake()
     {
@@ -167,8 +169,8 @@ public class Save : MonoBehaviour, IInteraction
 
     public void SaveData(int fileIndex)
     {
+        settingUI.text = GameManager.Instance.time.ToString("N2");
         fileName = fileName.Insert(8,fileIndex.ToString());
-        Debug.Log("ºº¿Ã∫Í");
         StreamWriter sw;
         if (File.Exists(path + fileName) == false)
         {
@@ -194,31 +196,16 @@ public class Save : MonoBehaviour, IInteraction
             saveData.Load(player, hiril, haiken);
         }
     }
-
-    private void FixedUpdate()
-    {
-        //if (Input.GetKeyDown(KeyCode.V))
-        //{
-        //    LoadData();
-        //}
-    }
-
     public void Active()
     {
         UIManager.Instance.saveUI.gameObject.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        //saveData = new SaveData(player, hiril, haiken, useItemSlot);
-        //SaveData();
     }
-
     public void SaveButton()
     {
         saveData = new SaveData(player, hiril, haiken);
         SaveData(fileIndex);
-        settingUI[0].text = saveData.hp.ToString();
-        settingUI[1].text = saveData.tension.ToString();
-        settingUI[2].text = saveData.stamina.ToString();
     }
     public void LoadButton()
     {
