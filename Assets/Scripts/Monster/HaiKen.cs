@@ -30,7 +30,6 @@ public class HaiKen : Monster
         sm.AddState("Attack", new HaiKenAttackState());
         base.Start();
         animator.SetBool("isStart", true);
-
         agent.isStopped = true;
         maxDistance = 20f;
         agent.speed = 5f;

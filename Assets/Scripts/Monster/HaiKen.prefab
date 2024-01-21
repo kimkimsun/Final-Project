@@ -1185,6 +1185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381983224056446402}
+  - component: {fileID: 2102025773411723257}
   m_Layer: 9
   m_Name: root
   m_TagString: Untagged
@@ -1208,6 +1209,29 @@ Transform:
   - {fileID: 5088196171281098377}
   m_Father: {fileID: 8899763093704384927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2102025773411723257
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594583521116918668}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.01
+  m_Height: 0.45
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.05, z: 1.01}
 --- !u!1 &5638012349462448657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1246,6 @@ GameObject:
   - component: {fileID: 332780115390108348}
   - component: {fileID: 7519119396489735649}
   - component: {fileID: 4414584355350156786}
-  - component: {fileID: 3946780908431274156}
   m_Layer: 9
   m_Name: HaiKen
   m_TagString: Untagged
@@ -1386,27 +1409,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3946780908431274156
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5638012349462448657}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.39, y: 1.6, z: 1.34}
-  m_Center: {x: 0, y: 1.06, z: 0}
 --- !u!1 &5780146939136512700
 GameObject:
   m_ObjectHideFlags: 0

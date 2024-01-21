@@ -24,11 +24,9 @@ public class PlayerInteraction : MonoBehaviour
     public void UseFlash()
     {
         if (Input.GetKeyDown(KeyCode.F))
-        {
-            Debug.Log(player.equipInven.Pocket.item.itemStrategy);
-            player.equipInven.Pocket.item.Use();
-        }
+            player.UseFlash();
     }
+    
     public void Stop()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

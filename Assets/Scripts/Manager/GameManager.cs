@@ -6,23 +6,48 @@ using Cinemachine;
 
 public class GameManager : SingleTon<GameManager>
 {
+    private bool isStart;
+
     public float time;
     public GameEvent pauseEvent;
     public Player player;
     public HiRil hiril;
     public HaiKen haiken;
-
     IEnumerator gameStartCo;
 
+    
+    public bool IsStart
+    {
+        get => isStart;
+        set
+        {
+            isStart = value;
+            if (isStart)
+            {
+                this.enabled = true;
+                StartCoroutine(gameStartCo);
+            }
+            else if (!isStart)
+            {
+                this.enabled = false;
+                StopCoroutine(gameStartCo);
+            }
+        }
+    }
     private void Start()
     {
         gameStartCo = GameStartCo();
         GameStart();
-        pauseEvent.RegisterListener(() => { GameStop(); });
-        pauseEvent.UnregisterListener(() => { GameStop(); });
-        pauseEvent.RegisterListener(() => { GameStart(); });
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+    }
+    private void OnEnable()
+    {
+        pauseEvent.RegisterListener(() => { IsStart = false; });
+        pauseEvent.UnregisterListener(() => { IsStart = true; });
+    }
+    private void OnDisable()
+    {
+        pauseEvent.RegisterListener(() => { IsStart = true; });
+        pauseEvent.UnregisterListener(() => { IsStart = false; });
     }
     public void GameStart()
     {

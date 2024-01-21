@@ -7792,6 +7792,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5104886340202542834, guid: bafaec104cca0be4f93662b78e911e21, type: 3}
+      propertyPath: itemSpawnList
+      value: 
+      objectReference: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12649,8 +12653,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615028159}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.007288809, y: 0.9265314, z: -0.37130812, w: 0.06014085}
-  m_LocalPosition: {x: 81.049995, y: 1.507, z: -154.37999}
+  m_LocalRotation: {x: 0.7098567, y: 0.004080683, z: -0.00459997, w: 0.70431936}
+  m_LocalPosition: {x: 80.96225, y: 2.6883516, z: -156.58707}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34692,6 +34696,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 753636770}
     m_Modifications:
+    - target: {fileID: 293931066313554486, guid: 5a5fe610287fed043b0062928da470a9, type: 3}
+      propertyPath: itemSpawnList
+      value: 
+      objectReference: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
     - target: {fileID: 6097625354651068554, guid: 5a5fe610287fed043b0062928da470a9, type: 3}
       propertyPath: m_Name
       value: Mungap_04
@@ -54353,7 +54361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!114 &293931066410430574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54366,7 +54374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!114 &293931066699771586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54379,7 +54387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!23 &303885722541965440
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62491,7 +62499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!114 &1665120755643261722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62504,7 +62512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!1 &1673656741429542831
 GameObject:
   m_ObjectHideFlags: 0
@@ -75476,7 +75484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!114 &2080458398251471733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75489,7 +75497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!114 &2080458398347175120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75502,7 +75510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!137 &2080831404104864662
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -76381,8 +76389,8 @@ Transform:
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6769782028927076908}
   - {fileID: 8475047095118467903}
+  - {fileID: 6769782028927076908}
   m_Father: {fileID: 6062410250577282687}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2279717792612407162
@@ -87300,7 +87308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c705c82c3790042bb551f649901e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnList: {fileID: 0}
+  itemSpawnList: {fileID: 11400000, guid: e9b0a9ad0d2ecd04b8fcbd8e4974ee70, type: 2}
 --- !u!23 &5106663129402894245
 MeshRenderer:
   m_ObjectHideFlags: 0

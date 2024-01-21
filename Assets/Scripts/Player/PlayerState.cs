@@ -107,15 +107,16 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     bool isUse;
     public override void Enter()
     {
+        player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         Debug.Log("잡힌상태");
         Init();
-        player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         player.playerMove.enabled = false;
         if (item > 0)
             player.StartCoroutine(CaughtCo());
         else
             ScenesManager.Instance.DieScene();
     }
+
 
     public void Init()
     {

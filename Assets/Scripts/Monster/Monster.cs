@@ -10,7 +10,6 @@ using UnityEngine.AI;
 public abstract class Monster : MonoBehaviour, IGetStunable
 {
     #region º¯¼ö
-
     public float escape;
     [SerializeField] protected LayerMask targetLayerMask;
     [SerializeField] protected LayerMask heardTargetLayerMask;
@@ -131,11 +130,10 @@ public abstract class Monster : MonoBehaviour, IGetStunable
         animator.enabled = false;
         this.enabled = false;
     }
-
     protected void Play()
     {
-        this.enabled = true;
         agent.isStopped = false;
+        this.enabled = true;
         enabled = true;
         animator.enabled = true;
     }

@@ -24,7 +24,9 @@ public class Player : MonoBehaviour
     public GameObject itemBox;
     public GameObject hairPinSlot;
     public Image stminaImage;
+    public Image batteryCharge;
     public TextMeshProUGUI hpText;
+    public Light flashlight;
 
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
@@ -39,12 +41,20 @@ public class Player : MonoBehaviour
     private int zero = 0;
     private int finalKey = 5;
     private int monsterLookZone;
+    private float minBright = 0;
+    private float maxBright = 10;
+    private float minBattery = 0;
+    private float maxBattery = 60;
+    private float battery = 60;
+    private bool useing;
     private bool isRegulate;
     private bool isMonsterCheck;
     private bool isMonsterAttackCheck;
     private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
+    private IEnumerator minusBatteryCo;
+    private IEnumerator plusBatteryCo;
     #endregion
     #region 프로퍼티
     public StateMachine<Player> PlayerSM
@@ -67,30 +77,6 @@ public class Player : MonoBehaviour
         get => quickSlot;
     }
 
-    public bool IsMonsterCheck
-    {
-        get { return isMonsterCheck; }
-        set 
-        { 
-            isMonsterCheck = value;
-            if (isMonsterCheck)
-            {
-                isRegulate = true;
-                if (isRegulate)
-                {
-                    StopCoroutine(plusTensionCo);
-                    StartCoroutine(minusTensionCo);
-                }
-                isRegulate = false;
-            }
-            else
-            {
-                isRegulate = true;
-                StopCoroutine(minusTensionCo);
-                StartCoroutine(plusTensionCo);
-            }
-        }
-    }
     public int ExitItemCount
     {
         get { return exitItemCount; }
@@ -176,12 +162,30 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-
+    public void UseFlash()
+    {
+        useing = !useing;
+        if (useing)
+        {
+            StopCoroutine(plusBatteryCo);
+            StartCoroutine(minusBatteryCo);
+        }
+        else
+            StopFlash();
+    }
+    public void StopFlash()
+    {
+        StopCoroutine(minusBatteryCo);
+        StartCoroutine(plusBatteryCo);
+    }
     private void Start()
     {
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
+
+        plusBatteryCo = PlusBatteryCo();
+        minusBatteryCo = MinusBatteryCo();
 
         playerSM.AddState("Idle", new IdleState());
         playerSM.AddState("Exhaustion", new ExhaustionState());
@@ -212,11 +216,13 @@ public class Player : MonoBehaviour
     }
     public IEnumerator PlusTensionCo(int tensionUp)
     {
-        while (Tension < zero)
+        isRegulate = false;
+        while (Tension < max)
         {
+            Debug.Log("들어옴?");
             yield return new WaitForSeconds(5);
             Tension += tensionUp;
-            yield return new WaitUntil(() => Hp < 100);
+            yield return new WaitUntil(() => Tension < 100);
         }
     }
     bool CheckInLayerMask(int layerIndex)
@@ -226,9 +232,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log(tension);
-        }
+            Debug.Log("텐션임" + tension);
         playerSM.curState.Update();
         Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
@@ -237,9 +241,28 @@ public class Player : MonoBehaviour
             RaycastHit hit;
             Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
             if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
-                IsMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-            Debug.Log("SDASD" + IsMonsterCheck);
+                isMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+            if (isMonsterCheck && !isRegulate)
+            {
+                Debug.Log("텐션 내려감");
+                StopCoroutine(plusTensionCo);
+                StartCoroutine(minusTensionCo);
+                isRegulate = true;
+            }
+            else if (!isMonsterCheck && isRegulate)
+            {
+                Debug.Log("텐션 올라가");
+                StopCoroutine(minusTensionCo);
+                StartCoroutine(plusTensionCo);
+                isRegulate = false;
+            }
         }
+        else if(!isMonsterZone)
+        {
+            StopCoroutine(minusTensionCo);
+            StartCoroutine(plusTensionCo);
+        }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -247,6 +270,34 @@ public class Player : MonoBehaviour
         {
             if (PlayerSM.curState is not CaughtState)
                 playerSM.SetState("Caught");
+        }
+    }
+    IEnumerator MinusBatteryCo()
+    {
+        while (battery > minBattery)
+        {
+            flashlight.intensity = maxBright;
+            yield return new WaitForSeconds(1f);
+            batteryCharge.fillAmount = battery / 60f;
+            battery -= 1;
+            if (battery <= minBattery)
+            {
+                StopFlash();
+            }
+            yield return new WaitUntil(() => battery > minBattery);
+        }
+    }
+
+    IEnumerator PlusBatteryCo()
+    {
+        while (battery < maxBattery)
+        {
+            flashlight.intensity = minBright;
+            yield return new WaitForSeconds(0.6f);
+            batteryCharge.fillAmount = battery / 60f;
+            battery += 1;
+            Debug.Log("플러스");
+            yield return new WaitUntil(() => battery < maxBattery);
         }
     }
 }
