@@ -21,12 +21,14 @@ public class HiRil : Monster
     }
     protected override void Start()
     {
+        finalEvent.RegisterListener(() => { sm.SetState("Final"); });
         sm = new StateMachine<HiRil>();
         sm.owner = this;
         sm.AddState("Idle", new HiRilIdleState());
         sm.AddState("Run", new HiRilRunState());
         sm.AddState("Stun", new HiRilStunState());
         sm.AddState("Attack", new HiRilAttackState());
+        sm.AddState("Final", new HiRilFinalState());
         sm.SetState("Idle");
 
         base.Start();

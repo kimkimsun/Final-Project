@@ -74,3 +74,18 @@ public class HaiKenAttackState : HaiKenState
     }
     public override void Update() { }
 }
+public class HaiKenFinalState : HaiKenState
+{
+    public override void Enter()
+    {
+        owner.Animator.SetBool("isRun", true);
+        owner.Agent.speed = 7;
+    }
+    public override void Exit()
+    {
+    }
+    public override void Update()
+    {
+        owner.Agent.SetDestination(GameManager.Instance.player.transform.position);
+    }
+}

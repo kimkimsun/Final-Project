@@ -32,16 +32,7 @@ public class EquipItemInventory : Inventory
     }
     public override void AddItem(Item item)
     {
-        if (((EquipmentItem)item).equipItem_Type == EQUIPITEM_TYPE.FLASHLIGHT)
-        {
-            pocket.item = item;
-            pocket.itemImage.color = new Color(1, 1, 1, 1);
-            pocket.itemImage.sprite = item.sprite;
-            item.transform.SetParent(flashLightPocket.transform);
-            item.transform.position = flashLightPocket.transform.position;
-            item.transform.rotation = flashLightPocket.transform.rotation;
-        }
-        else if (equipSlot.item == null)
+        if (equipSlot.item == null)
         {
             equipSlot.item = item;
             equipSlot.itemImage.color = new Color(1, 1, 1, 1);

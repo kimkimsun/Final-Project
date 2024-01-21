@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public Image batteryCharge;
     public TextMeshProUGUI hpText;
     public Light flashlight;
+    public float battery = 60;
 
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
@@ -45,7 +46,6 @@ public class Player : MonoBehaviour
     private float maxBright = 10;
     private float minBattery = 0;
     private float maxBattery = 60;
-    private float battery = 60;
     private bool useing;
     private bool isRegulate;
     private bool isMonsterCheck;
@@ -162,22 +162,7 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    public void UseFlash()
-    {
-        useing = !useing;
-        if (useing)
-        {
-            StopCoroutine(plusBatteryCo);
-            StartCoroutine(minusBatteryCo);
-        }
-        else
-            StopFlash();
-    }
-    public void StopFlash()
-    {
-        StopCoroutine(minusBatteryCo);
-        StartCoroutine(plusBatteryCo);
-    }
+    
     private void Start()
     {
         playerMove = GetComponent<FirstPersonController>();
@@ -204,6 +189,58 @@ public class Player : MonoBehaviour
         minusTensionCo = MinusTensionCo(tensionDwon);
         plusTensionCo = PlusTensionCo(tensionUp);
         finalEvent.RegisterListener(() => { this.enabled = true; });
+    }
+    public void UseFlash()
+    {
+        Debug.Log("asdads" + useing);
+        useing = !useing;
+        if (useing)
+        {
+            Debug.Log("드드드");
+            StopCoroutine(plusBatteryCo);
+            StartCoroutine(minusBatteryCo);
+        }
+        else
+        {
+            Debug.Log("노노노");
+            StopFlash();
+        }
+    }
+    public void StopFlash()
+    {
+        Debug.Log("asdasd");
+        StopCoroutine(minusBatteryCo);
+        StartCoroutine(plusBatteryCo);
+    }
+    IEnumerator MinusBatteryCo()
+    {
+            Debug.Log("마이너스");
+        while (battery > minBattery)
+        {
+            flashlight.intensity = maxBright;
+            yield return new WaitForSeconds(1f);
+            batteryCharge.fillAmount = battery / 60f;
+            battery -= 1;
+            if (battery <= minBattery)
+            {
+                StopFlash();
+            }
+            yield return new WaitUntil(() => battery > minBattery);
+        }
+    }
+
+    IEnumerator PlusBatteryCo()
+    {
+        Debug.Log("플러스");
+        while (battery < maxBattery)
+        {
+            Debug.Log("플러스");
+            flashlight.intensity = minBright;
+            yield return new WaitForSeconds(0.6f);
+            batteryCharge.fillAmount = battery / 60f;
+            battery += 1;
+            yield return new WaitUntil(() => battery < maxBattery);
+        }
     }
     public IEnumerator MinusTensionCo(int damege)
     {
@@ -272,32 +309,5 @@ public class Player : MonoBehaviour
                 playerSM.SetState("Caught");
         }
     }
-    IEnumerator MinusBatteryCo()
-    {
-        while (battery > minBattery)
-        {
-            flashlight.intensity = maxBright;
-            yield return new WaitForSeconds(1f);
-            batteryCharge.fillAmount = battery / 60f;
-            battery -= 1;
-            if (battery <= minBattery)
-            {
-                StopFlash();
-            }
-            yield return new WaitUntil(() => battery > minBattery);
-        }
-    }
-
-    IEnumerator PlusBatteryCo()
-    {
-        while (battery < maxBattery)
-        {
-            flashlight.intensity = minBright;
-            yield return new WaitForSeconds(0.6f);
-            batteryCharge.fillAmount = battery / 60f;
-            battery += 1;
-            Debug.Log("플러스");
-            yield return new WaitUntil(() => battery < maxBattery);
-        }
-    }
+    
 }

@@ -237,3 +237,17 @@ public class HiRilAttackState : HiRilState
     }
     public override void Update() { }
 }
+public class HiRilFinalState : HiRilState
+{
+    public override void Enter()
+    {
+        owner.Animator.SetBool("isRun", true);
+    }
+    public override void Exit()
+    {
+    }
+    public override void Update() 
+    {
+        owner.Agent.SetDestination(GameManager.Instance.player.transform.position);
+    }
+}

@@ -22,12 +22,14 @@ public class HaiKen : Monster
     }
     protected override void Start()
     {
+        finalEvent.RegisterListener(() => { sm.SetState("Final"); });
         sm = new StateMachine<HaiKen>();
         sm.owner = this;
         sm.AddState("Idle", new HaiKenIdleState());
         sm.AddState("Run", new HaiKenRunState());
         sm.AddState("Stun", new HaiKenStunState());
         sm.AddState("Attack", new HaiKenAttackState());
+        sm.AddState("Final", new HaiKenFinalState());
         base.Start();
         animator.SetBool("isStart", true);
         agent.isStopped = true;

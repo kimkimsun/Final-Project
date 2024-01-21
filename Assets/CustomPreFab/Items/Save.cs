@@ -13,6 +13,7 @@ public class SaveData
     public int tension;
     public float stamina;
     public float time;
+    public float battery;
     public Vector3 playerPos;
     public Vector3 playerRot;
     public Vector3 hirilPos;
@@ -34,6 +35,7 @@ public class SaveData
         useItemCount = new int[player.quickSlot.slots.Length];
         useItemIndexArray = new int[player.quickSlot.slots.Length];
 
+        battery = player.battery;
         hp = player.Hp;
         tension = player.Tension;
         stamina = player.Stamina;
@@ -73,6 +75,7 @@ public class SaveData
         player.Hp = hp;
         player.Tension = tension;
         player.Stamina = stamina;
+        player.battery = battery;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
         GameManager.Instance.time = time;

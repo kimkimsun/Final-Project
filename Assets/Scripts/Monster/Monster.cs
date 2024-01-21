@@ -122,7 +122,7 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     {
         return (targetLayerMask & (1 << layerIndex)) != 0;
     }
-
+    
     protected void Stop()
     {
         agent.isStopped = true;
