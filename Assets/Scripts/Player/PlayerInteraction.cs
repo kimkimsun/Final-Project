@@ -39,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour
             else if (UIManager.Instance.UIStack.Count <= 0)
             {
                 pause.Raise();
-                Debug.Log("일시정지 누름");
+                UIManager.Instance.settingBox.SetActive(true);
             }
         }
     }

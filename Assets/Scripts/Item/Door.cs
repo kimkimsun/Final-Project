@@ -8,6 +8,7 @@ public class Door : MonoBehaviour, IInteraction
 {
 
     public string InteractionText => "open";
+    public AudioClip clip;
     public Transform nextPos;
     public Transform prevPos;
     private bool isOpen;
@@ -25,8 +26,9 @@ public class Door : MonoBehaviour, IInteraction
             isOpen = value;
             if( isOpen )
             {
-                GameManager.Instance.player.transform.position = nextPos.position;
                  StartCoroutine(OpenCo());
+                SoundManager.Instance.Play(clip, false);
+                GameManager.Instance.player.transform.position = nextPos.position;
             }
             else
             {
@@ -37,8 +39,9 @@ public class Door : MonoBehaviour, IInteraction
                 }
                 else
                 {
-                    GameManager.Instance.player.transform.position = prevPos.position;
                     StartCoroutine(OpenCo());
+                    SoundManager.Instance.Play(clip, false);
+                    GameManager.Instance.player.transform.position = prevPos.position;
                 }
             }
         }
@@ -57,7 +60,7 @@ public class Door : MonoBehaviour, IInteraction
         IsOpen = !IsOpen;
     }
 
-    IEnumerator OpenCo()
+    protected IEnumerator OpenCo()
     {
         float alpha = 1;
         UIManager.Instance.openUI.color = new Color(0,0,0,0.8f);
