@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SceneMove : MonoBehaviour, IPointerClickHandler
 {
     public AudioClip clip;
+    public int loadDataIndex;
     public string scenesname;
     public void OnPointerClick(PointerEventData eventData)
     {
