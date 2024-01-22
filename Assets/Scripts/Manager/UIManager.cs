@@ -11,6 +11,9 @@ public class UIManager : SingleTon<UIManager>
     public Image openUI;
     public Image escapeCircle;
     public Image saveUI;
+    public Image loadImage;
+    public Button loadButton;
+    public Button saveButton;
     public TextMeshProUGUI uiSettingText;
     public Animator tensionAni;
     public Animator hpAni;
@@ -19,4 +22,5 @@ public class UIManager : SingleTon<UIManager>
     public UseItemInfo useItemInfo;
     public Stack<UnityEngine.Object> UIStack = new Stack<UnityEngine.Object>();
     public List<FieldInfo> uiViewFieldList;
+
 }

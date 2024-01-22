@@ -6,9 +6,11 @@ using Cinemachine;
 
 public class GameManager : SingleTon<GameManager>
 {
-    private bool isStart;
 
+
+    private bool isStart;
     public float time;
+
     public GameEvent pauseEvent;
     public Player player;
     public HiRil hiril;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundManager : SingleTon<SoundManager>
 {
 
+    public AudioClip bgm;
     [SerializeField] private SoundComponent SoundPrefab;
     private Queue<SoundComponent> pool = new Queue<SoundComponent>();
 
@@ -13,6 +14,11 @@ public class SoundManager : SingleTon<SoundManager>
     {
         base.Awake();
         Init();
+    }
+
+    private void Start()
+    {
+        Play(bgm, true);
     }
 
     private void Init()

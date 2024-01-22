@@ -41,7 +41,12 @@ public class SaveData
         stamina = player.Stamina;
         playerPos = player.transform.position;
         playerRot = player.transform.rotation.eulerAngles;
+        hirilPos = hiril.transform.position;
+        hirilRot = hiril.transform.rotation.eulerAngles;
+        haikenPos = haiken.transform.position;
+        haikenRot = haiken.transform.rotation.eulerAngles;
         time = GameManager.Instance.time;
+
         if (player.equipInven.EquipSlot.item != null)
             equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
 
@@ -78,6 +83,10 @@ public class SaveData
         player.battery = battery;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
+        hiril.transform.position = hirilPos;
+        hiril.transform.eulerAngles = hirilRot;
+        haiken.transform.position = haikenPos;
+        haiken.transform.root.eulerAngles = haikenRot;
         GameManager.Instance.time = time;
         for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
         {
@@ -134,37 +143,37 @@ public class SaveData
             for (int i = 0; i < hairPinCount; i++)
                 player.quickSlot.hairPinSlot.items.Add(ItemManager.Instance.itemList[4/*헤어핀이 배열 몇번째에 위치하는지를 적는게 연산적으로 괜춘 json은 기획이라고 하셨으니 이렇게 해도 됨*/]);
         }
-        //useItemSlot = JsonUtility.FromJson<UseItemSlot>(save);
-        //hiril.transform.position = hirilPos;
-        //hiril.transform.eulerAngles = hirilRot;
-        //haiken.transform.position = haikenPos;
-        //haiken.transform.root.eulerAngles = haikenRot;
+
     }
 }
 
 public class Save : MonoBehaviour, IInteraction
 {
+    public TextMeshProUGUI settingUI;
+    public static Save Instance;
+
     SaveData saveData;
     UseItemSlot[] useItemSlot;
-    public Player player;
     HiRil hiril;
     HaiKen haiken;
+    Player player;
+
     public int fileIndex;
     string path;
     string fileName;
-    public static Save Instance;
-    public TextMeshProUGUI settingUI;
+
     public string InteractionText => "Save";
+
     public void Awake()
     {
         Instance = this;
     }
+   
     private void Start()
     {
         player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
         haiken = GameManager.Instance.haiken;
-        useItemSlot = GameManager.Instance.player.quickSlot.slots;
 
         path = "Assets/";
         fileName = "SaveData.txt";
@@ -214,4 +223,10 @@ public class Save : MonoBehaviour, IInteraction
     {
         LoadData(fileIndex);
     }
+
+    public void MissingLoadFile()
+    {
+        
+    }
+
 }
