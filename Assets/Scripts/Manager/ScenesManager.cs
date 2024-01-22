@@ -1,9 +1,11 @@
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class ScenesManager : SingleTon<ScenesManager> 
+public class ScenesManager : SingleTon<ScenesManager>
 {
+    public int loadSceneindex = 1;
     public GameObject UICanvas;
     public CinemachineVirtualCamera EndVC;
     public Light EndLight;
@@ -31,7 +33,7 @@ public class ScenesManager : SingleTon<ScenesManager>
     {
         float alpha = 1f;
         EndLight.intensity = 10;
-        while(alpha >= 0)
+        while (alpha >= 0)
         {
             UIManager.Instance.openUI.color = new Color(0, 0, 0, alpha);
             yield return new WaitForSeconds(0.1f);
@@ -47,14 +49,10 @@ public class ScenesManager : SingleTon<ScenesManager>
     }
     public void Exit()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
                 Application.Quit();
-        #endif
-    }
-    public void LoadScene(int index)
-    {
-        Save.Instance.LoadData(index);
+#endif
     }
 }
