@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class SaveData
@@ -159,8 +160,8 @@ public class Save : MonoBehaviour, IInteraction
     Player player;
 
     public int fileIndex;
-    string path;
-    string fileName;
+    string path = "Assets/";
+    string fileName = "SaveData.txt";
 
     public string InteractionText => "Save";
 
@@ -171,12 +172,7 @@ public class Save : MonoBehaviour, IInteraction
    
     private void Start()
     {
-        player = GameManager.Instance.player;
-        hiril = GameManager.Instance.hiril;
-        haiken = GameManager.Instance.haiken;
-
-        path = "Assets/";
-        fileName = "SaveData.txt";
+        
     }
 
     public void SaveData(int fileIndex)
@@ -198,8 +194,11 @@ public class Save : MonoBehaviour, IInteraction
 
     public void LoadData(int fileIndex)
     {
+        SceneManager.LoadScene("MainGame");
         fileName = fileName.Insert(8, fileIndex.ToString());
-        Debug.Log("·Îµå");
+        player = GameManager.Instance.player;
+        hiril = GameManager.Instance.hiril;
+        haiken = GameManager.Instance.haiken;
         if (File.Exists(path + fileName))
         {
             StreamReader sr = new StreamReader(path + fileName);

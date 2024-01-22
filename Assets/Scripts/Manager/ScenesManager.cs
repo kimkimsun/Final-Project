@@ -53,5 +53,8 @@ public class ScenesManager : SingleTon<ScenesManager>
                 Application.Quit();
         #endif
     }
-
+    public void LoadScene(int index)
+    {
+        Save.Instance.LoadData(index);
+    }
 }
