@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 public abstract class EquipItemStrategy : ItemStrategy
 {
@@ -85,6 +87,7 @@ public class MaskItemStrategy : EquipItemStrategy
 public class NightVisionStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
+    PostProcessProfile profile;
     public NightVisionStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
     {
         this.equip = equipmentItem;
@@ -95,14 +98,15 @@ public class NightVisionStrategy : EquipItemStrategy
     {
         explanationText = "이름 : 야간투시경 볼 수 있는 시야범위가 넓어집니다.";
         equip.ExplanationText = this.explanationText;
+        profile = Camera.main.GetComponent<PostProcessVolume>().profile;
     }
     public override void Use()
     {
-        GameManager.Instance.player.MonsterLookZone = 5;
+        profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.4f };
     }
     public override void Exit()
     {
-        GameManager.Instance.player.MonsterLookZone = 10;
+        profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.7f };
     }
 }
 public enum EQUIPITEM_TYPE

@@ -18,6 +18,4 @@ public class SceneMove : MonoBehaviour, IPointerClickHandler
     {
         SceneManager.LoadScene(scenesname);
     }
-
 }
-
