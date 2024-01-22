@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         set
         {
             hp = value;
-            hpText.text = "Hp " + hp.ToString();
+            hpText.text = hp.ToString();
             if (hp <= zero)
             {
                 hp = zero;

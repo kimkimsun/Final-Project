@@ -212,6 +212,7 @@ public class KeyItemStrategy : UseItemStrategy
 {
     static bool isFirstKey;
     BoxCollider itemCollider;
+    Animator keyani;
     public KeyItemStrategy(UseItem useItem) : base(useItem) { Init(); }
 
     public override void Init()
@@ -239,8 +240,6 @@ public class KeyItemStrategy : UseItemStrategy
 public class HairPinItemStrategy : UseItemStrategy
 {
     static bool isFirstAttackItem;
-    Rigidbody monsterRb;
-    Monster monster;
     Player player = GameManager.Instance.player;
     public HairPinItemStrategy(UseItem useItem) : base(useItem) { }
 
@@ -331,6 +330,7 @@ public class UseItem : Item
 {
     public UseItemStrategy UseItemstrategy;
     public USEITEM_TYPE useItem_Type;
+
     public GameObject SponPoint;
     public Image escapeCircle;
     private void Start()
