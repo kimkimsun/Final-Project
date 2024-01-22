@@ -211,11 +211,13 @@ public class StaminaBuffItemStrategy : UseItemStrategy
 public class KeyItemStrategy : UseItemStrategy
 {
     static bool isFirstKey;
+    BoxCollider itemCollider;
     public KeyItemStrategy(UseItem useItem) : base(useItem) { Init(); }
 
     public override void Init()
     {
         isFirstKey = true;
+        itemCollider = item.GetComponent<BoxCollider>();
     }
     public override void PrintInfo()
     {
@@ -228,12 +230,9 @@ public class KeyItemStrategy : UseItemStrategy
     public override void Use()
     {
         base.Use();
-        if (isFirstKey)
-        {
-            UIManager.Instance.useItemInfo.SetInfo(useItem);
-            UIManager.Instance.useItemInfo.gameObject.SetActive(true);
-            isFirstKey = false;
-        }
+        itemCollider.size = new Vector3 (3, 3, 3);
+
+
     }
 }
 
