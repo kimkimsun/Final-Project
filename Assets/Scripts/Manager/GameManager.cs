@@ -38,6 +38,7 @@ public class GameManager : SingleTon<GameManager>
     {
         gameStartCo = GameStartCo();
         GameStart();
+        Debug.Log(Save.fileIndex);
         if(Save.fileIndex != 0)
             Save.Instance.LoadData(Save.fileIndex);
     }

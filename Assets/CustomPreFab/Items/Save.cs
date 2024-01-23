@@ -24,18 +24,14 @@ public class SaveData
     public Vector3 haikenPos;
     public Vector3 haikenRot;
     public UseItemSlot[] save;
-    public int[] equipIndexArray;
-    public int[] useItemCount;
-    public int[] useItemIndexArray;
+    public int[] equipIndexArray = new int[GameManager.Instance.player.equipInven.EiSlots.Length];
+    public int[] useItemCount = new int[GameManager.Instance.player.quickSlot.slots.Length];
+    public int[] useItemIndexArray = new int[GameManager.Instance.player.quickSlot.slots.Length];
     public int equipInvenIdIndex;
     public int hairPinCount;
     public string typeName;
     public SaveData(Player player, HiRil hiril, HaiKen haiken)
     {
-        equipIndexArray = new int[player.equipInven.EiSlots.Length];
-        useItemCount = new int[player.quickSlot.slots.Length];
-        useItemIndexArray = new int[player.quickSlot.slots.Length];
-
         battery = player.battery;
         hp = player.Hp;
         tension = player.Tension;
@@ -161,7 +157,6 @@ public class Save : MonoBehaviour, IInteraction
     HiRil hiril;
     HaiKen haiken;
     Player player;
-
     public static int fileIndex;
     string path = "Assets/";
     string fileName = "SaveData.txt";
@@ -175,6 +170,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void SaveData(int fileIndex)
     {
+        
         settingUI.text = GameManager.Instance.time.ToString("N2");
         fileName = fileName.Insert(8,fileIndex.ToString());
         StreamWriter sw;
@@ -192,10 +188,10 @@ public class Save : MonoBehaviour, IInteraction
 
     public void LoadData(int fileIndex)
     {
-        fileName = fileName.Insert(8, fileIndex.ToString());
-        player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
         haiken = GameManager.Instance.haiken;
+        player = GameManager.Instance.player;
+        fileName = fileName.Insert(8, fileIndex.ToString());
         if (File.Exists(path + fileName))
         {
             StreamReader sr = new StreamReader(path + fileName);
@@ -212,6 +208,9 @@ public class Save : MonoBehaviour, IInteraction
     }
     public void SaveButton()
     {
+        hiril = GameManager.Instance.hiril;
+        haiken = GameManager.Instance.haiken;
+        player = GameManager.Instance.player;
         saveData = new SaveData(player, hiril, haiken);
         SaveData(fileIndex);
     }
