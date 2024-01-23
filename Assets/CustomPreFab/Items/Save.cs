@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [System.Serializable]
 public class SaveData
@@ -114,12 +116,15 @@ public class SaveData
                     {
                         for (int k = 0; k < useItemCount[i]; k++)
                         {
+                            player.quickSlot.slots[i].CurItem = 0;
                             Item copyItem = ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
                             player.quickSlot.slots[i].items.Add(copyItem);
                             player.quickSlot.slots[i].items[k].Init();
                             player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(player.itemBox.transform);
                             player.quickSlot.slots[i].items[k].gameObject.transform.position = player.itemBox.transform.position;
                             player.quickSlot.slots[i].items[k].gameObject.SetActive(false);
+                            player.quickSlot.slots[i].CurItem++;
+                            player.quickSlot.slots[i].itemImage.sprite = player.quickSlot.slots[i].items[k].sprite;
                         }
                     }
                 }
@@ -130,7 +135,7 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-                player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
+                player.equipInven.EquipSlot.itemImage.sprite = ItemManager.Instance.itemList[i].sprite;
                 player.equipInven.EquipSlot.item.Init();
                 player.equipInven.EquipSlot.item.Use();
             }

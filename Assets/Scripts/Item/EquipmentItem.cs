@@ -109,6 +109,7 @@ public class NightVisionStrategy : EquipItemStrategy
         profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.7f };
     }
 }
+
 public enum EQUIPITEM_TYPE
 {
     OINTMENT,
