@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PopUpOff : MonoBehaviour, IPointerClickHandler
 {
     public AudioClip clip;
     public GameObject popUp;
+    public Button button;
+    private void Start()
+    {
+        button = GetComponent<Button>();
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(eventData.position);
         SoundManager.Instance.Play(clip,false);
         if (gameObject.name == "ExitButton")
             GameExit();
