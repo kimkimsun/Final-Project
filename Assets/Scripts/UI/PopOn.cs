@@ -15,12 +15,11 @@ public class PopUpOn : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(()=> { POPUp(); }) ;
+        button.onClick.AddListener(POPUp) ;
     }
 
     public void POPUp()
     {
-        Debug.Log("Å¬¸¯");
         SoundManager.Instance.Play(clip, false);
         popUp.SetActive(true);
     }
