@@ -32,7 +32,7 @@ public class SaveData
     public string typeName;
     public SaveData(Player player, HiRil hiril, HaiKen haiken)
     {
-        battery = player.battery;
+        battery = player.Battery;
         hp = player.Hp;
         tension = player.Tension;
         stamina = player.Stamina;
@@ -77,7 +77,7 @@ public class SaveData
         player.Hp = hp;
         player.Tension = tension;
         player.Stamina = stamina;
-        player.battery = battery;
+        player.Battery = battery;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
         hiril.transform.position = hirilPos;
