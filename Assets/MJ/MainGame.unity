@@ -4598,6 +4598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 1010353713}
+  popOffButton: {fileID: 213669386}
 --- !u!114 &213669386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14432,7 +14433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -30297,6 +30298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 217318955}
+  popOffButton: {fileID: 0}
 --- !u!114 &1241189521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38533,6 +38535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 1010353713}
+  button: {fileID: 1540187750}
 --- !u!114 &1540187750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46528,6 +46531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 0}
+  popOffButton: {fileID: 1804189495}
 --- !u!1001 &1806078794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51396,6 +51400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 1367588956}
+  popOffButton: {fileID: 2010493328}
 --- !u!114 &2010493328
 MonoBehaviour:
   m_ObjectHideFlags: 0
