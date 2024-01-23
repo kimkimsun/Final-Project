@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class PopUpOn : MonoBehaviour
 {
     public AudioClip clip;
@@ -19,6 +20,7 @@ public class PopUpOn : MonoBehaviour
 
     public void POPUp()
     {
+        Debug.Log("Å¬¸¯");
         SoundManager.Instance.Play(clip, false);
         popUp.SetActive(true);
     }
