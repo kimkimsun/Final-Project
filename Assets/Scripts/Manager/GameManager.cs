@@ -6,8 +6,6 @@ using Cinemachine;
 
 public class GameManager : SingleTon<GameManager>
 {
-
-
     private bool isStart;
     public float time;
 
@@ -40,6 +38,8 @@ public class GameManager : SingleTon<GameManager>
     {
         gameStartCo = GameStartCo();
         GameStart();
+        Debug.Log("게임시작");
+        Debug.Log(Save.Instance.fileIndex);
     }
     private void OnEnable()
     {

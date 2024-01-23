@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09279401, g: 0.11820955, b: 0.15350309, a: 1}
+  m_IndirectSpecularColor: {r: 0.09279574, g: 0.11821202, b: 0.15350479, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14793,6 +14793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950f62d7e88e9fe40a685f5af501e9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadSceneindex: 1
   UICanvas: {fileID: 1679636674}
   EndVC: {fileID: 615028160}
   EndLight: {fileID: 1018073622}
@@ -20955,7 +20956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1236951038057342804, guid: 71d66c9ec31659b4aa6735c8ef48b6ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -59.352
+      value: -63.14
       objectReference: {fileID: 0}
     - target: {fileID: 1236951038057342804, guid: 71d66c9ec31659b4aa6735c8ef48b6ba, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21002,6 +21003,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71d66c9ec31659b4aa6735c8ef48b6ba, type: 3}
+--- !u!114 &824342690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5511167537828667338, guid: 71d66c9ec31659b4aa6735c8ef48b6ba, type: 3}
+  m_PrefabInstance: {fileID: 824342689}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f4e8c5df67692646b86dcb857677613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &826016866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26472,7 +26484,7 @@ MonoBehaviour:
   time: 0
   pauseEvent: {fileID: 11400000, guid: 8b5a11c78b0c3dc4388261bfcd1b93df, type: 2}
   player: {fileID: 76312774}
-  hiril: {fileID: 0}
+  hiril: {fileID: 824342690}
   haiken: {fileID: 0}
 --- !u!4 &1053888786
 Transform:
@@ -46215,6 +46227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: 0}
+  loadDataIndex: 0
   scenesname: 
 --- !u!114 &1804189495
 MonoBehaviour:

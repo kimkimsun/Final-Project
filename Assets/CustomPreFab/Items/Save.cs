@@ -7,6 +7,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public class TempSaveData
+{
+
+}
+
 [System.Serializable]
 public class SaveData
 {
@@ -105,7 +110,6 @@ public class SaveData
         {
             GameObject.Destroy(player.itemBox.transform.GetChild(i).gameObject);
         }
-
         for (int i = 0; i < player.quickSlot.slots.Length; i++)
         {
             player.quickSlot.slots[i].items.Clear();
