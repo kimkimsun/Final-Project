@@ -36,7 +36,7 @@ public class SaveData
         useItemCount = new int[player.quickSlot.slots.Length];
         useItemIndexArray = new int[player.quickSlot.slots.Length];
 
-        battery = player.battery;
+        battery = player.Battery;
         hp = player.Hp;
         tension = player.Tension;
         stamina = player.Stamina;
@@ -81,7 +81,7 @@ public class SaveData
         player.Hp = hp;
         player.Tension = tension;
         player.Stamina = stamina;
-        player.battery = battery;
+        player.Battery = battery;
         player.transform.position = playerPos;
         player.transform.eulerAngles = playerRot;
         hiril.transform.position = hirilPos;

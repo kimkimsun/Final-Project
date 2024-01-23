@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     public Image batteryCharge;
     public TextMeshProUGUI hpText;
     public Light flashlight;
-    public float battery = 60;
 
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
@@ -42,6 +41,7 @@ public class Player : MonoBehaviour
     private int zero = 0;
     private int finalKey = 5;
     private int monsterLookZone;
+    private float battery = 60;
     private float minBright = 0;
     private float maxBright = 10;
     private float minBattery = 0;
@@ -85,6 +85,19 @@ public class Player : MonoBehaviour
             exitItemCount = value;
         }
     }
+    public float Battery
+    {
+        get => battery;
+        set
+        {
+            battery = value;
+            if(battery > maxBattery)
+                battery = maxBattery;
+            if(battery < minBattery)
+                battery = minBattery;
+        }
+    }
+
     public float Stamina
     {
         get { return stamina; }
@@ -165,6 +178,7 @@ public class Player : MonoBehaviour
     
     private void Start()
     {
+        flashlight = GetComponentInChildren<Light>();
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
@@ -177,7 +191,8 @@ public class Player : MonoBehaviour
         playerSM.AddState("Moribund", new MoribundState());
         playerSM.AddState("Caught", new CaughtState());
         playerSM.SetState("Idle");
-        
+
+        flashlight.intensity = 0;
         Hp = max;
         Tension = max;
         Stamina = max;
@@ -215,7 +230,7 @@ public class Player : MonoBehaviour
             flashlight.intensity = maxBright;
             yield return new WaitForSeconds(1f);
             batteryCharge.fillAmount = battery / 60f;
-            battery -= 1;
+            battery -= 1f;
             if (battery <= minBattery)
             {
                 StopFlash();
@@ -231,7 +246,7 @@ public class Player : MonoBehaviour
             flashlight.intensity = minBright;
             yield return new WaitForSeconds(0.6f);
             batteryCharge.fillAmount = battery / 60f;
-            battery += 1;
+            battery += 1f;
             yield return new WaitUntil(() => battery < maxBattery);
         }
     }
