@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class SceneMove : MonoBehaviour, IPointerClickHandler
+public class SceneMove : MonoBehaviour
 {
     public AudioClip clip;
-    public int loadDataIndex;
     public string scenesname;
-    public void OnPointerClick(PointerEventData eventData)
+    public Button button;
+
+    private void Start()
     {
-        //SoundManager.instance.SFXPlay("Button", clip);
-        GameScenes(scenesname);
+        button.onClick.AddListener(() => 
+        {
+            SoundManager.Instance.Play(clip, false);
+            SceneManager.LoadScene(scenesname); });
     }
 
-    public void GameScenes(string scenesname)
-    {
-        SceneManager.LoadScene(scenesname);
-    }
 }

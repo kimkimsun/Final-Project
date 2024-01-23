@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 463238880}
+  popOffButton: {fileID: 0}
 --- !u!114 &45596306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1562,6 +1563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 463238880}
+  button: {fileID: 0}
 --- !u!1 &760894199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,6 +2533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 1528041114}
+  button: {fileID: 0}
 --- !u!1 &1191438018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,6 +2999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 1528041114}
+  popOffButton: {fileID: 0}
 --- !u!1 &1250969455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3389,6 +3393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
   popUp: {fileID: 0}
+  popOffButton: {fileID: 0}
 --- !u!1 &1500876942
 GameObject:
   m_ObjectHideFlags: 0
@@ -4025,8 +4030,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: dd532fdb2a61e4cc5bc727f3b32a69a8, type: 3}
-  loadDataIndex: 0
   scenesname: MainGame
+  button: {fileID: 1671542670}
 --- !u!1 &1699973453
 GameObject:
   m_ObjectHideFlags: 0
