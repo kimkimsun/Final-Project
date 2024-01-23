@@ -49,7 +49,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 pause.Raise();
                 UIManager.Instance.settingBox.SetActive(true);
-                UIManager.Instance.UIStack.Push(UIManager.Instance.settingBox);
+                //UIManager.Instance.UIStack.Push(UIManager.Instance.settingBox);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
