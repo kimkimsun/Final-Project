@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class PopUpOn : MonoBehaviour, IPointerClickHandler
+public class PopUpOn : MonoBehaviour
 {
     public AudioClip clip;
     public GameObject popUp;
-    public void OnPointerClick(PointerEventData eventData)
+    public Button button;
+
+    private void Start()
     {
-        SoundManager.Instance.Play(clip,false);
-        SetOnPopUp(popUp);
+        button = GetComponent<Button>();
+        button.onClick.AddListener(()=> { POPUp(); }) ;
     }
 
-    public void SetOnPopUp(GameObject popUpName)
+    public void POPUp()
     {
+        SoundManager.Instance.Play(clip, false);
         popUp.SetActive(true);
     }
+
 }

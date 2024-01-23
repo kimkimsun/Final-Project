@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class PopUpOff : MonoBehaviour, IPointerClickHandler
+public class PopUpOff : MonoBehaviour
 {
     public AudioClip clip;
     public GameObject popUp;
-    public void OnPointerClick(PointerEventData eventData)
+    public Button popOffButton;
+
+    private void Start()
+    {
+        popOffButton = GetComponent<Button>();
+        popOffButton.onClick.AddListener(() => { Off();}) ;
+    }
+    public void Off()
     {
         SoundManager.Instance.Play(clip,false);
         if (gameObject.name == "ExitButton")
             GameExit();
         else
-            SetOffPopUp(popUp);
-    }
-    public void SetOffPopUp(GameObject popUp)
-    {
-        popUp.SetActive(false);
+            popUp.SetActive(false);
     }
 
     public void GameExit()

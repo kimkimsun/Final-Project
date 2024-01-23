@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -15,11 +16,18 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
+
+
         Stop();
-        SwitchItem();
-        OpenInven();
-        CurEquipItem();
-        UseFlash();
+
+        if (EventSystem.current.IsPointerOverGameObject() == false)
+        {
+            SwitchItem();
+            OpenInven();
+            CurEquipItem();
+            UseFlash();
+            
+        }
     }
     public void UseFlash()
     {
