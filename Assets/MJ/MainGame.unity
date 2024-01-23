@@ -46404,7 +46404,7 @@ GameObject:
   - component: {fileID: 1804189497}
   - component: {fileID: 1804189496}
   - component: {fileID: 1804189495}
-  - component: {fileID: 1804189494}
+  - component: {fileID: 1804189498}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -46432,21 +46432,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -72}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1804189494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804189492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610f9370d1ace4b4d9215cfd8193383a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
-  loadDataIndex: 0
-  scenesname: 
 --- !u!114 &1804189495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46529,6 +46514,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804189492}
   m_CullTransparentMesh: 1
+--- !u!114 &1804189498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804189492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297afeb47339c9340980ba68f101539f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 4702b8ef3bbbf2a4c9c8ab3f87b8bfbe, type: 3}
+  popUp: {fileID: 0}
 --- !u!1001 &1806078794
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -26,7 +26,6 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             player.UseFlash();
     }
-    
     public void Stop()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
