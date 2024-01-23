@@ -10,6 +10,7 @@ public class PopUpOff : MonoBehaviour, IPointerClickHandler
     public GameObject popUp;
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log(eventData.position);
         SoundManager.Instance.Play(clip,false);
         if (gameObject.name == "ExitButton")
             GameExit();
