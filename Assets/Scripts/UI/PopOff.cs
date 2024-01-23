@@ -16,7 +16,7 @@ public class PopUpOff : MonoBehaviour
         popOffButton = GetComponent<Button>();
         popOffButton.onClick.AddListener(() => { Off();}) ;
     }
-    public void Off()
+     public void Off()
     {
         SoundManager.Instance.Play(clip,false);
         if (gameObject.name == "ExitButton")
