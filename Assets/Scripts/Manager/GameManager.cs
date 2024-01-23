@@ -38,8 +38,6 @@ public class GameManager : SingleTon<GameManager>
     {
         gameStartCo = GameStartCo();
         GameStart();
-        Debug.Log("게임시작");
-        Debug.Log(Save.Instance.fileIndex);
     }
     private void OnEnable()
     {

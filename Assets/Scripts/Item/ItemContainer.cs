@@ -8,10 +8,12 @@ public class ItemContainer : MonoBehaviour, IInteraction
     public string InteractionText => "open";
     [SerializeField] private Animator ContainerAni;
     private bool isOpen;
+    private BoxCollider boxCollider;
 
     private void Start()
     {
         isOpen = false;
+        boxCollider = GetComponent<BoxCollider>();
     }
     public bool IsOpen
     {
@@ -23,10 +25,12 @@ public class ItemContainer : MonoBehaviour, IInteraction
             if (isOpen)
             {
                 ContainerAni.SetBool("IsOpen", true);
+                boxCollider.enabled = false;
             }
             else
             {
                 ContainerAni.SetBool("IsOpen", false);
+                boxCollider.enabled = true;
             }
         }
 
@@ -36,6 +40,7 @@ public class ItemContainer : MonoBehaviour, IInteraction
 
     public void Active()
     {
+        
         IsOpen = !IsOpen;
     }
 

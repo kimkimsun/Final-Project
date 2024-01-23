@@ -31,6 +31,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             if (UIManager.Instance.UIStack.Count > 0)
             {
                 UIManager.Instance.UIStack.Pop().GameObject().SetActive(false);
@@ -40,8 +42,12 @@ public class PlayerInteraction : MonoBehaviour
             {
                 pause.Raise();
                 UIManager.Instance.settingBox.SetActive(true);
+                UIManager.Instance.UIStack.Push(UIManager.Instance.settingBox);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
+
     }
     public void SwitchItem()
     {

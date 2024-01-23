@@ -192,29 +192,24 @@ public class Player : MonoBehaviour
     }
     public void UseFlash()
     {
-        Debug.Log("asdads" + useing);
         useing = !useing;
         if (useing)
         {
-            Debug.Log("드드드");
             StopCoroutine(plusBatteryCo);
             StartCoroutine(minusBatteryCo);
         }
         else
         {
-            Debug.Log("노노노");
             StopFlash();
         }
     }
     public void StopFlash()
     {
-        Debug.Log("asdasd");
         StopCoroutine(minusBatteryCo);
         StartCoroutine(plusBatteryCo);
     }
     IEnumerator MinusBatteryCo()
     {
-            Debug.Log("마이너스");
         while (battery > minBattery)
         {
             flashlight.intensity = maxBright;
@@ -231,10 +226,8 @@ public class Player : MonoBehaviour
 
     IEnumerator PlusBatteryCo()
     {
-        Debug.Log("플러스");
         while (battery < maxBattery)
         {
-            Debug.Log("플러스");
             flashlight.intensity = minBright;
             yield return new WaitForSeconds(0.6f);
             batteryCharge.fillAmount = battery / 60f;
@@ -256,7 +249,6 @@ public class Player : MonoBehaviour
         isRegulate = false;
         while (Tension < max)
         {
-            Debug.Log("들어옴?");
             yield return new WaitForSeconds(5);
             Tension += tensionUp;
             yield return new WaitUntil(() => Tension < 100);
@@ -269,7 +261,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.M))
-            Debug.Log("텐션임" + tension);
         playerSM.curState.Update();
         Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
@@ -281,14 +272,12 @@ public class Player : MonoBehaviour
                 isMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
             if (isMonsterCheck && !isRegulate)
             {
-                Debug.Log("텐션 내려감");
                 StopCoroutine(plusTensionCo);
                 StartCoroutine(minusTensionCo);
                 isRegulate = true;
             }
             else if (!isMonsterCheck && isRegulate)
             {
-                Debug.Log("텐션 올라가");
                 StopCoroutine(minusTensionCo);
                 StartCoroutine(plusTensionCo);
                 isRegulate = false;
