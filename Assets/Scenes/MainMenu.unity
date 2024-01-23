@@ -2162,7 +2162,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1042604744}
         m_TargetAssemblyTypeName: Save, Assembly-CSharp
-        m_MethodName: LoadButton
+        m_MethodName: LoadButton2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2223,7 +2223,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 0}
-  fileIndex: 2
 --- !u!1 &1065940996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2617,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1191438023}
         m_TargetAssemblyTypeName: Save, Assembly-CSharp
-        m_MethodName: LoadButton
+        m_MethodName: LoadButton3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2679,7 +2678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 0}
-  fileIndex: 3
 --- !u!1 &1200342660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,7 +2764,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1200342665}
         m_TargetAssemblyTypeName: Save, Assembly-CSharp
-        m_MethodName: LoadButton
+        m_MethodName: LoadButton1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2827,7 +2825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 0}
-  fileIndex: 1
 --- !u!1 &1214416230
 GameObject:
   m_ObjectHideFlags: 0

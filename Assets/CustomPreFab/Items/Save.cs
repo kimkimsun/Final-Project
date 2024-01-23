@@ -7,11 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TempSaveData
-{
-
-}
-
 [System.Serializable]
 public class SaveData
 {
@@ -33,8 +28,6 @@ public class SaveData
     public int equipInvenIdIndex;
     public int hairPinCount;
     public string typeName;
-
-
     public SaveData(Player player, HiRil hiril, HaiKen haiken)
     {
         equipIndexArray = new int[player.equipInven.EiSlots.Length];
@@ -163,7 +156,7 @@ public class Save : MonoBehaviour, IInteraction
     HaiKen haiken;
     Player player;
 
-    public int fileIndex;
+    public static int fileIndex;
     string path = "Assets/";
     string fileName = "SaveData.txt";
 
@@ -172,11 +165,6 @@ public class Save : MonoBehaviour, IInteraction
     public void Awake()
     {
         Instance = this;
-    }
-   
-    private void Start()
-    {
-        
     }
 
     public void SaveData(int fileIndex)
@@ -198,7 +186,6 @@ public class Save : MonoBehaviour, IInteraction
 
     public void LoadData(int fileIndex)
     {
-        SceneManager.LoadScene("MainGame");
         fileName = fileName.Insert(8, fileIndex.ToString());
         player = GameManager.Instance.player;
         hiril = GameManager.Instance.hiril;
@@ -222,14 +209,19 @@ public class Save : MonoBehaviour, IInteraction
         saveData = new SaveData(player, hiril, haiken);
         SaveData(fileIndex);
     }
-    public void LoadButton()
+    public void LoadButton1()
     {
-        LoadData(fileIndex);
+        SceneManager.LoadScene("MainGame");
+        fileIndex = 1;
     }
-
-    public void MissingLoadFile()
+    public void LoadButton2()
     {
-        
+        SceneManager.LoadScene("MainGame");
+        fileIndex = 2;
     }
-
+    public void LoadButton3()
+    {
+        SceneManager.LoadScene("MainGame");
+        fileIndex = 3;
+    }
 }

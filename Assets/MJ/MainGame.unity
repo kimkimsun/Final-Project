@@ -8543,7 +8543,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 1410514222}
-  fileIndex: 1
 --- !u!1001 &383721897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29793,7 +29792,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 808381852}
-  fileIndex: 2
 --- !u!1001 &1195919090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36154,7 +36152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingUI: {fileID: 1516680127}
-  fileIndex: 3
 --- !u!1 &1446266675
 GameObject:
   m_ObjectHideFlags: 0
