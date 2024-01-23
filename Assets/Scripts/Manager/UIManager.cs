@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : SingleTon<UIManager>
 {
-    private Type pType;
     public Image openUI;
     public Image escapeCircle;
     public Image saveUI;
