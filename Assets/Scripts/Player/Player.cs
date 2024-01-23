@@ -210,6 +210,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator MinusBatteryCo()
     {
+        Debug.Log("마이너스");
         while (battery > minBattery)
         {
             flashlight.intensity = maxBright;
@@ -226,6 +227,7 @@ public class Player : MonoBehaviour
 
     IEnumerator PlusBatteryCo()
     {
+        Debug.Log("플러스");
         while (battery < maxBattery)
         {
             flashlight.intensity = minBright;

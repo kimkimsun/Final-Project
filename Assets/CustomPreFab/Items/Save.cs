@@ -130,6 +130,7 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
+                player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
                 player.equipInven.EquipSlot.item.Init();
                 player.equipInven.EquipSlot.item.Use();
             }

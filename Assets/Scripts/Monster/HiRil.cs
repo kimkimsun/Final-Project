@@ -52,12 +52,15 @@ public class HiRil : Monster
         }
         else if (playerLookCol.Length > 0 && !isStun)
         {
-            Debug.Log("¸¸³µ´Ù");
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
-            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.blue);
-            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
+            Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.red);
+            if (Physics.Raycast(transform.position, direction+ new Vector3(0,-3,0), out hit, maxDistance))
+            {
+                Debug.Log(hit.collider.gameObject.name);
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
+                Debug.Log("TTTTTTTTT" + isPlayerCheck);
+            }
             if (isPlayerCheck && sm.curState is not HiRilRunState && !isStun)
                 sm.SetState("Run");
             else if (!isPlayerCheck && !isStun)
