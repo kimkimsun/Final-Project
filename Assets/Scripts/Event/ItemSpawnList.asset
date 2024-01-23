@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ItemSpawnList
   m_EditorClassIdentifier: 
   spawnList:
-  - {fileID: 5350933117340624716, guid: 5f3515b718798b9448fb09ff919774b1, type: 3}
-  - {fileID: 4711982814175992814, guid: a756916de761bcc458814200dea86789, type: 3}
-  - {fileID: -4986578476687819680, guid: 83f937296713b824a98df36961adf542, type: 3}
-  - {fileID: 4007594074607397530, guid: 29546555c0994b941ab0bdd458b6ecaa, type: 3}
-  - {fileID: -1537795151357597090, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
+  - {fileID: 5063152448436179104, guid: 56859c63acc20fe47aa0a0bbc61f4984, type: 3}
   - {fileID: 8241456922280165287, guid: 6bdab38c1cc3e1e42a80730799e91a1d, type: 3}
+  - {fileID: 8283027979062732667, guid: 09db9ea8cde56844287e21c4c9fddcb0, type: 3}
+  - {fileID: 373421300784311289, guid: 4050562126d44804eb4bf9fdb6f26d2a, type: 3}
+  - {fileID: 6668565894413414124, guid: 93b96abab8458b9408c6de1100712164, type: 3}
+  - {fileID: 7755036415787981819, guid: 526c1c44fb92b034f9a8f34284bbdcec, type: 3}
