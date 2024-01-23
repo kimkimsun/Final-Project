@@ -5,13 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PopUpOff : MonoBehaviour, IPointerClickHandler
+public class PopUpOff : MonoBehaviour
 {
     public AudioClip clip;
     public GameObject popUp;
     public Button popOffButton;
 
-     public void Off()
+    private void Start()
+    {
+        popOffButton.onClick.AddListener(Off);
+    }
+
+    public void Off()
     {
         SoundManager.Instance.Play(clip,false);
         if (gameObject.name == "ExitButton")
@@ -27,10 +32,5 @@ public class PopUpOff : MonoBehaviour, IPointerClickHandler
 #else
         Application.Quit();
 #endif
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("´­¸®´Ï?");
     }
 }
