@@ -21,5 +21,4 @@ public class UIManager : SingleTon<UIManager>
     public UseItemInfo useItemInfo;
     public Stack<UnityEngine.Object> UIStack = new Stack<UnityEngine.Object>();
     public List<FieldInfo> uiViewFieldList;
-
 }

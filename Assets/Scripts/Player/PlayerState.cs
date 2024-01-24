@@ -87,7 +87,6 @@ public class MoribundState : PlayerState // ºó»ç »óÅÂ
         player.playerMove.MoveSpeed = 1.0f;
         player.playerMove.SprintSpeed = 3.2f;
         player.StartCoroutine(minusHpCo);
-        //°¡»Û ¼û »ç¿îµå
     }
 
     public override void Exit()

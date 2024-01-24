@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using System;
 public class InteractionAim : MonoBehaviour
-{
+{ 
     [SerializeField] private LayerMask monsterLayerMask;
     private Vector3 screenCenter;
     private int maxDistance;

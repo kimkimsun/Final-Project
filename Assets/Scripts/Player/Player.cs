@@ -31,15 +31,16 @@ public class Player : MonoBehaviour
     [SerializeField] private int hp;
     [SerializeField] private float stamina;
     [SerializeField] private int tension;
+    [SerializeField] private TextMeshProUGUI finalKeyText;
 
     private LayerMask monsterMask;
     private StateMachine<Player> playerSM;
-    private int tensionDwon = 5;
+    private int tensionDwon = 50;
     private int tensionUp = 3;
     private int maxDistance;
     private int max = 100;
     private int zero = 0;
-    private int finalKey = 5;
+    private int finalKey = 0;
     private int monsterLookZone;
     private float battery = 60;
     private float minBright = 0;
@@ -57,6 +58,17 @@ public class Player : MonoBehaviour
     private IEnumerator plusBatteryCo;
     #endregion
     #region 프로퍼티
+    public int FinalKey
+    {
+        get => finalKey;
+        set
+        {
+            finalKey = value;
+            finalKeyText.text = finalKey.ToString();
+            if (finalKey == 5)
+                finalEvent.Raise();
+        }
+    }
     public StateMachine<Player> PlayerSM
     {
         get => playerSM; 
