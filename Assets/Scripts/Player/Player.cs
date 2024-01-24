@@ -294,8 +294,8 @@ public class Player : MonoBehaviour
             }
             else if (!isMonsterCheck && isRegulate)
             {
-                StopCoroutine(minusTensionCo);
-                StartCoroutine(plusTensionCo);
+               // StopCoroutine(minusTensionCo);
+                //StartCoroutine(plusTensionCo);
                 isRegulate = false;
             }
         }
