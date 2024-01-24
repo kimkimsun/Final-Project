@@ -11,7 +11,7 @@ public class InteractionAim : MonoBehaviour
     public bool isLookMonster;
     private void Start()
     {
-        maxDistance = 2;
+        maxDistance = 4;
         screenCenter = new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2);
     }
     private void FixedUpdate()

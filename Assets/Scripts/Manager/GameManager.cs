@@ -7,7 +7,7 @@ using Cinemachine;
 public class GameManager : SingleTon<GameManager>
 {
     private bool isStart;
-    public float time;
+    //public float time;
 
     public GameEvent pauseEvent;
     public Player player;
@@ -15,7 +15,13 @@ public class GameManager : SingleTon<GameManager>
     public HaiKen haiken;
     IEnumerator gameStartCo;
 
-    
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            Debug.Log(player.quickSlot.slots[0].items.Count);
+        }
+    }
     public bool IsStart
     {
         get => isStart;
@@ -38,8 +44,7 @@ public class GameManager : SingleTon<GameManager>
     {
         gameStartCo = GameStartCo();
         GameStart();
-        Debug.Log(Save.fileIndex);
-        if(Save.fileIndex != 0)
+        if (Save.fileIndex != 0)
             Save.Instance.LoadData(Save.fileIndex);
     }
     private void OnEnable()
@@ -65,8 +70,8 @@ public class GameManager : SingleTon<GameManager>
     {
         while(true)
         {
-            time += Time.deltaTime;
-            UIManager.Instance.uiSettingText.text = time.ToString("N2");
+            //time += Time.deltaTime;
+            //UIManager.Instance.uiSettingText.text = time.ToString("N2");
             yield return null;
         }
     }

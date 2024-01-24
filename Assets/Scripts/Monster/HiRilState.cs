@@ -216,7 +216,6 @@ public class HiRilStunState : HiRilState
     {
         owner.Animator.SetBool("isStun", false);
         owner.Agent.isStopped = false;
-        owner.MonsterVirtualCamera.Priority = 9;
     }
     public override void Update()
     {

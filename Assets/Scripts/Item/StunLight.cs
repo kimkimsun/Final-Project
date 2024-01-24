@@ -31,6 +31,7 @@ public class StunLight : MonoBehaviour,IStunable
 
     IEnumerator BrightLightCo()
     {
+        GetComponent<SphereCollider>().enabled = true;
         lightStun.intensity = maxBright;
         while (lightStun.intensity > 0)
         {
@@ -42,9 +43,14 @@ public class StunLight : MonoBehaviour,IStunable
         Destroy(Camera.gameObject);
         yield break;
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<IGetStunable>(out IGetStunable stun))
+            Stun(stun);
+    }
     public void Stun(IGetStunable target)
     {
-        throw new System.NotImplementedException();
+        target.GetStun();
+        Destroy(transform.parent.gameObject);
     }
 }

@@ -14,7 +14,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     [SerializeField] protected LayerMask targetLayerMask;
     [SerializeField] protected LayerMask heardTargetLayerMask;
     [SerializeField] protected GameObject map;
-    [SerializeField] protected CinemachineVirtualCamera monsterVirtualCamera;
     [SerializeField] protected GameEvent pauseEvent;
     [SerializeField] protected GameEvent finalEvent;
     [SerializeField] protected NavMeshAgent agent;
@@ -60,11 +59,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     public Transform FootTrans
     {
         get => footTrans; set => footTrans = value;
-    }
-    public CinemachineVirtualCamera MonsterVirtualCamera
-    {
-        get => monsterVirtualCamera;
-        set => monsterVirtualCamera = value;
     }
     public float Escape
     {

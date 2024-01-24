@@ -12,6 +12,7 @@ public class HairPin : MonoBehaviour, IStunable
     }
     public void Stun(IGetStunable target)
     {
+        Debug.Log("몬스터 스턴좀 먹여라 제발");
         target.GetStun();
         Destroy(transform.parent.gameObject);
     }

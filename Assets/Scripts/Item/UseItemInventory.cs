@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UseItemInventory : Inventory
 {
-    public UseItemSlot[] slots = new UseItemSlot[8];
+    public UseItemSlot[] slots;
     public UseItemSlot hairPinSlot;
 
     public UseItemSlot HairPinSlot

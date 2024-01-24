@@ -1,18 +1,16 @@
 using CustomInterface;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
+
+
 
 [System.Serializable]
 public class SaveData
 {
-    public int hp;
+    public int hp; 
+
     public int tension;
     public float stamina;
     public float time;
@@ -42,7 +40,7 @@ public class SaveData
         hirilRot = hiril.transform.rotation.eulerAngles;
         haikenPos = haiken.transform.position;
         haikenRot = haiken.transform.rotation.eulerAngles;
-        time = GameManager.Instance.time;
+        //time = GameManager.Instance.time;
 
         if (player.equipInven.EquipSlot.item != null)
             equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
@@ -84,7 +82,7 @@ public class SaveData
         hiril.transform.eulerAngles = hirilRot;
         haiken.transform.position = haikenPos;
         haiken.transform.root.eulerAngles = haikenRot;
-        GameManager.Instance.time = time;
+        //GameManager.Instance.time = time;
         for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
         {
             if (equipIndexArray[i] != -1)
@@ -110,17 +108,20 @@ public class SaveData
                 {
                     if (useItemIndexArray[i] == ItemManager.Instance.itemList[j].itemID)
                     {
+                        player.quickSlot.slots[i].items.Clear();
                         for (int k = 0; k < useItemCount[i]; k++)
                         {
                             player.quickSlot.slots[i].CurItem = 0;
                             Item copyItem = ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
+                            player.quickSlot.slots[i].items.Add(ItemManager.Instance.itemList[j]);
                             player.quickSlot.slots[i].items.Add(copyItem);
+
                             player.quickSlot.slots[i].items[k].Init();
                             player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(player.itemBox.transform);
                             player.quickSlot.slots[i].items[k].gameObject.transform.position = player.itemBox.transform.position;
                             player.quickSlot.slots[i].items[k].gameObject.SetActive(false);
                             player.quickSlot.slots[i].CurItem++;
-                            player.quickSlot.slots[i].itemImage.sprite = player.quickSlot.slots[i].items[k].sprite;
+                            player.quickSlot.slots[i].SetItem(player.quickSlot.slots[i].items[k]);
                         }
                     }
                 }
@@ -131,7 +132,7 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-                player.equipInven.EquipSlot.itemImage.sprite = ItemManager.Instance.itemList[i].sprite;
+                player.equipInven.EquipSlot.item.sprite = ItemManager.Instance.itemList[i].sprite;
                 player.equipInven.EquipSlot.item.Init();
                 player.equipInven.EquipSlot.item.Use();
             }
@@ -143,7 +144,6 @@ public class SaveData
             for (int i = 0; i < hairPinCount; i++)
                 player.quickSlot.hairPinSlot.items.Add(ItemManager.Instance.itemList[4/*헤어핀이 배열 몇번째에 위치하는지를 적는게 연산적으로 괜춘 json은 기획이라고 하셨으니 이렇게 해도 됨*/]);
         }
-
     }
 }
 
@@ -151,9 +151,9 @@ public class Save : MonoBehaviour, IInteraction
 {
     public TextMeshProUGUI settingUI;
     public static Save Instance;
+    public int saveIndex;
 
     SaveData saveData;
-    UseItemSlot[] useItemSlot;
     HiRil hiril;
     HaiKen haiken;
     Player player;
@@ -170,8 +170,7 @@ public class Save : MonoBehaviour, IInteraction
 
     public void SaveData(int fileIndex)
     {
-        
-        settingUI.text = GameManager.Instance.time.ToString("N2");
+        //settingUI.text = GameManager.Instance.time.ToString("N2");
         fileName = fileName.Insert(8,fileIndex.ToString());
         StreamWriter sw;
         if (File.Exists(path + fileName) == false)
@@ -212,7 +211,7 @@ public class Save : MonoBehaviour, IInteraction
         haiken = GameManager.Instance.haiken;
         player = GameManager.Instance.player;
         saveData = new SaveData(player, hiril, haiken);
-        SaveData(fileIndex);
+        SaveData(saveIndex);
     }
     public void LoadButton1()
     {

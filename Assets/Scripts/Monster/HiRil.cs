@@ -55,7 +55,7 @@ public class HiRil : Monster
             RaycastHit hit;
             Vector3 direction = ((playerLookCol[0].transform.position) - transform.position).normalized;
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.red);
-            if (Physics.Raycast(transform.position, direction+ new Vector3(0,-3,0), out hit, maxDistance))
+            if (Physics.Raycast(new Vector3(transform.position.x,transform.position.y + 0.5f, transform.position.z), direction * maxDistance, out hit, maxDistance))
             {
                 Debug.Log(hit.collider.gameObject.name);
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);

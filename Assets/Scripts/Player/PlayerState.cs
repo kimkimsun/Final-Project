@@ -107,6 +107,7 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     bool isUse;
     public override void Enter()
     {
+        item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
         player.quickSlot.HairPinSlot.OnUse += () => isUse = true;
         Debug.Log("잡힌상태");
         Init();
@@ -122,7 +123,6 @@ public class CaughtState: PlayerState //몬스터한테 잡혔을때
     {
         caughtCo = CaughtCo();
         diecount = UIManager.Instance.escapeCircle;
-        item = GameManager.Instance.player.quickSlot.HairPinSlot.items.Count;
     }
     protected IEnumerator CaughtCo()
     {

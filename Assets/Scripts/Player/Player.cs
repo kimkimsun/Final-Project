@@ -178,7 +178,6 @@ public class Player : MonoBehaviour
     
     private void Start()
     {
-        flashlight = GetComponentInChildren<Light>();
         playerMove = GetComponent<FirstPersonController>();
         playerSM = new StateMachine<Player>();
         playerSM.owner = this;
@@ -302,8 +301,8 @@ public class Player : MonoBehaviour
         }
         else if(!isMonsterZone)
         {
-            StopCoroutine(minusTensionCo);
-            StartCoroutine(plusTensionCo);
+            //StopCoroutine(minusTensionCo);
+            //StartCoroutine(plusTensionCo);
         }
 
     }

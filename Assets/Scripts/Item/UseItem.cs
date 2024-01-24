@@ -114,6 +114,7 @@ public class FireCrackerItemStrategy : UseItemStrategy
     }
     IEnumerator AttractionCo()
     {
+        Debug.Log("지금 돌아감..?");
         sphereCollider.enabled = true;
         sphereCollider.radius = 3;
         yield return new WaitForSeconds(time);
