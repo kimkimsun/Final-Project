@@ -84,11 +84,11 @@ public class MaskItemStrategy : EquipItemStrategy
         GameManager.Instance.player.MonsterLookZone = 10;
     }
 }
-public class NightVisionStrategy : EquipItemStrategy
+public class NightVisionItemStrategy : EquipItemStrategy
 {
     EquipmentItem equip;
-    PostProcessProfile profile;
-    public NightVisionStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
+    //PostProcessProfile profile;
+    public NightVisionItemStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
     {
         this.equip = equipmentItem;
         Init();
@@ -98,15 +98,34 @@ public class NightVisionStrategy : EquipItemStrategy
     {
         explanationText = "이름 : 야간투시경 볼 수 있는 시야범위가 넓어집니다.";
         equip.ExplanationText = this.explanationText;
-        profile = Camera.main.GetComponent<PostProcessVolume>().profile;
+        //profile = Camera.main.GetComponent<PostProcessVolume>().profile;
     }
     public override void Use()
     {
-        profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.4f };
+        //profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.4f };
     }
     public override void Exit()
     {
-        profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.7f };
+        //profile.GetComponent<Vignette>().intensity = new FloatParameter { value = 0.7f };
+    }
+}
+public class FinalKeyItemStrategy : EquipItemStrategy
+{
+    EquipmentItem equip;
+    public FinalKeyItemStrategy(EquipmentItem equipmentItem) : base(equipmentItem)
+    {
+        this.equip = equipmentItem;
+        Init();
+    }
+
+    public override void Init()
+    {
+    }
+    public override void Use()
+    {
+    }
+    public override void Exit()
+    {
     }
 }
 
@@ -116,6 +135,7 @@ public enum EQUIPITEM_TYPE
     ADRENALINE,
     MASK,
     NIGHTVISION,
+    FINALKEY,
 }
 public class EquipmentItem : Item
 {
@@ -139,7 +159,10 @@ public class EquipmentItem : Item
                 itemStrategy = new MaskItemStrategy(this);
                 break;
             case EQUIPITEM_TYPE.NIGHTVISION:
-                itemStrategy = new MaskItemStrategy(this);
+                itemStrategy = new NightVisionItemStrategy(this);
+                break;
+            case EQUIPITEM_TYPE.FINALKEY:
+                itemStrategy = new FinalKeyItemStrategy(this);
                 break;
         }
     }

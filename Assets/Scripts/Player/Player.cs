@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     private LayerMask monsterMask;
     private StateMachine<Player> playerSM;
-    private int tensionDwon = 50;
+    private int tensionDwon = 5;
     private int tensionUp = 3;
     private int maxDistance;
     private int max = 100;
@@ -50,8 +50,6 @@ public class Player : MonoBehaviour
     private bool useing;
     private bool isRegulate;
     private bool isMonsterCheck;
-    private bool isMonsterAttackCheck;
-    private bool caughtSetState;
     private IEnumerator minusTensionCo;
     private IEnumerator plusTensionCo;
     private IEnumerator minusBatteryCo;
@@ -140,18 +138,18 @@ public class Player : MonoBehaviour
             if (tension >= max)
             {
                 tension = max;
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+                //UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
             }
             if (tension <= 60 && playerSM.curState is not MoribundState && playerSM.curState is not ExhaustionState)
             {
                 playerSM.SetState("Exhaustion");
-                UIManager.Instance.tensionAni.SetBool("VeryDownTension", false);
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", true);
+                //UIManager.Instance.tensionAni.SetBool("VeryDownTension", false);
+                //UIManager.Instance.tensionAni.SetBool("IsDownTension", true);
             }
             else if (tension > 60 && playerSM.curState is not MoribundState && playerSM.curState is not IdleState)
             {
-                UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
-                UIManager.Instance.tensionAni.SetBool("VeryDownTension", true);
+               // UIManager.Instance.tensionAni.SetBool("IsDownTension", false);
+               // UIManager.Instance.tensionAni.SetBool("VeryDownTension", true);
                 playerSM.SetState("IdleState");
             }
         }
@@ -171,18 +169,18 @@ public class Player : MonoBehaviour
             else if (hp <= 30 && playerSM.curState is not MoribundState)
             {
                 playerSM.SetState("Moribund");
-                UIManager.Instance.hpAni.SetBool("IsDownHp", false);
-                UIManager.Instance.hpAni.SetBool("IsVeryDown", true);
+                //UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+                //UIManager.Instance.hpAni.SetBool("IsVeryDown", true);
             }
             else if (hp <= 50)
             {
-                UIManager.Instance.hpAni.SetBool("IsVeryDown", false);
-                UIManager.Instance.hpAni.SetBool("IsDownHp", true);
+                //UIManager.Instance.hpAni.SetBool("IsVeryDown", false);
+                //UIManager.Instance.hpAni.SetBool("IsDownHp", true);
             }
             else if (hp >= max)
             {
                 hp = max;
-                UIManager.Instance.hpAni.SetBool("IsDownHp", false);
+                //UIManager.Instance.hpAni.SetBool("IsDownHp", false);
             }
         }
     }
@@ -205,10 +203,9 @@ public class Player : MonoBehaviour
 
         flashlight.intensity = 0;
         Hp = max;
-        Tension = max;
-        Stamina = max;
+        tension = max;
+        stamina = max;
         monsterMask = 1 << 9;
-        caughtSetState = true;
         monsterLookZone = 10;
         maxDistance = 5;
 
@@ -265,21 +262,21 @@ public class Player : MonoBehaviour
     }
     public IEnumerator MinusTensionCo(int damege)
     {
-        while (Tension > zero)
+        Debug.Log("들어옴?");
+        while (Tension >= zero)
         {
             yield return new WaitForSeconds(3);
             Tension -= damege;
+            yield return new WaitUntil(() => Tension >= zero);
         }
-        yield break;
     }
     public IEnumerator PlusTensionCo(int tensionUp)
     {
-        isRegulate = false;
-        while (Tension < max)
+        while (Tension <= max)
         {
             yield return new WaitForSeconds(5);
             Tension += tensionUp;
-            yield return new WaitUntil(() => Tension < 100);
+            yield return new WaitUntil(() => Tension <= max);
         }
     }
     bool CheckInLayerMask(int layerIndex)
@@ -288,33 +285,34 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.M))
         playerSM.curState.Update();
+        if (Input.GetKeyDown(KeyCode.M))
+            Debug.Log(tension);
         Collider[] monsterZoneCol = Physics.OverlapSphere(transform.position, monsterLookZone, monsterMask);
         bool isMonsterZone = monsterZoneCol.Length > 0;
         if (isMonsterZone)
         {
             RaycastHit hit;
             Vector3 direction = ((monsterZoneCol[0].transform.position) - transform.position).normalized;
-            if (Physics.Raycast(transform.position, direction, out hit, maxDistance))
+            if (Physics.Raycast(transform.position, direction * maxDistance, out hit, maxDistance))
                 isMonsterCheck = CheckInLayerMask(hit.collider.gameObject.layer);
             if (isMonsterCheck && !isRegulate)
             {
+                isRegulate = true;
                 StopCoroutine(plusTensionCo);
                 StartCoroutine(minusTensionCo);
-                isRegulate = true;
             }
             else if (!isMonsterCheck && isRegulate)
             {
-               // StopCoroutine(minusTensionCo);
-                //StartCoroutine(plusTensionCo);
                 isRegulate = false;
+                StopCoroutine(minusTensionCo);
+                StartCoroutine(plusTensionCo);
             }
         }
-        else if(!isMonsterZone)
+        else
         {
-            //StopCoroutine(minusTensionCo);
-            //StartCoroutine(plusTensionCo);
+            StopCoroutine(minusTensionCo);
+            StartCoroutine(plusTensionCo);
         }
 
     }

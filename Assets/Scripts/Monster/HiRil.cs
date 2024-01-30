@@ -57,9 +57,7 @@ public class HiRil : Monster
             Debug.DrawLine(transform.position, transform.position + (direction * maxDistance), Color.red);
             if (Physics.Raycast(new Vector3(transform.position.x,transform.position.y + 0.5f, transform.position.z), direction * maxDistance, out hit, maxDistance))
             {
-                Debug.Log(hit.collider.gameObject.name);
                 isPlayerCheck = CheckInLayerMask(hit.collider.gameObject.layer);
-                Debug.Log("TTTTTTTTT" + isPlayerCheck);
             }
             if (isPlayerCheck && sm.curState is not HiRilRunState && !isStun)
                 sm.SetState("Run");

@@ -29,10 +29,6 @@ public class InteractionAim : MonoBehaviour
                     hitResult.Active();
                 }
             }
-            else if (hit.transform.GetComponent<Monster>() != null)
-            {
-                isLookMonster = true;
-            }
         }
         else
             text.text = "";

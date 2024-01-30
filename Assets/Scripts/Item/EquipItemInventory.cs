@@ -32,7 +32,13 @@ public class EquipItemInventory : Inventory
     }
     public override void AddItem(Item item)
     {
-        if (equipSlot.item == null)
+        if (item.itemStrategy is FinalKeyItemStrategy)
+        {
+            Destroy(item);
+            GameManager.Instance.player.FinalKey++;
+        }
+
+        else if (equipSlot.item == null)
         {
             equipSlot.item = item;
             equipSlot.itemImage.color = new Color(1, 1, 1, 1);

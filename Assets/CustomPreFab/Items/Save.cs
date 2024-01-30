@@ -170,7 +170,6 @@ public class Save : MonoBehaviour, IInteraction
 
     public void SaveData(int fileIndex)
     {
-        //settingUI.text = GameManager.Instance.time.ToString("N2");
         fileName = fileName.Insert(8,fileIndex.ToString());
         StreamWriter sw;
         if (File.Exists(path + fileName) == false)
