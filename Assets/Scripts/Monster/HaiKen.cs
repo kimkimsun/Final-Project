@@ -49,7 +49,6 @@ public class HaiKen : Monster
 
         RaycastHit hit;
         Vector3 interV = playerLookCol[0].transform.position - transform.position;
-
         if(interV.magnitude <= maxDistance)
         {
             float dot = Vector3.Dot(interV.normalized, transform.forward);
