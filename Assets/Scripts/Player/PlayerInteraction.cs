@@ -16,9 +16,6 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         Stop();
-        SwitchItem();
-        OpenInven();
-        CurEquipItem();
         UseFlash();
     }
     public void UseFlash()
@@ -47,51 +44,5 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-    }
-    public void SwitchItem()
-    {
-        if (player.EquipInven.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Return))
-            player.EquipInven.SwitchItem();
-    }
-
-    public void OpenInven()
-    {
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (!player.EquipInven.gameObject.activeSelf)
-            {
-                player.EquipInven.gameObject.SetActive(true);
-                slotIndexNum = 3;
-                player.EquipInven.IndexSlot(slotIndexNum);
-                UIManager.Instance.UIStack.Push(player.EquipInven);
-            }
-            else
-                return;
-        }
-    }
-
-    public void CurEquipItem()
-    {
-
-        if (player.EquipInven.gameObject.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                slotIndexNum--;
-                if (slotIndexNum == -1)
-                    slotIndexNum = player.EquipInven.EiSlots.Length - 1;
-                player.EquipInven.IndexSlot(slotIndexNum);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                slotIndexNum++;
-                if (slotIndexNum == player.EquipInven.EiSlots.Length)
-                    slotIndexNum = 0;
-                player.EquipInven.IndexSlot(slotIndexNum);
-            }
-        }
-        else
-            return;
     }
 }
