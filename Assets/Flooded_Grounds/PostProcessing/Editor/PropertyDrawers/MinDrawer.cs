@@ -3,7 +3,7 @@ using UnityEngine.PostProcessing;
 
 namespace UnityEditor.PostProcessing
 {
-/*    [CustomPropertyDrawer(typeof(MinAttribute))]
+    [CustomPropertyDrawer(typeof(MinAttribute))]
     sealed class MinDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -25,5 +25,5 @@ namespace UnityEditor.PostProcessing
                 EditorGUI.LabelField(position, label.text, "Use Min with float or int.");
             }
         }
-    }*/
+    }
 }
