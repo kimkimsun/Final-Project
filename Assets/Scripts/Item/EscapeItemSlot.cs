@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipItemSlot : Slot
+public class EscapeItemSlot : Slot
 {
     public Item item;
     public override void SetItem(Item item)
