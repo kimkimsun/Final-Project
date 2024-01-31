@@ -113,14 +113,12 @@ public class SaveData
                         {
                             player.quickSlot.slots[i].CurItem = 0;
                             Item copyItem = ItemManager.Instance.CreatePrefab(useItemIndexArray[i]);
-                            player.quickSlot.slots[i].items.Add(ItemManager.Instance.itemList[j]);
                             player.quickSlot.slots[i].items.Add(copyItem);
-
                             player.quickSlot.slots[i].items[k].Init();
                             player.quickSlot.slots[i].items[k].gameObject.transform.SetParent(player.itemBox.transform);
                             player.quickSlot.slots[i].items[k].gameObject.transform.position = player.itemBox.transform.position;
                             player.quickSlot.slots[i].items[k].gameObject.SetActive(false);
-                            player.quickSlot.slots[i].CurItem++;
+                            player.quickSlot.slots[i].CountItem++;
                             player.quickSlot.slots[i].SetItem(player.quickSlot.slots[i].items[k]);
                         }
                     }
@@ -214,17 +212,17 @@ public class Save : MonoBehaviour, IInteraction
     }
     public void LoadButton1()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("SunjinScene");
         fileIndex = 1;
     }
     public void LoadButton2()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("SunjinScene");
         fileIndex = 2;
     }
     public void LoadButton3()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("SunjinScene");
         fileIndex = 3;
     }
 }
