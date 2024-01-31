@@ -65,7 +65,6 @@ public class EquipItemInventory : Inventory
         {
             if (i == index)
             {
-                //eiSlots[i].transform.GetChild(1).gameObject.SetActive(true);
                 if (eiSlots[i].item != null && GameManager.Instance.player.equipInven.gameObject.activeSelf)
                 {
                     textCoverImage.gameObject.SetActive(true);
@@ -74,8 +73,6 @@ public class EquipItemInventory : Inventory
                 else
                     textCoverImage.gameObject.SetActive(false);
             }
-            //else
-                //eiSlots[i].transform.GetChild(1).gameObject.SetActive(false);
         }
     }
     public void SwitchItem()

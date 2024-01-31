@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
+
 namespace CustomInterface
 {
     public interface INode
@@ -34,5 +36,17 @@ namespace CustomInterface
     public interface IGetStunable
     {
         public void GetStun();
+    }
+    public interface ISoundable
+    {
+        public int Sound
+        {
+            get;
+        }
+        public void Active();
+    }
+    public interface IListenable
+    {
+
     }
 }

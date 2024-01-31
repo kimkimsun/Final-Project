@@ -90,7 +90,10 @@ public class SaveData
                 for (int j = 0; j < ItemManager.Instance.itemList.Count; j++)
                 {
                     if (equipIndexArray[i] == ItemManager.Instance.itemList[j].itemID)
+                    {
                         player.equipInven.EiSlots[i].item = ItemManager.Instance.itemList[j];
+                        player.equipInven.EiSlots[i].itemImage.sprite = ItemManager.Instance.itemList[j].sprite;
+                    }
                 }
             }
         }
@@ -130,7 +133,7 @@ public class SaveData
             if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
             {
                 player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-                player.equipInven.EquipSlot.item.sprite = ItemManager.Instance.itemList[i].sprite;
+                player.equipInven.EquipSlot.itemImage.sprite = ItemManager.Instance.itemList[i].sprite;
                 player.equipInven.EquipSlot.item.Init();
                 player.equipInven.EquipSlot.item.Use();
             }
@@ -139,8 +142,8 @@ public class SaveData
         if (hairPinCount > 0)
         {
             player.quickSlot.hairPinSlot.items.Clear();
-            for (int i = 0; i < hairPinCount; i++)
-                player.quickSlot.hairPinSlot.items.Add(ItemManager.Instance.itemList[4/*헤어핀이 배열 몇번째에 위치하는지를 적는게 연산적으로 괜춘 json은 기획이라고 하셨으니 이렇게 해도 됨*/]);
+           // for (int i = 0; i < hairPinCount; i++)
+                //player.quickSlot.hairPinSlot.items.Add(ItemManager.Instance.itemList[4/*헤어핀이 배열 몇번째에 위치하는지를 적는게 연산적으로 괜춘 json은 기획이라고 하셨으니 이렇게 해도 됨*/]);
         }
     }
 }
