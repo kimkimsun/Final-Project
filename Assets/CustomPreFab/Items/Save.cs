@@ -22,7 +22,7 @@ public class SaveData
     public Vector3 haikenPos;
     public Vector3 haikenRot;
     public UseItemSlot[] save;
-    public int[] equipIndexArray = new int[GameManager.Instance.player.escapeInven.EscapeSlot.Length];
+    //public int[] equipIndexArray = new int[GameManager.Instance.player.equipInven.EiSlots.Length];
     public int[] useItemCount = new int[GameManager.Instance.player.quickSlot.slots.Length];
     public int[] useItemIndexArray = new int[GameManager.Instance.player.quickSlot.slots.Length];
     public int equipInvenIdIndex;
@@ -42,20 +42,20 @@ public class SaveData
         haikenRot = haiken.transform.rotation.eulerAngles;
         //time = GameManager.Instance.time;
 
-        //if (player.escapeInven.EscapeSlot.item != null)
-        //    equipInvenIdIndex = player.escapeInven.EscapeSlot.item.itemID;
+        //if (player.equipInven..item != null)
+         //   equipInvenIdIndex = player.equipInven.EquipSlot.item.itemID;
 
 
         //if (player.quickSlot.hairPinSlot.items.Count > 0 && player.quickSlot.hairPinSlot != null)
         //    hairPinCount = player.quickSlot.hairPinSlot.items.Count;
 
 
-        for (int i = 0; i < player.escapeInven.EscapeSlot.Length; i++)
-        {
-            equipIndexArray[i] = -1;
-            if (player.escapeInven.EscapeSlot[i].item != null)
-                equipIndexArray[i] = player.escapeInven.EscapeSlot[i].item.itemID;
-        }
+       // for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
+        //{
+           // equipIndexArray[i] = -1;
+            //if (player.equipInven.EiSlots[i].item != null)
+           //     equipIndexArray[i] = player.equipInven.EiSlots[i].item.itemID;
+        //}
 
 
         for (int j = 0; j < player.quickSlot.slots.Length; j++)
@@ -83,20 +83,20 @@ public class SaveData
         haiken.transform.position = haikenPos;
         haiken.transform.root.eulerAngles = haikenRot;
         //GameManager.Instance.time = time;
-        for (int i = 0; i < player.escapeInven.EscapeSlot.Length; i++)
-        {
-            if (equipIndexArray[i] != -1)
-            {
-                for (int j = 0; j < ItemManager.Instance.itemList.Count; j++)
-                {
-                    if (equipIndexArray[i] == ItemManager.Instance.itemList[j].itemID)
-                    {
-                        player.escapeInven.EscapeSlot[i].item = ItemManager.Instance.itemList[j];
-                        player.escapeInven.EscapeSlot[i].itemImage.sprite = ItemManager.Instance.itemList[j].sprite;
-                    }
-                }
-            }
-        }
+        //for (int i = 0; i < player.equipInven.EiSlots.Length; i++)
+        //{
+            //if (equipIndexArray[i] != -1)
+            //{
+              //  for (int j = 0; j < ItemManager.Instance.itemList.Count; j++)
+               // {
+                //    if (equipIndexArray[i] == ItemManager.Instance.itemList[j].itemID)
+                //    {
+                        //player.equipInven.EiSlots[i].item = ItemManager.Instance.itemList[j];
+                        //player.equipInven.EiSlots[i].itemImage.sprite = ItemManager.Instance.itemList[j].sprite;
+                 //   }
+                //}
+            //}
+        //}
 
         for(int i = 0; i < player.itemBox.transform.childCount; i++)
         {
@@ -128,16 +128,16 @@ public class SaveData
                 }
             }
         }
-        //for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
-        //{
-        //    if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
-        //    {
-        //        player.escapeInven.EquipSlot.item = ItemManager.Instance.itemList[i];
-        //        player.escapeInven.EquipSlot.itemImage.sprite = ItemManager.Instance.itemList[i].sprite;
-        //        player.escapeInven.EquipSlot.item.Init();
-        //        player.escapeInven.EquipSlot.item.Use();
-        //    }
-        //}
+        for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
+        {
+            if (equipInvenIdIndex == ItemManager.Instance.itemList[i].itemID)
+            {
+                //player.equipInven.EquipSlot.item = ItemManager.Instance.itemList[i];
+                //player.equipInven.EquipSlot.itemImage.sprite = ItemManager.Instance.itemList[i].sprite;
+                //player.equipInven.EquipSlot.item.Init();
+                //player.equipInven.EquipSlot.item.Use();
+            }
+        }
 
         if (hairPinCount > 0)
         {

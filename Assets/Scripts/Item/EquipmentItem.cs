@@ -173,8 +173,6 @@ public class EquipmentItem : Item
     }
     public override void Active()
     {
-        EscapeItemInventory equipInven = GameManager.Instance.player.EquipInven;
-        equipInven.AddItem(this);
     }
     public IEnumerator HpPlusCo()
     {

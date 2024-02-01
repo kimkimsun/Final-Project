@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public abstract void AddItem(Item item);
+    public virtual void AddItem(Item item) { }
 }

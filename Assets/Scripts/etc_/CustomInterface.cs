@@ -39,7 +39,7 @@ namespace CustomInterface
     }
     public interface ISoundable
     {
-        public int Sound
+        public float Sound
         {
             get;
         }

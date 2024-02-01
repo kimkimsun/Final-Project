@@ -16,11 +16,12 @@ public class Player : MonoBehaviour
 
     #region 변수
     [Header("�κ��丮")]
-    public EscapeItemInventory escapeInven;
+    public PartsInventory partsInven;
     public UseItemInventory quickSlot;
     public InteractionAim aim;
     public FirstPersonController playerMove;    
     public GameEvent finalEvent;
+    public GameObject escapeBox;
     public GameObject itemBox;
     public GameObject hairPinSlot;
     public Image stminaImage;
@@ -76,10 +77,6 @@ public class Player : MonoBehaviour
     {
         get => monsterLookZone;
         set => monsterLookZone = value;
-    }
-    public EscapeItemInventory EquipInven
-    {
-        get => escapeInven;
     }
 
     public Inventory QuickSlot
