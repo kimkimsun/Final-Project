@@ -8,10 +8,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : SingleTon<UIManager>
 {
-    public Image openUI;
     public Image escapeCircle;
     public Image saveUI;
-    public Image loadImage;
     public Image[] carImage = new Image[5];
     public Scrollbar soundScroll;
     public Button loadButton;
@@ -26,7 +24,6 @@ public class UIManager : SingleTon<UIManager>
     public List<FieldInfo> uiViewFieldList;
 
     private float alpha;
-    private float time;
     private float curSound;
     private bool check;
     private void Start()
@@ -34,7 +31,6 @@ public class UIManager : SingleTon<UIManager>
         alpha = 0.4f;
         StartCoroutine(ImageBlinkPlusCo());
     }
-
     public IEnumerator SoundCo(float sound)
     {
         if (sound <= curSound)
@@ -58,10 +54,13 @@ public class UIManager : SingleTon<UIManager>
 
     IEnumerator ImageBlinkPlusCo()
     {
-        //foreach (Image image in carImage)
-        //{
-        //    image.gameObject.activeSelf |= false;
-        //}
+        check = false;
+        foreach (Image image in carImage)
+        {
+            check &= !(image.gameObject.activeSelf);
+        }
+        if (check)
+            yield break;
         while (alpha <= 1.0f)
         {
             for (int i = 0; i < carImage.Length; i++)
@@ -78,12 +77,17 @@ public class UIManager : SingleTon<UIManager>
     }
     IEnumerator ImageBlinkMinusCo()
     {
+        check = false;
+        foreach (Image image in carImage)
+        {
+            check &= !(image.gameObject.activeSelf);
+        }
+        if (check)
+            yield break;
         while (alpha >= 0.4f)
         {
             for (int i = 0; i < carImage.Length; i++)
             {
-                if (check |= carImage[i].gameObject.activeSelf == false)
-                    StopAllCoroutines();
                 if (carImage[i].gameObject.activeSelf)
                 {
                     carImage[i].color = new Color(1, 1, 1, alpha);
