@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : SingleTon<UIManager>
@@ -26,6 +27,7 @@ public class UIManager : SingleTon<UIManager>
 
     private float alpha;
     private float time;
+    private float curSound;
     private bool check;
     private void Start()
     {
@@ -35,30 +37,35 @@ public class UIManager : SingleTon<UIManager>
 
     public IEnumerator SoundCo(float sound)
     {
-        Debug.Log("µé¾î¿È?");
+        if (sound <= curSound)
+            yield break;
+        curSound = sound;
         float scrollSound = 0;
         while(scrollSound <= (sound/2))
         {
             yield return null;
             scrollSound += Time.deltaTime;
-            soundScroll.value = scrollSound / (sound * 10);
+            soundScroll.value = scrollSound / 10;
         }
         while(scrollSound >= 0)
         {
             yield return null;
             scrollSound -= Time.deltaTime;
-            soundScroll.value = scrollSound / (sound * 10);
+            soundScroll.value = scrollSound / 10;
         }
+        curSound = 0;
     }
 
     IEnumerator ImageBlinkPlusCo()
     {
+        //foreach (Image image in carImage)
+        //{
+        //    image.gameObject.activeSelf |= false;
+        //}
         while (alpha <= 1.0f)
         {
             for (int i = 0; i < carImage.Length; i++)
             {
-                if (check |= carImage[i].gameObject.activeSelf == false)
-                    StopAllCoroutines();
                 if (carImage[i].gameObject.activeSelf)
                 {
                     carImage[i].color = new Color(1, 1, 1, alpha);
@@ -82,7 +89,6 @@ public class UIManager : SingleTon<UIManager>
                     carImage[i].color = new Color(1, 1, 1, alpha);
                     yield return new WaitForSeconds(0.01f);
                     alpha -= 0.0119f;
-                    Debug.Log("¹Ø¿¡°Å");
                 }
             }
         }
