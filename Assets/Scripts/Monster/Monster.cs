@@ -18,7 +18,6 @@ public abstract class Monster : MonoBehaviour, IGetStunable
     [SerializeField] protected GameEvent finalEvent;
     [SerializeField] protected NavMeshAgent agent;
     public Transform monsterPos;
-    protected Door door;
     protected StateMachine<Monster> sm;
     protected Transform footTrans;
     protected List<Transform> monsterNextPositionList;
