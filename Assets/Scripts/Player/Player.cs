@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
             if (hp <= zero)
             {
                 hp = zero;
-                ScenesManager.Instance.DieScene();
+              //  ScenesManager.Instance.DieScene();
             }
             else if (hp <= 30 && playerSM.curState is not MoribundState)
             {

@@ -11,14 +11,14 @@ public class ScenesManager : SingleTon<ScenesManager>
     public Light EndLight;
 
     private float time;
-    public void DieScene()
+/*    public void DieScene()
     {
         UICanvas.gameObject.SetActive(false);
         EndVC.Priority = 11;
         StartCoroutine(CameraMove());
-    }
+    }*/
 
-    IEnumerator CameraMove()
+/*    IEnumerator CameraMove()
     {
         time = 0;
         UIManager.Instance.openUI.color = new Color(0, 0, 0, 1);
@@ -46,7 +46,7 @@ public class ScenesManager : SingleTon<ScenesManager>
             EndLight.intensity -= 0.1f;
             yield return new WaitForSeconds(0.1f);
         }
-    }
+    }*/
     public void Exit()
     {
 #if UNITY_EDITOR

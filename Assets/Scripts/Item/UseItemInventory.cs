@@ -71,8 +71,8 @@ public class UseItemInventory : Inventory
         {
             if (dieCount.fillAmount > 0.6f)
                 hairPinSlot.SlotItemUse();
-            else
-                ScenesManager.Instance.DieScene();
+/*            else
+                ScenesManager.Instance.DieScene();*/
         }
     }
     private void Update()
