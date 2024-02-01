@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 482118}
   - component: {fileID: 3352312}
   - component: {fileID: 2392576}
-  - component: {fileID: 6533138}
   m_Layer: 8
   m_Name: lo_Prop_Car1_DM_LOD1
   m_TagString: Untagged
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6533138
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107490}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.281636, y: 2.3403463, z: 2.9155545}
-  m_Center: {x: -0.333897, y: 1.3057265, z: -0.25349498}
 --- !u!1 &115150
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +94,6 @@ GameObject:
   - component: {fileID: 412368}
   - component: {fileID: 3344640}
   - component: {fileID: 2311192}
-  - component: {fileID: 6597350}
   m_Layer: 8
   m_Name: lo_Prop_Car1_DM_LOD2
   m_TagString: Untagged
@@ -189,27 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6597350
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115150}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.2815504, y: 2.338341, z: 2.9144943}
-  m_Center: {x: -0.3338542, y: 1.3067292, z: -0.25296485}
 --- !u!1 &136378
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +239,7 @@ GameObject:
   - component: {fileID: 488092}
   - component: {fileID: 3392748}
   - component: {fileID: 2362188}
-  - component: {fileID: 6549902}
+  - component: {fileID: 6556078441156804524}
   m_Layer: 8
   m_Name: lo_Prop_Car1_DM_LOD0
   m_TagString: Untagged
@@ -356,8 +312,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6549902
-BoxCollider:
+--- !u!64 &6556078441156804524
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -374,6 +330,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.281651, y: 2.3413537, z: 2.9165783}
-  m_Center: {x: -0.3339045, y: 1.3052229, z: -0.2540068}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300006, guid: 8acc190dad5b9744fab16f0792a78ac1, type: 3}
