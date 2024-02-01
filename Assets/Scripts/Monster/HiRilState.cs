@@ -23,13 +23,11 @@ public class ActionNode : INode
 }
 public class SelectorNode : INode
 {
-    public Func<INode.STATE> func;
     List<INode> children;
 
-    public SelectorNode(Func<INode.STATE> func)
+    public SelectorNode()
     {
         children = new List<INode>();
-        this.func += func;
     }
     public void Add(INode node)
     {
@@ -54,12 +52,10 @@ public class SelectorNode : INode
 }
 public class SequenceNode : INode
 {
-    public Func<INode.STATE> func;
     List<INode> children;
-    public SequenceNode(Func<INode.STATE> func)
+    public SequenceNode()
     {
         children = new List<INode>();
-        this.func += func;
     }
     public void Add(INode node)
     {
@@ -128,45 +124,15 @@ public class HiRilRunState : HiRilState
     }
     public void FirstSetting()
     {
-        rootNode = new SelectorNode(() => { return INode.STATE.SUCCESS; });
-        rootNode.Add(detectiveSequence = new SequenceNode(() =>
-        {
-            if (owner.IsPlayerCheck)
-                return INode.STATE.SUCCESS;
-            else
-                return INode.STATE.FAIL;
-        }));
-
-        rootNode.Add(heardSequence = new SequenceNode(() =>
-        {
-            if (owner.IsHeardCheck)
-                return INode.STATE.SUCCESS;
-            else
-                return INode.STATE.FAIL;
-        }));
-
+        rootNode = new SelectorNode();
+        rootNode.Add(detectiveSequence = new SequenceNode());
+        rootNode.Add(heardSequence = new SequenceNode());
         detectiveSequence.Add(playerChaseAction = new ActionNode(() =>
         {
             if (owner.PlayerLookCol.Length > 0)
             {
                 owner.Agent.SetDestination(owner.PlayerLookCol[0].transform.position);
                 return INode.STATE.RUN;
-            }
-            else
-                return INode.STATE.FAIL;
-        }));
-
-        heardSequence.Add(footChaseAction = new ActionNode(() =>
-        {
-            if (owner.FootTrans != null)
-            {
-                while (Vector3.Distance(owner.transform.position, owner.FootTrans.position) > 1.5f)
-                {
-                    owner.Agent.SetDestination(owner.FootTrans.transform.position);
-                    return INode.STATE.RUN;
-                }
-                sm.SetState("Idle");
-                return INode.STATE.FAIL;
             }
             else
                 return INode.STATE.FAIL;
@@ -178,7 +144,6 @@ public class HiRilRunState : HiRilState
                 while (Vector3.Distance(owner.transform.position, owner.FootTrans.position) > 1.5f)
                 {
                     owner.Agent.SetDestination(owner.SoundCol[0].transform.position);
-                    Debug.Log("ÆøÁ× µé¾î¿È");
                     return INode.STATE.RUN;
                 }
                 sm.SetState("Idle");

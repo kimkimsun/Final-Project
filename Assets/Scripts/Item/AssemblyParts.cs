@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 public enum ASSEMBLE_TYPE
 {
-    WHEELPOINT,
+    LEFTWHEELPOINT,
+    RIGHTWHEELPOINT,
     HANDLEPOINT,
     CARKEYPOINT,
     OILPOINT,
@@ -17,7 +18,7 @@ public enum ASSEMBLE_TYPE
 public class AssemblyParts : MonoBehaviour, IInteraction
 {
     public ASSEMBLE_TYPE assembleType;
-    public Image imagePair;
+    public List<Image> imagePair = new List<Image>();
 
     private string interactionText;
     private int itemIndex;
@@ -40,7 +41,10 @@ public class AssemblyParts : MonoBehaviour, IInteraction
         parts[itemIndex].gameObject.transform.position = transform.position;
         parts[itemIndex].parts = null;
         parts[itemIndex].itemImage.sprite = null;
-        imagePair.gameObject.SetActive(false);
+        for(int i =0; i < imagePair.Count;i++)
+        {
+            imagePair[i].gameObject.SetActive(false);
+        }
         Destroy(gameObject);
     }
 
@@ -49,10 +53,15 @@ public class AssemblyParts : MonoBehaviour, IInteraction
         parts = GameManager.Instance.player.partsInven.PartsSlots;
         switch (assembleType)
         {
-            case ASSEMBLE_TYPE.WHEELPOINT:
-                assembleType = ASSEMBLE_TYPE.WHEELPOINT;
-                partsCombinationDic.Add(PARTS_TYPE.WHEEL, ASSEMBLE_TYPE.WHEELPOINT);
-                interactionText = "¹ÙÄû";
+            case ASSEMBLE_TYPE.LEFTWHEELPOINT:
+                assembleType = ASSEMBLE_TYPE.LEFTWHEELPOINT;
+                partsCombinationDic.Add(PARTS_TYPE.LEFTWHEEL, ASSEMBLE_TYPE.LEFTWHEELPOINT);
+                interactionText = "¿ÞÂÊ ¹ÙÄû";
+                break;
+            case ASSEMBLE_TYPE.RIGHTWHEELPOINT:
+                assembleType = ASSEMBLE_TYPE.RIGHTWHEELPOINT;
+                partsCombinationDic.Add(PARTS_TYPE.RIGHTWHEEL, ASSEMBLE_TYPE.RIGHTWHEELPOINT);
+                interactionText = "¿À¸¥ÂÊ ¹ÙÄû";
                 break;
             case ASSEMBLE_TYPE.HANDLEPOINT:
                 assembleType = ASSEMBLE_TYPE.HANDLEPOINT;

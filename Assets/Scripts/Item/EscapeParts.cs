@@ -6,7 +6,8 @@ using UnityEngine;
 
 public enum PARTS_TYPE
 {
-    WHEEL,
+    LEFTWHEEL,
+    RIGHTWHEEL,
     HANDLE,
     CARKEY,
     OIL,
@@ -35,9 +36,13 @@ public class EscapeParts : MonoBehaviour,IInteraction
         parts = GameManager.Instance.player.partsInven.PartsSlots;
         switch (partsType)
         {
-            case PARTS_TYPE.WHEEL:
-                partsType = PARTS_TYPE.WHEEL;
-                fixedDic.Add(PARTS_TYPE.WHEEL, FIXOBJ_TYPE.SPANNER);
+            case PARTS_TYPE.LEFTWHEEL:
+                partsType = PARTS_TYPE.LEFTWHEEL;
+                fixedDic.Add(PARTS_TYPE.LEFTWHEEL, FIXOBJ_TYPE.SPANNER);
+                break;
+            case PARTS_TYPE.RIGHTWHEEL:
+                partsType = PARTS_TYPE.RIGHTWHEEL;
+                fixedDic.Add(PARTS_TYPE.RIGHTWHEEL, FIXOBJ_TYPE.SPANNER);
                 break;
             case PARTS_TYPE.HANDLE:
                 partsType = PARTS_TYPE.HANDLE;

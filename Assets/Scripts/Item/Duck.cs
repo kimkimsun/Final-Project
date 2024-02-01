@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Duck : MonoBehaviour, ISoundable
 {
-    public float Sound => 3f;
+    public float Sound => 5f;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("けいしけいし");
         if (other.GetComponent<Player>() != null)
+        {
+            Active();
             transform.GetChild(0).GetComponent<CapsuleCollider>().enabled = true;
+        }
     }
     public void Active()
     {
