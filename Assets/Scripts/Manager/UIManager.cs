@@ -22,6 +22,7 @@ public class UIManager : SingleTon<UIManager>
     public UseItemInfo useItemInfo;
     public Stack<UnityEngine.Object> UIStack = new Stack<UnityEngine.Object>();
     public List<FieldInfo> uiViewFieldList;
+    public IEnumerator soundCo;
 
     private float alpha;
     private float curSound;
@@ -33,18 +34,21 @@ public class UIManager : SingleTon<UIManager>
     }
     public IEnumerator SoundCo(float sound)
     {
-        if (sound <= curSound)
-            yield break;
+        bool breakCheck = sound <= curSound;
         curSound = sound;
         float scrollSound = 0;
-        while(scrollSound <= (sound/2))
+        while (scrollSound <= (sound / 2))
         {
+            if(breakCheck)
+                yield break;
             yield return null;
             scrollSound += Time.deltaTime;
             soundScroll.value = scrollSound / 10;
         }
-        while(scrollSound >= 0)
+        while (scrollSound >= 0)
         {
+            if (breakCheck)
+                yield break;
             yield return null;
             scrollSound -= Time.deltaTime;
             soundScroll.value = scrollSound / 10;
