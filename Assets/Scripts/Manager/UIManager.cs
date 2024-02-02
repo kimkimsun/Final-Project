@@ -25,7 +25,7 @@ public class UIManager : SingleTon<UIManager>
     public IEnumerator soundCo;
 
     private float alpha;
-    private float curSound;
+    private float tempSound;
     private bool check;
     private void Start()
     {
@@ -34,8 +34,8 @@ public class UIManager : SingleTon<UIManager>
     }
     public IEnumerator SoundCo(float sound)
     {
-        bool breakCheck = sound <= curSound;
-        curSound = sound;
+        bool breakCheck = sound <= tempSound;
+        tempSound = sound;
         float scrollSound = 0;
         while (scrollSound <= (sound / 2))
         {
@@ -53,7 +53,7 @@ public class UIManager : SingleTon<UIManager>
             scrollSound -= Time.deltaTime;
             soundScroll.value = scrollSound / 10;
         }
-        curSound = 0;
+        tempSound = 0;
     }
 
     IEnumerator ImageBlinkPlusCo()

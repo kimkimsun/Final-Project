@@ -37,8 +37,9 @@ public class AssemblyParts : MonoBehaviour, IInteraction
     }
     public void Active()
     {
-        parts[itemIndex].gameObject.SetActive(true);
-        parts[itemIndex].gameObject.transform.position = transform.position;
+        parts[itemIndex].parts.gameObject.SetActive(true);
+        parts[itemIndex].parts.gameObject.transform.position = transform.position;
+        parts[itemIndex].parts.gameObject.transform.SetParent(gameObject.transform);
         parts[itemIndex].parts = null;
         parts[itemIndex].itemImage.sprite = null;
         for(int i =0; i < imagePair.Count;i++)
