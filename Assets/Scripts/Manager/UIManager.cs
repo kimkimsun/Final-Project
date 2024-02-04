@@ -32,23 +32,30 @@ public class UIManager : SingleTon<UIManager>
         alpha = 0.4f;
         StartCoroutine(ImageBlinkPlusCo());
     }
+    public void SaveSoundCo(float sound)
+    {
+        if (tempSound < sound)
+        {
+            StopCoroutine(soundCo);
+            tempSound = sound;
+            soundCo = SoundCo(sound);
+            StartCoroutine(soundCo);
+        }
+        else
+            return;
+    }
+
     public IEnumerator SoundCo(float sound)
     {
-        bool breakCheck = sound <= tempSound;
-        tempSound = sound;
         float scrollSound = 0;
         while (scrollSound <= (sound / 2))
         {
-            if(breakCheck)
-                yield break;
             yield return null;
             scrollSound += Time.deltaTime;
             soundScroll.value = scrollSound / 10;
         }
         while (scrollSound >= 0)
         {
-            if (breakCheck)
-                yield break;
             yield return null;
             scrollSound -= Time.deltaTime;
             soundScroll.value = scrollSound / 10;
