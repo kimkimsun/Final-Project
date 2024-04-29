@@ -13,6 +13,8 @@
 ![image](https://github.com/kimkimsun/Final-Project/assets/116052108/51e69b03-85db-4f19-bf30-abbcd6ee37a3) ![image](https://github.com/kimkimsun/Final-Project/assets/116052108/2c4bfa37-a868-4f28-a54c-ab72ab407366)
 #### 스팀의 출시된 게임인 인사일런스와 그림자 복도에서 영감을 많이 받은 게임입니다.
 #### 장르는 공포 3D 탈출 등등입니다.
+# 게임 영상 (이미지 클릭)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Xsq0zKicf30/0.jpg)](https://youtu.be/Xsq0zKicf30)
 # **핵심 기능**
 ## 첫 번째 기능
 ### 기능설명
@@ -28,6 +30,36 @@
 #### Behaviour Tree로 구현하게 된 이유는 몬스터가 폭죽이나 플레이어의 뛰는소리를 들어도 해당 위치로 추격을 하게 하였습니다.
 #### 그렇게 가게된 위치에 플레이어가 존재한다면 다른 조건들은 다 무시한채 플레이어를 쫓게끔 우선순위를 주기 위하였습니다.
 #### 이 외에 상태들은 Behaviour Tree를 사용하지 않고 상태 패턴만을 사용하였습니다.
+<details>
+    <summary>코드</summary>
+    
+### 코드
+```C#
+public class HiRilState {}
+public class HiRilIdleState {}
+public class HiRilRunState {}
+public class HiRilStunState {}
+public class HiRilAttackState {}
+public class HiRilFinalState {}
+```
+
+```C#
+public class HiRil : Monster
+{
+    protected override void Start()
+    {
+        sm = new StateMachine<HiRil>();
+        sm.owner = this;
+        sm.AddState("Idle", new HiRilIdleState());
+        sm.AddState("Run", new HiRilRunState());
+        sm.AddState("Stun", new HiRilStunState());
+        sm.AddState("Attack", new HiRilAttackState());
+        sm.AddState("Final", new HiRilFinalState());
+        sm.SetState("Idle");
+    }
+}
+```
+</details>
 
 ## 두 번째 기능
 ### 기능 설명
